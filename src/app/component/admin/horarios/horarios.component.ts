@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-horarios',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './horarios.component.css'
 })
 export class HorariosComponent {
+  @ViewChild('menu') menu!: ElementRef;
 
+  swvisible() {
+    this.menu.nativeElement.classList.toggle("oculto");
+    console.log("ocultado");
+  }
 }

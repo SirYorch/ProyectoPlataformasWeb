@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-espacio',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './espacio.component.css'
 })
 export class EspacioComponent {
+  @ViewChild('menu') menu!: ElementRef;
 
+  swvisible() {
+    this.menu.nativeElement.classList.toggle("oculto");
+    console.log("ocultado");
+  }
 }

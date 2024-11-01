@@ -222,6 +222,7 @@ footer div{
     margin: auto;
 }
 label{
+    color: var(--blueD);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -229,6 +230,7 @@ label{
     margin-bottom: 7px;
 }
 label input{
+    color:var(--blueL);
     margin: auto;
     font-size: 22px;
     margin-top: 10px;
@@ -256,11 +258,11 @@ label input:focus{
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    transition: box-shadow .1s linear;
+    transition: font-size .1s linear;
 }
 .ca-button:hover{
-    box-shadow: 5px 5px 5px var(--blueL) inset;
+    font-size: 23px;
 }
 .ca-button:active{
-    box-shadow: 7px 7px 6px var(--blueL) inset;
+    font-size: 25px;
 }

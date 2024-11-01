@@ -1,13 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-arriendos',
+  selector: 'app-principal',
   standalone: true,
   imports: [],
-  templateUrl: './arriendos.component.html',
-  styleUrl: './arriendos.component.css'
+  templateUrl: './principal.component.html',
+  styleUrl: './principal.component.css'
 })
-export class ArriendosComponent {
+export class PrincipalComponent {
   @ViewChild('menu') menu!: ElementRef;
 
   swvisible() {
