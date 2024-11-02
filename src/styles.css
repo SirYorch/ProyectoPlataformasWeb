@@ -19,7 +19,7 @@
 }
 
 body{
-    margin-top: calc(13vh +  2px);
+    margin-top: calc(13vh +  3px);
 }
 
 *{
@@ -27,6 +27,49 @@ body{
     padding: 0;
     box-sizing: border-box;
 }
+
+
+/* test import */
+.hamburger {
+    cursor: pointer;
+    width:60px;
+  }
+  
+  .hamburger input {
+    display: none;
+  }
+  
+  .hamburger svg {
+    /* The size of the SVG defines the overall size */
+    height: 60px;
+    /* Define the transition for transforming the SVG */
+    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .line {
+    fill: none;
+    stroke: white;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+    /* Define the transition for transforming the Stroke */
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+                stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .line-top-bottom {
+    stroke-dasharray: 12 63;
+  }
+  
+  .hamburger input:checked + svg {
+    transform: rotate(-45deg);
+  }
+  
+  .hamburger input:checked + svg .line-top-bottom {
+    stroke-dasharray: 20 300;
+    stroke-dashoffset: -32.42;
+  }
+  
 
 nav{
     background-color: var(--blueD);
@@ -62,7 +105,7 @@ nav{
 .li{
     color: var(--white);
     text-decoration: none;
-    transform: font-size  .1s linear;
+    transition: font-size  .1s linear;
 }
 .li:hover{
     font-size: 46px;
@@ -155,7 +198,9 @@ footer div{
     height: 50px;
     align-self: center;
     color: var(--white);
+    display: flex;
     text-align: center;
+    justify-content: center;
 }
 .contenidos{
     height: calc(87vh);
@@ -221,11 +266,14 @@ footer div{
     height:75%;
     margin: auto;
 }
+.cp-input{
+    flex-direction: column;
+    
+    justify-content: center;
+}
 label{
     color: var(--blueD);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     text-align: center;
     margin-bottom: 7px;
 }
@@ -244,25 +292,155 @@ label input:focus{
     outline: none;
     border-bottom: 4px solid var(--Black);
 }
-.ca-button{
+
+.button{
+
     width:50vw;
     height:45px;
     font-size: 22px;
     background-color: var(--blueD);
     color: var(--white);
     border: none;
-    position: absolute;
     border-radius: 10px;
+    
+    transition: font-size .1s linear;
+}
+.cp{
+   
+    position: absolute;
+   
     bottom: 20px;
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    transition: font-size .1s linear;
 }
-.ca-button:hover{
+.button:hover{
     font-size: 23px;
 }
-.ca-button:active{
+.button:active{
     font-size: 25px;
+}
+
+
+section{
+    color: var(--blueD);
+    border:2px var(--blueL) solid;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height:60px;
+}
+
+section p {
+    display: inline-block;
+    margin-left: 10px;
+}
+section b{
+    display: inline-block;
+}
+.au{
+    position: absolute;
+    right: 10px;
+}
+.ae-input{
+    font-size: 25px;
+    height: 60px;
+    padding: 15px;
+    align-items: center;
+    
+}
+.input-p {
+    margin-left: 20px;
+}
+.ae-input input{
+    width:60px;
+    position: absolute;
+    right: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+}
+.ae-button{
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.motd{
+    flex-direction: column;
+    height: 150px;
+}
+textarea{
+    
+    margin-top: 15px;
+    width: 300px;
+    min-height: 100px;
+    background-color: var(--blueL);
+    border: none;
+    border-radius: 20px;
+    padding: 13px;
+    font-size: 19px;
+    color: var(--white);
+}
+textarea:focus{
+    outline: none;
+    box-shadow: 0 0 15px var(--blueD) inset;
+}
+
+.horario{
+    width: 100vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.horario section{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.horario section strong{
+    font-weight: normal;
+    font-size: 25px;
+}
+.dato{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 10px;
+}
+
+.ah-button{
+    background-color: var(--blueL);
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.ah-crear{
+    width:80%;
+    height: 50px;
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.ah-crear:hover{
+    font-size: 33px;
+}
+.ah-crear:active{
+    font-size: 37px;
+ }
+.no-border{
+    border: none;
+}
+
+.aa-button{
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.aa-section{   
+    justify-content: space-around;
 }
