@@ -413,7 +413,6 @@ textarea:focus{
 }
 
 .ah-button{
-    background-color: var(--blueL);
     margin: 10px;
     margin-left: auto;
     margin-right: auto;
