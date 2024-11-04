@@ -19,7 +19,9 @@
 }
 
 body{
-    margin-top: calc(13vh +  3px);
+    position: absolute;
+    top: calc(13vh +  3px);
+    
 }
 
 *{
@@ -120,7 +122,7 @@ img{
     margin: auto;
 }
 main{
-    height: 80vh;
+    height: auto;
     width:100vw;
     background-color: #E7ECEF;
     overflow: hidden;
@@ -137,7 +139,7 @@ main{
 article{
     position: relative;
     overflow: hidden;
-    height: 40vh;
+    height: 400px;
     width: 100vw;
     display: flex;
 }
@@ -442,4 +444,9 @@ textarea:focus{
 
 .aa-section{   
     justify-content: space-around;
+}
+
+
+@media screen {
+    
 }
