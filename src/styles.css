@@ -78,9 +78,9 @@ nav{
     width: 100vw;
     height:13vh;
     display: flex;
-    position: relative;
     position: fixed;
     top: 0;
+    left: 0;
 }
 .menu-button{
     height:8vh;
@@ -129,8 +129,8 @@ main{
 }
 .bg{
     position: absolute;
-    width:200%;
-    height: auto;
+    width: auto;
+    height: inherit;
     filter: blur(3px);
 }
 .bg1{
@@ -147,7 +147,7 @@ article{
     position: absolute;
     background-color: var(--blueL);
     width: 100%;
-    height: 100%;
+    height: inherit ;
     opacity: .7;
 }
 .capa1{
@@ -348,12 +348,21 @@ section b{
     position: absolute;
     right: 10px;
 }
+.extra{
+    display: none;
+}
 .ae-input{
     font-size: 25px;
     height: 60px;
     padding: 15px;
     align-items: center;
     
+}
+
+.ventana div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .input-p {
     margin-left: 20px;
@@ -446,7 +455,174 @@ textarea:focus{
     justify-content: space-around;
 }
 
-
-@media screen {
+@media only screen and (min-width: 1200px) {
+    main{
+        display: flex;
+        height: 900px;
+    }
+    article{
+        margin-top: 10vh;
+        display: flex;
+        height: inherit;
+    }
+    .capa{
+        display: flex;
+    }
+    article p{
+        top: 40vh;
+    }
+    article .menu-button{
+        bottom: 20vh;
+    }
     
+    nav{
+        display: none;
+        margin-top: 0;
+    }
+    li{
+        font-size: 35px;
+    }
+
+    .principal{
+        display: flex;
+    }
+    body{
+        top: 0;
+        padding: 0;
+        margin: 0;
+        margin-top: 0;
+    }
+    .ventana {
+        width: calc(100vw - 305px);
+        margin-left: 305px;
+        overflow: hidden;
+    }
+    .selector{
+        margin-top: 0;
+        min-width:250px;
+        max-width: 500px;
+        width: 400px;
+        margin-left: 320px;
+    }
+
+    .oculto{
+        position: fixed;
+        display: flex;
+        height: 100vh;
+        width:290px;
+        top:0;
+        left: 0;
+        border-top: 0;
+    }
+    footer{
+        display: flex;
+        flex-direction:row;
+        align-items: center;
+    }
+    .ventana div{
+        height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: calc(100vw - 305px );
+    }
+    .datos{
+        justify-content: center;
+        align-items: center;
+        width: 60%;
+    }
+
+    .datos input{
+        width:400px;
+    }
+
+    .cp{
+        bottom:330px;
+        width: 200px;
+        margin: 0;
+        left: 445px;
+    }
+
+    
+    .ventana{
+        display: flex;
+        flex-direction: row;
+        height: 90vh;
+        
+    }
+    .perfil{
+        padding-bottom: 170px;
+        align-items: center;
+    }
+    .ventana div{
+        height: 90%;
+    }
+
+    .vertical{
+        flex-direction: column;
+        overflow: visible;
+    }
+    .extra{
+        display: block;
+    }
+    .au{
+        width:200px;
+        right: 60px;
+    }
+    .espacio{
+        padding: 0 150px;
+    }
+    .ae-input input{
+        right: 200px;
+    }
+    .ae-button{
+        position: absolute;
+        top:-90px;
+        right: 100px;
+        width:350px;
+        height:50px;
+    }
+    .at{
+        
+        width: calc(100vw - 305px);
+        margin-left: 305px;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+    .at div{
+        display: flex;
+        justify-content: space-around;
+        width: 50%;
+
+    }
+    .motd p{
+        margin-bottom: 40px
+    }
+
+    .at div input{
+        right:600px;
+        width:100px;
+    }
+
+    .ventana .horario{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        height: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        align-items: center;
+    }
+    .ah{
+        display: flex;
+        width:60%;
+        margin: 0;
+        padding: 0;
+        height: auto;
+        align-items: center;
+    }
+    .ah-button{
+        width: 300px;
+    }
 }
