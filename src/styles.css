@@ -520,12 +520,11 @@ textarea:focus{
         align-items: center;
     }
     .ventana div{
-        height: 60vh;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        width: calc(100vw - 305px );
     }
+
     .datos{
         justify-content: center;
         align-items: center;
@@ -540,7 +539,7 @@ textarea:focus{
         bottom:330px;
         width: 200px;
         margin: 0;
-        left: 445px;
+        left: 530px;
     }
 
     
@@ -554,9 +553,7 @@ textarea:focus{
         padding-bottom: 170px;
         align-items: center;
     }
-    .ventana div{
-        height: 90%;
-    }
+
 
     .vertical{
         flex-direction: column;
@@ -569,8 +566,10 @@ textarea:focus{
         width:200px;
         right: 60px;
     }
-    .espacio{
+    .ventana .espacio{
         padding: 0 150px;
+        height: 100%;
+        display: flex;
     }
     .ae-input input{
         right: 200px;
@@ -594,6 +593,7 @@ textarea:focus{
         display: flex;
         justify-content: space-around;
         width: 50%;
+        height: 100%;
 
     }
     .motd p{
@@ -601,19 +601,21 @@ textarea:focus{
     }
 
     .at div input{
-        right:600px;
+        right:700px;
         width:100px;
     }
 
     .ventana .horario{
+        max-width: 90%;
+        height: fit-content;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        height: auto;
         margin-top: 20px;
         margin-bottom: 20px;
         align-items: center;
     }
+
     .ah{
         display: flex;
         width:60%;
