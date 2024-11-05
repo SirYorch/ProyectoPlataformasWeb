@@ -376,7 +376,7 @@ section b{
     text-align: center;
 }
 .ae-button{
-    margin-top: 30px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -574,6 +574,12 @@ textarea:focus{
     .ae-input input{
         right: 200px;
     }
+    .motd{
+        height: 350px;
+    }
+    textarea{
+        min-height: 300px;
+    }
     .ae-button{
         position: absolute;
         top:-90px;
@@ -606,7 +612,7 @@ textarea:focus{
     }
 
     .ventana .horario{
-        max-width: 90%;
+        width: 100%;
         height: fit-content;
         display: flex;
         flex-direction: row;
