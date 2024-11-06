@@ -9,6 +9,7 @@ import { EspacioComponent } from './component/admin/espacio/espacio.component';
 import { HorariosComponent } from './component/admin/horarios/horarios.component';
 import { UsuariosComponent } from './component/admin/usuarios/usuarios.component';
 import { PrincipalAComponent } from './component/admin/principal-a/principal-a.component';
+import { LoginComponent } from './component/login/login.component';
 
 export const routes: Routes = [
     {
@@ -46,5 +47,9 @@ export const routes: Routes = [
     {
         path:"admin/principal",
         component: PrincipalAComponent
+    },
+    {
+        path:"login",
+        component: LoginComponent
     },
 ];
