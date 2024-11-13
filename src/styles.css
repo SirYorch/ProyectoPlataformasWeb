@@ -190,15 +190,21 @@ body{
     height: 100vh;
     justify-content: center;
     align-items: center;
+    transform-style:preserve-3d;
+    transition: transform .1s linear;
 }
 
 .login-container , .register-container{
     position: absolute;
-    backface-visibility: hidden;
+    backface-visibility: visible;
 }
 
 .register-container{
     transform: rotateY(180deg);
+    backface-visibility: hidden;
+}
+.login-container{
+    transform: rotateY(0deg);
 }
 
 .rotated{
