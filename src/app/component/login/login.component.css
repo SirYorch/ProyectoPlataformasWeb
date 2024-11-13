@@ -17,7 +17,7 @@
   
   /* Formularios */
   .form-container {
-    position: absolute;
+    position: -2;
     width: 100%;
     backface-visibility: hidden;
     top: 0;
@@ -55,3 +55,4 @@
     font-size: 50px;
     text-decoration: none;
   }
+  
