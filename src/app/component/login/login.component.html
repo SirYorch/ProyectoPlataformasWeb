@@ -7,7 +7,7 @@
         <input required class="input" type="email" placeholder="Correo Electrónico">
         <input required class="input" type="password" placeholder="Contraseña">
         <span class="forgot-password"><a href="#">¿Olvidaste tu contraseña?</a></span>
-        <span class="forgot-password"><a (click)="toggleView()">¿Eres nuevo? Regístrate</a></span>
+        <span class="forgot-password register"><a (click)="toggleView()">¿Eres nuevo? Regístrate</a></span>
         <input class="login-button" type="submit" value="Iniciar Sesión">
       </div>
 
@@ -22,21 +22,24 @@
           </button>
         </div>
       </div>
+
+
+      <div class="register-container">
+        <div class="heading">Regístrate</div>
+        <div class="form">
+          <label class="cp-input">Nombre: <input required class="input" type="text"></label>
+          <label class="cp-input">Teléfono: <input required class="input" type="text"></label>
+          <label class="cp-input">Dirección: <input required class="input" type="text"></label>
+          <label class="cp-input">Cédula: <input required class="input" type="text"></label>
+          <label class="cp-input">Placas de vehículo: <input required class="input" type="text"></label>
+          <label class="cp-input">Contraseña: <input required class="input" type="password"></label>
+          <label class="cp-input">Confirmar Contraseña: <input required class="input" type="password"></label>
+          <span class="forgot-password"><a href="#" (click)="toggleView()">¿Ya tienes una cuenta? Inicia Sesión</a></span>
+          <input class="login-button" type="submit" value="Registrarse">
+        </div>
+
     </div>
-<!--
-    <div class="register-container">
-      <div class="heading">Regístrate</div>
-      <div class="form">
-        <label class="cp-input">Nombre: <input required class="input" type="text"></label>
-        <label class="cp-input">Teléfono: <input required class="input" type="text"></label>
-        <label class="cp-input">Dirección: <input required class="input" type="text"></label>
-        <label class="cp-input">Cédula: <input required class="input" type="text"></label>
-        <label class="cp-input">Placas de vehículo: <input required class="input" type="text"></label>
-        <label class="cp-input">Contraseña: <input required class="input" type="password"></label>
-        <label class="cp-input">Confirmar Contraseña: <input required class="input" type="password"></label>
-        <span class="forgot-password"><a href="#" (click)="toggleView()">¿Ya tienes una cuenta? Inicia Sesión</a></span>
-        <input class="login-button" type="submit" value="Registrarse">
-      </div>
-    -->
+   
+    </div>
 
 </div>

@@ -191,6 +191,23 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+.login-container , .register-container{
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.register-container{
+    transform: rotateY(180deg);
+}
+
+.rotated{
+    transform: rotateY(180deg);
+}
+.register{
+    cursor: pointer;
+}
+
 /* test import */
 .hamburger {
     cursor: pointer;
