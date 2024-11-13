@@ -777,10 +777,10 @@ textarea:focus{
     }
 
     .cp{
-        bottom:330px;
+        top:60vh;
         width: 200px;
         margin: 0;
-        left: 530px;
+        left: 30vw;
     }
 
     
