@@ -8,6 +8,7 @@ import { HorariosComponent } from './components/admin/horarios/horarios.componen
 import { UsuariosComponent } from './components/admin/usuarios/usuarios.component';
 import { MainAComponent } from './components/admin/main-a/main-a.component';
 import { LoginComponent } from './components/extras/login/login.component';
+import { MainCComponent } from './components/cliente/main-c/main-c.component';
 
 export const routes: Routes = [
     {
@@ -20,7 +21,7 @@ export const routes: Routes = [
     },
     {
         path:"cliente/principal",
-        component: MainComponent
+        component: MainCComponent
     },
     {
         path:"admin/tarifas",
