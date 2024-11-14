@@ -1,20 +1,18 @@
-import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { InicioComponent } from './component/inicio/inicio.component';
-import { TarifasComponent } from './component/admin/tarifas/tarifas.component';
-import { PerfilComponent } from './component/cliente/perfil/perfil.component';
-import { PrincipalComponent } from './component/cliente/principal/principal.component';
-import { ArriendosComponent } from './component/admin/arriendos/arriendos.component';
-import { EspacioComponent } from './component/admin/espacio/espacio.component';
-import { HorariosComponent } from './component/admin/horarios/horarios.component';
-import { UsuariosComponent } from './component/admin/usuarios/usuarios.component';
-import { PrincipalAComponent } from './component/admin/principal-a/principal-a.component';
-import { LoginComponent } from './component/login/login.component';
+import { MainComponent } from './components/extras/main/main.component';
+import { PerfilComponent } from './components/cliente/perfil/perfil.component';
+import { TarifasComponent } from './components/admin/tarifas/tarifas.component';
+import { ArriendosComponent } from './components/admin/arriendos/arriendos.component';
+import { EspacioComponent } from './components/admin/espacio/espacio.component';
+import { HorariosComponent } from './components/admin/horarios/horarios.component';
+import { UsuariosComponent } from './components/admin/usuarios/usuarios.component';
+import { MainAComponent } from './components/admin/main-a/main-a.component';
+import { LoginComponent } from './components/extras/login/login.component';
 
 export const routes: Routes = [
     {
         path:"",
-        component: InicioComponent
+        component: MainComponent
     },
     {
         path:"cliente/perfil",
@@ -22,7 +20,7 @@ export const routes: Routes = [
     },
     {
         path:"cliente/principal",
-        component: PrincipalComponent
+        component: MainComponent
     },
     {
         path:"admin/tarifas",
@@ -46,7 +44,7 @@ export const routes: Routes = [
     },
     {
         path:"admin/principal",
-        component: PrincipalAComponent
+        component: MainAComponent
     },
     {
         path:"login",
