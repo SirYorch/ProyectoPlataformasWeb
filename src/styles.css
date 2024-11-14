@@ -28,6 +28,7 @@ body{
     box-sizing: border-box;
 }
 
+
     /* login  */
     .exit a{
         position: absolute;
@@ -60,6 +61,8 @@ body{
         border: none;
         border-bottom: 5px solid var(--blueD);
         margin:10px 0 10px 0;
+        color:var(--blueD);
+        transition: border .2s linear;
       }
       
       .form .input::-moz-placeholder {
@@ -72,7 +75,7 @@ body{
       
       .form .input:focus {
         outline: none;
-        border-inline: 2px solid var(--blueL);
+        border-bottom: 5px solid var(--Black);
       }
       
       .form .forgot-password {
@@ -168,8 +171,10 @@ body{
     .register-container{
         background-color: var(--white);
         padding: 20px;
-
+        box-shadow: 5px 5px 10px 3px var(--blueL);
     }
+    
+
 
     .login-form{
         max-width: 350px;
@@ -178,6 +183,10 @@ body{
         justify-content: center;
         align-items: center;
         padding: 20px;
+        background-color: var(--white);
+        padding: 20px;
+        box-shadow: 5px 5px 10px 3px var(--blueL);
+        backface-visibility: hidden;
     }
     .form .input{
         margin-left: 25px;
