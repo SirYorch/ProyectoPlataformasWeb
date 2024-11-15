@@ -28,15 +28,15 @@
     <div class="register-container">
       <div class="heading">Regístrate</div>
       <div class="form">
-        <label class="cp-input">Nombre: <input required class="input" type="text"></label>
-        <label class="cp-input">Teléfono: <input required class="input" type="text"></label>
-        <label class="cp-input">Dirección: <input required class="input" type="text"></label>
-        <label class="cp-input">Cédula: <input required class="input" type="text"></label>
-        <label class="cp-input">Placas de vehículo: <input required class="input" type="text"></label>
-        <label class="cp-input">Contraseña: <input required class="input" type="password"></label>
-        <label class="cp-input">Confirmar Contraseña: <input required class="input" type="password"></label>
+        <label class="cp-input">Nombre: <input required class="input" type="text" [(ngModel)]="nombre" ></label>
+        <label class="cp-input">Teléfono: <input required class="input" type="text" [(ngModel)]="telefono"></label>
+        <label class="cp-input">Dirección: <input required class="input" type="text" [(ngModel)]="direccion"></label>
+        <label class="cp-input">Cédula: <input required class="input" type="text" [(ngModel)]="cedula"></label>
+        <label class="cp-input">Placas de vehículo: <input required class="input" type="text" [(ngModel)]="placa"></label>
+        <label class="cp-input">Contraseña: <input required class="input" type="password" [(ngModel)]="pass"></label>
+        <label class="cp-input">Confirmar Contraseña: <input required class="input" type="password" [(ngModel)]="confPass"></label>
         <span class="forgot-password register"><a (click)="toggleView()">¿Ya tienes una cuenta? Inicia Sesión</a></span>
-        <input class="login-button" type="submit" value="Registrarse">
+        <input class="login-button" type="submit" value="Registrarse" (click)="register()">
       </div>
 
     </div>
