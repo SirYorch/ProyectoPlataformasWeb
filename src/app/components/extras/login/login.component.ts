@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { GoogleAuthService} from '../../../services/google-auth.service';
 import {  User } from '@angular/fire/auth';
 import {FormsModule} from '@angular/forms'
+import { ReadService } from '../../../services/read.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent {
 
   private currentUser: User | null = null;
 
-  constructor(private googleAuthService: GoogleAuthService) {}
+  constructor(private googleAuthService: GoogleAuthService , private read: ReadService) {}
 
   toggleView(): void {
     this.isRegisterView = !this.isRegisterView;
@@ -44,6 +45,7 @@ export class LoginComponent {
         const userExists = await this.googleAuthService.checkUserExists(user.uid);
         
         if (userExists) {
+          
           this.googleAuthService.router.navigate(['/cliente/principal']);
         } else {
           this.isRegisterView = true;
@@ -65,6 +67,7 @@ export class LoginComponent {
       this.placa = this.placa.trim();
       this.pass = this.pass.trim();
       this.confPass = this.confPass.trim();
+
 
           
       if (this.nombre.length < 5) {
