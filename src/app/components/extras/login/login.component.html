@@ -3,12 +3,15 @@
     <!-- Ventana de Inicio de Sesión -->
     <div class="login-form form-container front">
       <div class="heading">Inicia Sesión</div>
-      <div class="form">
+      <div class="form"><!--
         <input required class="input" type="email" placeholder="Correo Electrónico">
         <input required class="input" type="password" placeholder="Contraseña">
         <span class="forgot-password"><a href="#">¿Olvidaste tu contraseña?</a></span>
-        <span class="forgot-password register"><a (click)="toggleView()">¿Eres nuevo? Regístrate</a></span>
-        <input class="login-button" type="submit" value="Iniciar Sesión">
+        <span class="forgot-password "><a (click)="toggleView()">¿Eres nuevo? Regístrate</a></span>
+        <input class="login-button" type="submit" value="Iniciar Sesión">-->
+        <div class="info">
+          Por el momento solo manejamos el inicio de sesión con una cuenta de google
+        </div>
       </div>
 
       <!-- Opción de inicio de sesión con Google -->
@@ -33,8 +36,6 @@
         <label class="cp-input">Dirección: <input required class="input" type="text" [(ngModel)]="direccion"></label>
         <label class="cp-input">Cédula: <input required class="input" type="text" [(ngModel)]="cedula"></label>
         <label class="cp-input">Placas de vehículo: <input required class="input" type="text" [(ngModel)]="placa"></label>
-        <label class="cp-input">Contraseña: <input required class="input" type="password" [(ngModel)]="pass"></label>
-        <label class="cp-input">Confirmar Contraseña: <input required class="input" type="password" [(ngModel)]="confPass"></label>
         <span class="forgot-password register"><a (click)="toggleView()">¿Ya tienes una cuenta? Inicia Sesión</a></span>
         <input class="login-button" type="submit" value="Registrarse" (click)="register()">
       </div>

@@ -1,24 +1,26 @@
 
-
 <!--Contenido-->
 
 <div class="selector">
-    <strong>Gestión espacio</strong>
-</div>
-<div class="ventana vertical">
-    <div class="espacio">
-        <label class="ae-input"><p>Plazas totales</p> <input  type="text"></label>
-        <label class="ae-input"><p>Plazas disponibles</p> <input  type="text"></label>
-        <label class="ae-input"><p>Plazas ocupadas</p> <input  type="text"></label>
-        <label class="ae-input"><p>Plazas reservadas</p> <input  type="text"></label>
-        <label class="ae-input"><p>Clientes en dia</p> <input  type="text"></label>
+    <strong>Perfil</strong>
+  </div>
+  <div class="ventana perfil">
+    <div class="imagen"><img src="profile.png"></div>
+    <div class="datos">
+        <label class="cp-input">Nombre: <input [(ngModel)]="nombre" ></label>
+        <label class="cp-input">Telefono: <input [(ngModel)]="telefono"></label>
+        <label class="cp-input">Dirección: <input [(ngModel)]="direccion"></label>
+        <label class="cp-input">Cédula: <input [(ngModel)]="cedula"></label>
+        <label class="cp-input">Placas de vehiculo: <input [(ngModel)]="placas"></label>
+        
     </div>
-    <button class="ae-button button bajo">Editar</button>
-</div>
-<!--Menu-->
-
-<!--Menu-->
-<nav>
+    
+  <button class="cp button ae-button " (click)="guardarInfo()">Editar</button>
+  
+  </div>
+  
+  <!--Menu-->
+  <nav>
     <div class="menu">
         <label class="hamburger">
             <input type="checkbox" (click)="swvisible()">
@@ -29,8 +31,11 @@
           </label>
     </div>
     
-</nav>
-<div class="contenidos oculto" #menu>
+  </nav>
+  
+  
+  
+  <div class="contenidos oculto" #menu>
     <ul>
         <li><a class="li" href="">Inicio</a></li>
         <li><a class="li" href="admin/principal">Menu principal</a></li>

@@ -9,6 +9,8 @@ import { UsuariosComponent } from './components/admin/usuarios/usuarios.componen
 import { MainAComponent } from './components/admin/main-a/main-a.component';
 import { LoginComponent } from './components/extras/login/login.component';
 import { MainCComponent } from './components/cliente/main-c/main-c.component';
+import { PerfilCComponent } from './components/admin/perfil-c/perfil-c.component';
+import { PerfilAComponent } from './components/admin/perfil-a/perfil-a.component';
 
 export const routes: Routes = [
     {
@@ -18,6 +20,14 @@ export const routes: Routes = [
     {
         path:"cliente/perfil",
         component: PerfilComponent
+    },
+    {
+        path:"admin/perfilCliente",
+        component: PerfilCComponent
+    },
+    {
+        path:"admin/perfil",
+        component: PerfilAComponent
     },
     {
         path:"cliente/principal",

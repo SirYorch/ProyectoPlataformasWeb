@@ -1,32 +1,59 @@
 
 
 <!--Contenidos-->
-
 <div class="selector">
-    <strong>Gestión Tarifas</strong>
+    <strong>Menu principal</strong>
 </div>
-<div class="ventana vertical at">
-    <div>
-        <label class="ae-input motd"><p>Mensaje del Día</p> <textarea name="" id=""></textarea></label>
-    </div>
-    <div>
-        <label class="ae-input"><p class="input-p">Plazas totales</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Plazas disponibles</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Plazas ocupadas</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Plazas reservadas</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Clientes en dia</p> <input  type="text"></label>
-        <button class="ae-button button bajo">Editar</button>
+<div class="ventana mprincipal">
+  <article class="datos-bienvenida">
+    <article class="bienvenida ">
+      <p>Bienvenido {{nombre}} el estado actual del parqueadero es {{estado}}</p>
+    </article>
+    <article class="bienvenida ">
+      <p>{{motd}}</p>
+    </article>
+    <article class="bienvenida ">
+      <p>Plazas disponibles ahora: {{plazas}}</p>
+    </article>
+  </article>
+  <div class="tc">
+      <div class="tarifas">
+          <h2>Tarifas</h2>
+        <label>
+            <p>Uso mínimo</p>
+            <s>${{val1}}</s>
+          </label><br>
+          <label>
+            <p>1-1:30 horas</p>
+            <s>${{val2}}</s>
+          </label><br>
+          <label>
+            <p>1:30-2 horas</p>
+            <s>${{val3}}</s>
+          </label><br>
+          <label>
+            <p>2-2:30 horas</p>
+            <s>${{val4}}</s>
+          </label><br>
+          <label>
+            <p>2:30-3 horas</p>
+            <s>${{val5}}</s>
+          </label><br>
+          <label>
+            <p>3-3:30 horas</p>
+            <s>${{val6}}</s>
+          </label><br>
+          <label>
+            <p>3:30-4 horas</p>
+            <s>${{val7}}</s>
+          </label><br>
+          <label>
+            <p>4 horas en adelante</p>
+            <s>${{val8}}</s>
+          </label>
+        </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 <!--Menu-->
 <nav>
@@ -50,6 +77,8 @@
         <li><a class="li" href="admin/tarifas">Gestion Tarifas</a></li>
         <li><a class="li" href="admin/horarios">Horarios de Atencion</a></li>
         <li><a class="li" href="admin/arriendos">Arriendos</a></li>
+        <li><a class="li" href="admin/perfil">Perfil</a></li>
+        <li><a class="li" (click)="logout()">Log Out</a></li>
     </ul>
 </div>
 

@@ -7,15 +7,15 @@
 <div class="ventana perfil">
   <div class="imagen"><img src="profile.png"></div>
   <div class="datos">
-      <label class="cp-input">Nombre: <input></label>
-      <label class="cp-input">Telefono: <input></label>
-      <label class="cp-input">Dirección: <input></label>
-      <label class="cp-input">Cédula: <input></label>
-      <label class="cp-input">Placas de vehiculo: <input></label>
+      <label class="cp-input">Nombre: <input [(ngModel)]="nombre" ></label>
+      <label class="cp-input">Telefono: <input [(ngModel)]="telefono"></label>
+      <label class="cp-input">Dirección: <input [(ngModel)]="direccion"></label>
+      <label class="cp-input">Cédula: <input [(ngModel)]="cedula"></label>
+      <label class="cp-input">Placas de vehiculo: <input [(ngModel)]="placas"></label>
       
   </div>
   
-<button class="cp button ae-button ">Editar</button>
+<button class="cp button ae-button " (click)="guardarInfo()">Editar</button>
 
 </div>
 
@@ -40,5 +40,6 @@
       <li><a href="" class="li">Inicio</a></li>
       <li><a href="cliente/principal" class="li">Menu principal</a></li>
       <li><a href="cliente/perfil" class="li">Perfil</a></li>
+      <li><a href="" class="li" (click)="logout()">Log Out</a></li>
   </ul>
 </div>

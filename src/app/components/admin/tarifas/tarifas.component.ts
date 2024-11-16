@@ -15,4 +15,7 @@ export class TarifasComponent {
     this.menu.nativeElement.classList.toggle("oculto");
     console.log("ocultado");
   }
+  logout(){
+    
+  }
 }

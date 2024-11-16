@@ -203,6 +203,18 @@ body{
     transition: transform .1s linear;
 }
 
+.info{
+    color: var(--blueD);
+    max-width: 250px;
+    text-align: center;
+
+}
+.bienvenida p{
+    position: initial;
+    color: var(--blueD);
+    font-size: 25px;
+
+}
 .login-container , .register-container{
     position: absolute;
     backface-visibility: visible;
@@ -267,11 +279,20 @@ body{
 
 
 .bienvenida{
-    width: 80%;
+    
+    position: initial;
+    width: 75%;
     text-align: center;
     margin: 10px auto;
     color: var(--blueD);
-    margin-bottom:30px
+    margin-bottom: 20px;
+    max-width: fit-content;
+    height: fit-content;
+}
+.datos-bienvenida{
+    display: block;
+    height: fit-content;
+    overflow: visible;
 }
 
 .tarifas{
@@ -309,6 +330,8 @@ nav{
     position: fixed;
     top: 0;
     left: 0;
+    
+    z-index:100;
 }
 .menu-button{
     height:8vh;
@@ -337,7 +360,7 @@ nav{
     text-decoration: none;
     transition: font-size  .1s linear;
 }
-.li:hover{
+.li:hover,.contenidos ul li:hover{
     font-size: 46px;
 }
 .li:active{
@@ -361,30 +384,38 @@ main{
     width: auto;
     height: inherit;
     filter: blur(3px);
+    z-index:1;
+    left:0;
 }
 .bg1{
+    left: auto;
     right: 0;
 }
 article{
     position: relative;
     overflow: hidden;
-    height: 400px;
     width: 100vw;
+    max-height: 500px;
+    height: auto;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 .capa{
     position: absolute;
     background-color: var(--blueL);
     width: 100%;
-    height: inherit ;
+    height: 100% ;
     opacity: .7;
+    z-index: 2;
 }
 .capa1{
     background-color: var(--white);
 }
 article a, article p{
-    position: absolute;
-    flex-wrap: wrap;
+    margin: 0;
+    z-index: 3;
 }
 .texto1{
     color: var(--blueD);
@@ -396,10 +427,9 @@ article p{
     font-size: 30px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
     text-align: center;
-    left: 0;
-    right: 0;
-    top:70px
 }
 article a{
     bottom: 40px;
@@ -411,8 +441,9 @@ article a{
 
 footer{
     background-color: var(--blueD);
-    height:10vh;
+    height:auto;
     text-align: center;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -420,6 +451,7 @@ footer{
 footer div{
     font-size: 20px;
     color: var(--white);
+    margin: 0 0 10px 0;
 }
 
 
@@ -443,6 +475,7 @@ footer div{
     color: var(--white);
     font-size: 35px;
     border-top: 2px solid var(--white);
+    z-index: 99;
 }
 .contenidos ul{
     width: 100%;
@@ -481,6 +514,10 @@ footer div{
     font-size: 35px;
     text-align: center;
 
+}
+
+.inic{
+    margin-bottom: 50px;
 }
 .ventana .imagen{
     width:200px;
@@ -701,14 +738,20 @@ textarea:focus{
     article{
         margin-top: 10vh;
         display: flex;
-        height: inherit;
+        height:100%;
+        max-height: 805px;
         max-width: 100%;
+    }
+    .inic{
+        margin-top: auto;
+        margin-bottom: auto;
     }
     .capa{
         display: flex;
     }
     article p{
-        top: 40vh;
+        margin-top: auto;
+        margin-bottom: auto;
     }
     article .menu-button{
         bottom: 20vh;
@@ -739,7 +782,8 @@ textarea:focus{
     .ventana {
         width: calc(100vw - 305px);
         margin-left: 305px;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
     .logg{
         width: 100vw;
@@ -781,6 +825,10 @@ textarea:focus{
         justify-content: center;
         align-items: center;
         width: 60%;
+    }
+    .bienvenida {
+        min-height: 0;
+        max-height: none;
     }
 
     .datos input{
@@ -895,12 +943,26 @@ textarea:focus{
     }
     .mprincipal{
         flex-direction: column;
-        overflow: scroll;
     }
     
-    .bienvenida{
-        width: 100%;
-        margin: 70px 0 150px 0;
+    .datos-bienvenida .bienvenida {
+        margin: 40px 50px 80px 50px;
+        flex: 1 1 0; 
+        max-width: 50%;
+        min-width: 50px;
+        text-align: center;
+        height: auto;
+    }
+   
+    .datos-bienvenida{
+        align-items: stretch;
+        display: flex;
+        flex-direction: row;
+        height: fit-content;
+        overflow: visible;
+        justify-content: space-around;
+        align-items: center;
+        height: fit-content;
     }
 
     .ventana .tc{
