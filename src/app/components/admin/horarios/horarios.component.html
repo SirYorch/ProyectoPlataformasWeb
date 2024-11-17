@@ -20,84 +20,84 @@
     </div>
     <div class="horario" *ngFor="let horario of horarios">
         <section class="ah">
-            <div class="exit"><a (click)="eliminar()">X</a></div>
-            <Strong>Especial</Strong>
+            <div class="exit"><a (click)="eliminar(horario)">X</a></div>
+            <Strong>{{horario.nombre}}</Strong>
             <div class="dato">
-                <p>31/10/2024</p>
-                <P>8:00AM - 1:00PM</P>
+                <p>{{horario.fechaInicio}} - {{horario.fechaFin}} </p>
+                <P>{{horario.inicio}} - {{horario.fin}}</P>
             </div>
         </section>
-        <button class="ah-button button" (click)="desplegarEditar()">Editar</button>
+        <button class="ah-button button" (click)="desplegarEditar(horario)">Editar</button>
     </div>
     <button class="ah-crear button ae-button bajo " (click)="desplegarCrear()">Crear</button>
 </div>
 
-<div class="crearArriendos" #crear>
+<div class="crearArriendos crearArriend" #crear>
     <div class="exit"><a (click)="desplegarCrear()">X</a></div>
     <div class="selector"> <strong>Crear</strong> </div>
     <div>
-        <label>
-          Nombre:
-          <input type="text">
-        </label><br><br>
-      
-        <label>
-          Fecha de apertura:
-          <input type="date">
-        </label><br><br>
-      
-        <label>
-          Hora de apertura:
-          <input type="time">
-        </label><br><br>
-      
-        <label>
-          Fecha de cierre:
-          <input type="date">
-        </label><br><br>
-      
-        <label>
-          Hora de cierre:
-          <input type="time">
-        </label><br><br>
+      <label>
+        Nombre:
+        <input type="text" [(ngModel)]="nombreHorario">
+      </label><br><br>
+    
+      <label>
+        Fecha de apertura:
+        <input type="date" [(ngModel)]="fechaApertura">
+      </label><br><br>
+    
+      <label>
+        Hora de apertura:
+        <input type="time" [(ngModel)]="horaApertura">
+      </label><br><br>
+    
+      <label>
+        Fecha de cierre:
+        <input type="date" [(ngModel)]="fechaCierre">
+      </label><br><br>
+    
+      <label>
+        Hora de cierre:
+        <input type="time" [(ngModel)]="horaCierre">
+      </label><br><br>
       </div>
-      <button (click)="guardarGeneral()" class="ah-button button">Crear</button>
+      <button (click)="crearHorario()" class="ah-button button">Crear</button>
 </div>
 
 <div class="crearArriendos" #editar>
-    <div class="exit"><a (click)="desplegarEditar()">X</a></div>
+    <div class="exit"><a (click)="desplegarEditar(null)">X</a></div>
     <div class="selector"> <strong>Editar</strong> </div>
     <div>
         <label>
           Nombre:
-          <input type="text">
+          <input type="text" [(ngModel)]="nombreHorario">
         </label><br><br>
       
         <label>
           Fecha de apertura:
-          <input type="date">
+          <input type="date" [(ngModel)]="fechaApertura">
         </label><br><br>
       
         <label>
           Hora de apertura:
-          <input type="time">
+          <input type="time" [(ngModel)]="horaApertura">
         </label><br><br>
       
         <label>
           Fecha de cierre:
-          <input type="date">
+          <input type="date" [(ngModel)]="fechaCierre">
         </label><br><br>
       
         <label>
           Hora de cierre:
-          <input type="time">
+          <input type="time" [(ngModel)]="horaCierre">
         </label><br><br>
     </div>
-    <button (click)="guardarGeneral()" class="ah-button button">Guardar</button>
+    <button (click)="guardarEditar()" class="ah-button button">Guardar</button>
       
 </div>
 
-<div class="crearArriendos" #editarGeneral>
+<div class="crearArriendos general" #editarGeneral>
   <div class="exit">
     <a (click)="desplegarEditarGeneral()">X</a>
   </div>
@@ -132,8 +132,9 @@
         <input type="time" name="cierreSabadoDomingo" [(ngModel)]="horaFings">
       </label>
     </fieldset>
-    <button (click)="guardarGeneral()" class="ah-button button">Guardar General</button>
+    
   </div>
+  <button (click)="guardarGeneral()" class="ah-button button">Guardar General</button>
 </div>
 <!--Menu-->
 <nav>

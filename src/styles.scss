@@ -371,11 +371,14 @@ nav{
     
     font-size: 50px;
 }
+.general .selector strong{
+    font-size: 27px;
+}
 .crearArriendos{
     padding: 20px;
     width: 300px;
     position: absolute;
-    top: -600px;;
+    top: -100vh;;
     left: 50%;
     transform: translateX(-50%);
     border: 2px var(--blueL) solid;
@@ -1022,6 +1025,11 @@ textarea:focus{
         margin-bottom: 10px;
         width: calc(100% + 40px);
         margin-top: -20px;
+    }
+    .crearArriendos .button{
+        
+        margin-bottom: 10px;
+        width: calc(100% );
     }
 
     .ventana .tc{

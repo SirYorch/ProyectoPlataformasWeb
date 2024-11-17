@@ -140,16 +140,84 @@ export class HorariosComponent {
     this.crear.nativeElement.classList.toggle("desplegarCrear");
   }
 
-  desplegarEditar() {
+  desplegarEditar(horario:any) {
     this.editar.nativeElement.classList.toggle("desplegarCrear");
+    this.cambiarDatos(horario);
   }
 
   desplegarEditarGeneral() {
     this.editarGeneral.nativeElement.classList.toggle("desplegarCrear");
   }
 
-  eliminar() {
-    console.log("Método eliminar llamado");
-    // Implementación futura para eliminar
+  eliminar(horario:any) {
+    console.log(this.horarios);
+    this.horarios = this.horarios.filter((horarioE:any)=> horarioE !== horario);
+    console.log(this.horarios);
+    this.googleuser.saveHorarios(this.horarios);
   }
+
+  nombreHorario= "";
+  fechaApertura= "";
+  fechaCierre="";
+  horaApertura:any="";
+  horaCierre:any="";
+  cambiarDatos(horario: any) {
+    if(horario != null){
+      this.horarioe =horario;
+      console.log(horario);
+      this.nombreHorario = horario.nombre;
+      this.fechaApertura = horario.fechaInicio;
+      this.fechaCierre = horario.fechaFin;
+      this.horaApertura = this.convertirHora(horario.inicio);
+      this.horaCierre = this.convertirHora(horario.fin);
+    }
+}
+
+convertirHora(horaString: string): string {
+  const [tiempo, periodo] = horaString.split(' ');
+  const [horas, minutos] = tiempo.split(':');
+  let horasNum = parseInt(horas);
+  
+  // Ajustar para PM
+  if (periodo === 'PM' && horasNum !== 12) {
+      horasNum += 12;
+  }
+  // Ajustar para AM
+  if (periodo === 'AM' && horasNum === 12) {
+      horasNum = 0;
+  }
+  
+  // Retornar en formato HH:mm para input type="time"
+  return `${horasNum.toString().padStart(2, '0')}:${minutos}`;
+}
+horarioe:any ;
+
+guardarEditar(){
+  this.horarioe.nombre = this.nombreHorario
+  this.horarioe.fechaInicio = this.fechaApertura
+  this.horarioe.fechaFin = this.fechaCierre
+  this.horarioe.inicio = this.horaApertura
+  this.horarioe.fin = this.horaCierre;
+  this.googleuser.saveHorarios(this.horarios);
+  this.desplegarEditar(null);
+  this.horarioe = null;
+  this.nombreHorario= "";
+  this.fechaApertura= "";
+  this.fechaCierre= "";
+  this.horaApertura= "";
+  this.horaCierre = "";
+}
+
+crearHorario(){
+  const horario  = {
+    fechaFin: this.fechaCierre,
+    fechaInicio: this.fechaApertura,
+    fin: this.horaCierre,
+    inicio: this.horaApertura,
+    nombre: this.nombreHorario,
+  }
+  this.horarios.push(horario)
+  this.googleuser.saveHorarios(this.horarios);
+}
+
 }

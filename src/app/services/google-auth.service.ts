@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider, User, signOut } from '@angular/fire/auth';
-import { Firestore, collection, doc, getDoc ,getDocs,setDoc} from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDoc ,getDocs,setDoc, writeBatch} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
@@ -235,7 +235,74 @@ export class GoogleAuthService {
       return null;
     }
   }
-  async getHorarios(): Promise<any[]> {
+
+  async saveHorarios(horarios: { fechaInicio: string; fechaFin: string; nombre: string; inicio: string; fin: string }[]): Promise<void> {
+    try {
+      // Referencia a la colección
+      const collectionRef = collection(this.firestore, 'horarios');
+  
+      // Eliminar todos los documentos existentes en la colección
+      const querySnapshot = await getDocs(collectionRef);
+      const batch = writeBatch(this.firestore);
+  
+      querySnapshot.forEach(doc => {
+        batch.delete(doc.ref); // Agregar la eliminación del documento al batch
+      });
+  
+      await batch.commit(); // Ejecutar las eliminaciones en un solo paso
+      console.log("Documentos existentes eliminados.");
+  
+      // Guardar los nuevos horarios en la colección
+      for (const horario of horarios) {
+        // Convertir las fechas y horas al formato requerido por Firestore (timestamp o ISO strings)
+        const fechaInicioTimestamp = this.convertToTimestamp(horario.fechaInicio, horario.inicio);
+        const fechaFinTimestamp = this.convertToTimestamp(horario.fechaFin, horario.fin);
+  
+        // Crear el objeto de datos para Firestore
+        const horarioData = {
+          fechaInicio: fechaInicioTimestamp,
+          fechaFin: fechaFinTimestamp,
+          nombre: horario.nombre
+        };
+  
+        // Agregar el documento a la colección
+        await addDoc(collectionRef, horarioData);
+      }
+  
+      console.log("Nuevos horarios guardados exitosamente.");
+    } catch (error) {
+      console.error("Error al guardar los horarios:", error);
+      throw error; // Propagar el error para manejarlo en la llamada del método
+    }
+  }
+  
+
+
+// Método auxiliar para convertir fecha y hora a un objeto Date o timestamp para Firestore
+private convertToTimestamp(fecha: string, hora: string): Date | null {
+  if (!fecha || !hora) {
+    return null; // Devuelve null si los valores no son válidos
+  }
+
+  try {
+    // Combina la fecha y la hora en un único string ISO
+    const [time, ampm] = hora.split(' '); // Divide la hora en "HH:MM" y "AM/PM"
+    const [hours, minutes] = time.split(':').map(Number); // Extrae las horas y minutos como números
+
+    // Ajusta la hora según AM/PM
+    const adjustedHours = ampm === 'PM' && hours !== 12 ? hours + 12 : ampm === 'AM' && hours === 12 ? 0 : hours;
+
+    // Crear un objeto Date
+    const dateTime = new Date(`${fecha}T${adjustedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`);
+
+    return dateTime;
+  } catch (error) {
+    console.error("Error al convertir fecha y hora:", error);
+    return null; // Devuelve null si ocurre un error
+  }
+}
+
+  async getHorarios(): Promise<{ fechaInicio: string; fechaFin: string; nombre: string; inicio: string, fin: string }[]> {
     try {
       // Referencia a la colección
       const collectionRef = collection(this.firestore, 'horarios');
@@ -243,38 +310,48 @@ export class GoogleAuthService {
       // Obtener todos los documentos de la colección
       const querySnapshot = await getDocs(collectionRef);
   
-      // Obtener datos generales
-      const generalData = await this.getGeneral();
-  
-      // Validar que los datos generales existen
-      if (!generalData) {
-        console.warn("No se pudieron obtener los datos generales.");
-        return [];
-      }
-  
-      // Mapear y modificar los documentos
-      const documents: any[] = querySnapshot.docs.map(doc => {
+      // Mapear los documentos y extraer solo los datos necesarios
+      const documents = querySnapshot.docs.map(doc => {
         const data = doc.data();
   
-        // Formatear fechaInicio y fechaFin
-        const fechaInicio = this.formatTimeWithAmPm(this.extractDateTime(data['fechaInicio']));
-        const fechaFin = this.formatTimeWithAmPm(this.extractDateTime(data['fechaFin']));
+        // Procesar los campos
+        const fechaInicio = this.formatTimestamp(data['fechaInicio']); // Convertir a timestamp si existe
+        const fechaFin = this.formatTimestamp(data['fechaFin']); // Convertir a timestamp si existe
+        const nombre = data['nombre'] || `Horario-${doc.id}`; // Usar el nombre o uno predeterminado
   
-        // Crear la estructura del documento modificado
         return {
-          id: doc.id, // ID del documento
-          nombre: data['nombre'] || `Horario-${doc.id}`, // Nombre o un nombre predeterminado
-          fechaInicio: `${fechaInicio.hora}:${fechaInicio.minutos} ${fechaInicio.ampm}`, // Hora formateada
-          fechaFin: `${fechaFin.hora}:${fechaFin.minutos} ${fechaFin.ampm}`, // Hora formateada
-          // Puedes agregar más propiedades del documento si las necesitas
+          fechaInicio: fechaInicio ? fechaInicio.fecha : '', // Retornar solo la fecha
+          fechaFin: fechaFin ? fechaFin.fecha : '', // Retornar solo la fecha
+          nombre, // Nombre del horario
+          inicio: `${fechaInicio?.hora}:${fechaInicio?.minutos} ${fechaInicio?.ampm}`, // Hora formateada con AM/PM
+          fin: `${fechaFin?.hora}:${fechaFin?.minutos} ${fechaFin?.ampm}` // Hora formateada con AM/PM
         };
       });
   
-      return documents; // Retorna los documentos modificados como un arreglo
+      return documents;
     } catch (error) {
-      console.error("Error al obtener los documentos:", error);
-      return []; // En caso de error, retornar un arreglo vacío
+      console.error("Error al obtener los horarios:", error);
+      return []; // Retornar un arreglo vacío en caso de error
     }
+  }
+  
+  formatTimestamp(timestamp: any): { fecha: string; hora: string; minutos: string; ampm: string } {
+    if (!timestamp || !timestamp.toDate) {
+      return { fecha: '', hora: '00', minutos: '00', ampm: 'AM' }; // Valores predeterminados si el timestamp no es válido
+    }
+  
+    // Extraer la fecha, hora y minutos del timestamp
+    const { fecha, hora, minutos } = this.extractDateTime(timestamp);
+  
+    // Formatear la hora y minutos con AM/PM
+    const formattedTime = this.formatTimeWithAmPm({ hora, minutos });
+  
+    return {
+      fecha, // Mantener la fecha en formato 'YYYY-MM-DD'
+      hora: formattedTime.hora, // Hora en formato de 12 horas
+      minutos: formattedTime.minutos, // Minutos con dos dígitos
+      ampm: formattedTime.ampm // Periodo AM/PM
+    };
   }
   // Función para formatear un timestamp con AM/PM
   formatTimeWithAmPm(timestamp: { hora: number; minutos: number }): { hora: string; minutos: string; ampm: string } {
@@ -344,5 +421,7 @@ export class GoogleAuthService {
       return []; // En caso de error, retornar un arreglo vacío
     }
   }
+
+ 
 
 }
