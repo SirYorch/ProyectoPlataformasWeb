@@ -13,6 +13,7 @@ import { UserInfoService } from '../../../services/user-info.service';
 })
 export class ArriendosComponent {
   @ViewChild('menu') menu!: ElementRef;
+  @ViewChild('crear') crear!: ElementRef;
 
   swvisible() {
     this.menu.nativeElement.classList.toggle("oculto");
@@ -27,5 +28,13 @@ export class ArriendosComponent {
 
   constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
 
+  }
+  desplegarCrear()
+  {
+    this.crear.nativeElement.classList.toggle("desplegarCrear");
+    
+  }
+  eliminar(){
+    
   }
 }

@@ -5,24 +5,28 @@
 </div>
 <div class="ventana vertical">
     <section class="no-border aa-section">
+        <p>Eliminar</p>
         <b>Placa</b>
         <p>Estado</p>
     </section>
-    <section class="aa-section">
-        <b>ASD-293</b>
-        <p>Dentro</p>
-    </section>
-    <section class="aa-section">
-        <b>ASD-293</b>
-        <p>Dentro</p>
-    </section>
-    <section class="aa-section">
+    <section class="aa-section" >
+        <div class="exit"><a (click)="eliminar()">X</a></div>
         <b>ASD-293</b>
         <p>Dentro</p>
     </section>
 
-    <button class="button aa-button ae-button">Agregar</button>
+    <button class="button aa-button ae-button" (click)="desplegarCrear()">Agregar</button>
 </div>
+
+<div class="crearArriendos" #crear>
+    <div class="exit"><a (click)="desplegarCrear()">X</a></div>
+    <div class="selector"> <strong>Crear</strong> </div>
+    <label>Usuario <input type="text"></label>
+    <label>Inicio<input type="date"></label>
+    <label>Fin <input type="date"></label>
+
+</div>
+
 
 <!--Menu-->
 <nav>

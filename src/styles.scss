@@ -322,6 +322,9 @@ body{
     height: auto;
 }
   
+fieldset{
+    color: var(--blueD);
+}
 nav{
     background-color: var(--blueD);
     width: 100vw;
@@ -360,12 +363,61 @@ nav{
     text-decoration: none;
     transition: font-size  .1s linear;
 }
+
 .li:hover,.contenidos ul li:hover{
     font-size: 46px;
 }
 .li:active{
     
     font-size: 50px;
+}
+.crearArriendos{
+    padding: 20px;
+    width: 300px;
+    position: absolute;
+    top: -600px;;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px var(--blueL) solid;
+    background-color: var(--white);
+    border-radius: 10px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: top .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.crearArriendos .selector{
+    margin-top: 0;
+    margin-bottom: 10px;
+    width: calc(100% + 40px);margin-top: -20px;
+}
+.crearArriendos label{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.crearArriendos label input{
+    margin-left: 20px;
+    width:180px
+}
+.crearArriendos .exit a{
+    position: absolute;
+    width: auto;
+    height: auto;
+    top:2px;
+    margin: 0;
+    right: 20px;
+    color: var(--white);
+}
+.aa-section a{
+    position:unset;
+    font-size: 35px;
+    top:0
+}
+.desplegarCrear{
+    top:200px
 }
 img{
     width:100px;
@@ -500,7 +552,7 @@ footer div{
 }
 .selector{
     
-    width: 100vw;
+    width: 100%;
     height: 70px;
     background-color: var(--blueL);
     display: flex;
@@ -963,6 +1015,13 @@ textarea:focus{
         justify-content: space-around;
         align-items: center;
         height: fit-content;
+    }
+    .crearArriendos .selector{
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 10px;
+        width: calc(100% + 40px);
+        margin-top: -20px;
     }
 
     .ventana .tc{
