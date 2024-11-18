@@ -40,6 +40,7 @@ export class GoogleAuthService {
       return null;
     }
   }
+  
 
 
  async checkUserExists(uid: string): Promise<boolean> {
