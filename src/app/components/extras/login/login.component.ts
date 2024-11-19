@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit{
       }
     } catch (error) {
       console.error('Error durante la validación del usuario:', error);
-      this.router.navigate(['']); // Redirigir en caso de error
     }
   }
 
