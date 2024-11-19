@@ -6,10 +6,10 @@
     <section class="no-border aa-section">
       <p>Eliminar</p>
       <b>Placa</b>
-      <p>Estado</p>
-      <p>Inicio</p>
-      <p>Fin</p>
-      <p>Nombre</p>
+      <p >Estado</p>
+      <p class="extra">Inicio</p>
+      <p class="extra">Fin</p>
+      <p class="extra">Nombre</p>
     </section>
   
     <!-- Listado dinámico de arriendos -->
@@ -17,9 +17,9 @@
     <div class="exit"><a (click)="eliminarArriendo(arriendo.id)">X</a></div>
     <b>{{ arriendo.placa }}</b>
     <p>{{ arriendo.estado }}</p>
-    <p>Inicio: {{ arriendo.inicio }}</p>
-    <p>Fin: {{ arriendo.fin }}</p>
-    <p>Nombre: {{ arriendo.nombreUsuario }}</p>
+    <p class="extra">{{ arriendo.inicio }}</p>
+    <p class="extra">{{ arriendo.fin }}</p>
+    <p class="extra">{{ arriendo.nombreUsuario }}</p>
   </section>
   
   
