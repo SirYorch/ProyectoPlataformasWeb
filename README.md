@@ -1,27 +1,33 @@
-# CsParking
+# Proyecto interciclo de los estudiantes Jorge Cueva y Samantha Suquilanda
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.1.
+Proyecto realizado en código Angular, utilizando Firebase para la implementación de hosting, autenticación con Google y Firestore para el almacenamiento en línea.
 
-## Development server
+## Archivos entregados
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. **informe.pdf**  
+   Documento en formato IEEE que presenta un informe detallado sobre el proceso de desarrollo de la página web del parqueadero.
 
-## Code scaffolding
+2. **codigo.bat**  
+   Archivo que redirecciona a la página de GitHub con el contenido del proyecto.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3. **prototipo.pdf**  
+   Presentación de las interfaces del proyecto, explicando brevemente las razones detrás de su diseño, con un enfoque en la experiencia y usabilidad del usuario.
 
-## Build
+4. **video.bat**  
+   Archivo que redirecciona a un video de YouTube con la presentación del proyecto. El video incluye:  
+   - Introducción  
+   - Objetivos  
+   - Autenticación y seguridad  
+   - Funcionalidades para usuarios  
+   - Decisiones de diseño  
+   - Requisitos previos al desarrollo  
+   - Desafíos enfrentados  
+   - Guía de uso para administrador y cliente
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+**En caso de fallas**
+Si alguno de los hipervinculos llegase a fallar o no generan confianza, los links son los siguientes.
 
-## Running unit tests
+[Repositorio de github](https://github.com/SirYorch/ProyectoPlataformasWeb)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+[Video de youtube](https://www.youtube.com/watch?v=LYuJnuungUM&ab_channel=SamanthaSuquilanda)
