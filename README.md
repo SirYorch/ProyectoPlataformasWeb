@@ -24,10 +24,20 @@ Proyecto realizado en código Angular, utilizando Firebase para la implementaci�
    - Desafíos enfrentados  
    - Guía de uso para administrador y cliente
 
+5. **prototipoFigma.bat**  
+   Archivo que redirecciona al documento de figma, con las vistas que esperabamos tener en un inicio de la aplicación.
+
+
 **En caso de fallas**
+
+
+
 Si alguno de los hipervinculos llegase a fallar o no generan confianza, los links son los siguientes.
+
+
 
 [Repositorio de github](https://github.com/SirYorch/ProyectoPlataformasWeb)
 
-
 [Video de youtube](https://www.youtube.com/watch?v=LYuJnuungUM&ab_channel=SamanthaSuquilanda)
+
+[Prototipo en aplicacoin figma](https://www.figma.com/design/lsqgSl0zqYCDGdmbcJURBS/ProyectoProgramacionWeb?node-id=3-28&t=FgXTAvAWGeEqx6kc-1)
