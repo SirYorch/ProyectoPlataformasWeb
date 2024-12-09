@@ -4,11 +4,11 @@ public class Espacio {
     private String espacioLetra;
     private String estado;
     
-    public Espacio (){
+    public Espacio (int espacioId, int espacioNum, String espacioLetra, String estado){
         this.espacioId = this.espacioId;
         this.espacioNum = this.espacioNum;
         this.espacioLetra = this.espacioLetra;
-        this.espacioEstado = this.espacioEstado;
+        this.estado = this.estado;
 
 
     }
