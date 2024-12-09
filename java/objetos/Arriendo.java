@@ -1,4 +1,3 @@
-
 import java.sql.Date;
 
 public class Arriendo {
@@ -7,9 +6,9 @@ public class Arriendo {
     private Date fechaFin;
 
     public Arriendo (int arriendoId, Date fechaInicio, Date fechaFin){
-        this.arriendoId = this.arriendoId;
-        this.fechaInicio = this.fechaInicio;
-        this.fechaFin = this.fechaFin;
+        this.arriendoId = arriendoId;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         
 
 

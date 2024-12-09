@@ -1,4 +1,3 @@
-
 import java.sql.Date;
 
 public class Horario {
@@ -9,12 +8,12 @@ public class Horario {
     private Date horaInicio;
     private Date horaFin;
   public Horario (int horarioId, String nombre, Date fechaInicio, Date fechaFin, Date horaInicio, Date horaFin) {
-    this.horarioId = this.horarioId;
-    this.nombre = this.nombre;
-    this.fechaInicio = this.fechaInicio;
-    this.fechaFin = this.fechaFin;
-    this.horaInicio = this.horaInicio;
-    this.horaFin = this.horaFin;
+    this.horarioId = horarioId;
+    this.nombre = nombre;
+    this.fechaInicio = fechaInicio;
+    this.fechaFin = fechaFin;
+    this.horaInicio = horaInicio;
+    this.horaFin = horaFin;
 
 
   }
