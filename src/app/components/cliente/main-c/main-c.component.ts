@@ -15,7 +15,6 @@ export class MainCComponent implements OnInit{
 
   swvisible() {
     this.menu.nativeElement.classList.toggle("oculto");
-    console.log("ocultado");
   }
 
   nombre = "Usuario";
@@ -24,13 +23,15 @@ export class MainCComponent implements OnInit{
   constructor(private googleuser: GoogleAuthService,private read: ReadService){
 
   }
-
-  user:any ;
-  ngOnInit(){
+  ngOnInit(): void {
+    setTimeout(() => {
     this.user = this.googleuser.getUser();
     this.iniciarDatos();
-    this.estado = this.read.getEstado();
+    console.log(this.read.getEstado());
+    }, 1);
   }
+
+  user:any ;
   iniciarDatos(){
     console.log(this.user)
     this.nombre = this.user.nombre;
