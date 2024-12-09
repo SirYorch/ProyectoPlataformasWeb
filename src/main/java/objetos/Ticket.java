@@ -1,5 +1,6 @@
 import java.sql.Date;
 
+
 public class Ticket {
     int id;
     Date inicio;

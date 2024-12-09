@@ -1,4 +1,3 @@
-
 public class Espacio{
     private int espacioId;
     private int espacioNum;

@@ -1,5 +1,5 @@
-import java.sql.Date;
 
+import java.sql.Date;
 public class Arriendo {
     private int arriendoId;
     private Date fechaInicio;
