@@ -1,4 +1,3 @@
-package objetos;
 public class Usuario{
     String nombre;
     String telefono;

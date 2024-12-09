@@ -1,4 +1,3 @@
-package objetos;
 import java.sql.Date;
 
 public class Ticket {

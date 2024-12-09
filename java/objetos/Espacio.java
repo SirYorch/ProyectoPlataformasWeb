@@ -1,5 +1,5 @@
 
-public class Espacio {
+public class Espacio{
     private int espacioId;
     private int espacioNum;
     private String espacioLetra;
