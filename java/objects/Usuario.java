@@ -1,3 +1,6 @@
+package objects;
+
+
 public class Usuario{
     String nombre;
     String telefono;

@@ -1,6 +1,7 @@
+package objects;
 import java.sql.Date;
 
-public class Reserva {
+public class Reserva{
     Ticket ticket;
     Date inicio;
     Date fin;
@@ -12,6 +13,5 @@ public class Reserva {
         this.fin = fin;
         this.placa = placa;
         this.usuario = usuario;
-
     }
 }
