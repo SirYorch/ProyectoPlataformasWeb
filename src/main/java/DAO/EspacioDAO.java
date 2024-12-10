@@ -1,7 +1,12 @@
 package DAO;
-
-import java.io.IOException;
-
+import iDAO.IEspacioDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import objects.Espacio;
 public class EspacioDAO implements IEspacioDAO{
     
      private Connection connection;
@@ -16,8 +21,8 @@ public class EspacioDAO implements IEspacioDAO{
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, espacio.getEspacioId());
             statement.setInt(2, espacio.getEspacioNum());
-            statement.setString(3, espacio.getEspacioLetra);
-            statement.setString(4, espacio.getEstado);
+            statement.setString(3, espacio.getEspacioLetra());
+            statement.setString(4, espacio.getEstado());
 
             statement.executeUpdate();
         } catch (SQLException e) {

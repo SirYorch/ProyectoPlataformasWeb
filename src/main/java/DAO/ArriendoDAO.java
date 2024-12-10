@@ -1,8 +1,13 @@
 package DAO;
-
-import java.sql.Date;
+import iDAO.IArriendoDAO;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import objects.Arriendo;
+
 
 public class ArriendoDAO implements  IArriendoDAO{
     private Connection connection;
@@ -17,8 +22,8 @@ public class ArriendoDAO implements  IArriendoDAO{
         String sql = "INSERT INTO arriendos (arriendoId, fechaInicio, fechaFin) VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, arriendo.getArriendoId());
-            statement.setDate(2, Date.valueOf(arriendo.getFechaInicio()));
-            statement.setDate(3, Date.valueOf(arriendo.getFechaFin()));
+            statement.setDate(2, arriendo.getFechaInicio());
+            statement.setDate(3, arriendo.getFechaFin());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,8 +39,8 @@ public class ArriendoDAO implements  IArriendoDAO{
             if (resultSet.next()) {
                 return new Arriendo(
                         resultSet.getInt("arriendoId"),
-                        resultSet.getDate("fechaInicio").toLocalDate(),
-                        resultSet.getDate("fechaFin").toLocalDate()
+                        resultSet.getDate("fechaInicio"),
+                        resultSet.getDate("fechaFin")
                 );
             }
         } catch (SQLException e) {
@@ -48,8 +53,8 @@ public class ArriendoDAO implements  IArriendoDAO{
     public void update(Arriendo arriendo) {
         String sql = "UPDATE arriendos SET fechaInicio = ?, fechaFin = ? WHERE arriendoId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setDate(1, Date.valueOf(arriendo.getFechaInicio()));
-            statement.setDate(2, Date.valueOf(arriendo.getFechaFin()));
+            statement.setDate(1, arriendo.getFechaInicio());
+            statement.setDate(2, arriendo.getFechaFin());
             statement.setInt(3, arriendo.getArriendoId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -77,8 +82,8 @@ public class ArriendoDAO implements  IArriendoDAO{
             while (resultSet.next()) {
                 arriendos.add(new Arriendo(
                         resultSet.getInt("arriendoId"),
-                        resultSet.getDate("fechaInicio").toLocalDate(),
-                        resultSet.getDate("fechaFin").toLocalDate()
+                        resultSet.getDate("fechaInicio"),
+                        resultSet.getDate("fechaFin")
                 ));
             }
         } catch (SQLException e) {

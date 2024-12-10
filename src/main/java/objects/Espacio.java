@@ -15,5 +15,40 @@ public class Espacio{
 
     }
 
+    public Espacio(){
+        
+    }
+    public int getEspacioId() {
+        return espacioId;
+    }
+
+    public void setEspacioId(int espacioId) {
+        this.espacioId = espacioId;
+    }
+
+    public int getEspacioNum() {
+        return espacioNum;
+    }
+
+    public void setEspacioNum(int espacioNum) {
+        this.espacioNum = espacioNum;
+    }
+
+    public String getEspacioLetra() {
+        return espacioLetra;
+    }
+
+    public void setEspacioLetra(String espacioLetra) {
+        this.espacioLetra = espacioLetra;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     
 }
