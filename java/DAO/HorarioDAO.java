@@ -1,5 +1,10 @@
 package DAO;
 
+import java.sql.*;
+
+import iDAO.IHorarioDAO;
+import objects.Horario;
+
 public class HorarioDAO implements IHorarioDAO{
      private Connection connection;
 

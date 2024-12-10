@@ -1,4 +1,7 @@
+package iDAO;
 import java.util.List;
+
+import objects.Espacio;
 
 public interface IEspacioDAO {
     public void create (Espacio espacio);

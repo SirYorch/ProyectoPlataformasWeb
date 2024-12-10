@@ -1,5 +1,9 @@
 package gestion;
 
+import java.util.List;
+import iDAO.IEspacioDAO;
+import objects.Espacio;
+
 public class EspacioGestion {
     private IEspacioDAO espacioDAO;
 

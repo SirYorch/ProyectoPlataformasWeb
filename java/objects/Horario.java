@@ -1,14 +1,16 @@
 package objects;
 import java.sql.Date;
+import java.sql.Time;
 
 public class Horario {
     private int horarioId;
     private String nombre;
     private Date fechaInicio;
     private Date fechaFin;
-    private Date horaInicio;
-    private Date horaFin;
-  public Horario (int horarioId, String nombre, Date fechaInicio, Date fechaFin, Date horaInicio, Date horaFin) {
+    private Time horaInicio;
+    private Time horaFin;
+    
+  public Horario (int horarioId, String nombre, Date fechaInicio, Date fechaFin, Time horaInicio, Time  horaFin) {
     this.horarioId = horarioId;
     this.nombre = nombre;
     this.fechaInicio = fechaInicio;
@@ -18,5 +20,9 @@ public class Horario {
 
 
   }
+public int getHorarioId() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getHorarioId'");
+}
 
 }

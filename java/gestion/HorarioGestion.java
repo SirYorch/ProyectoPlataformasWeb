@@ -1,5 +1,10 @@
 package gestion;
 
+import java.util.List;
+
+import iDAO.IHorarioDAO;
+import objects.Horario;
+
 public class HorarioGestion {
     private IHorarioDAO horarioDAO;
 

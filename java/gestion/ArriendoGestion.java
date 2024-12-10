@@ -1,6 +1,9 @@
 package gestion;
 import java.util.List;
 
+import iDAO.IArriendoDAO;
+import objects.Arriendo;
+
 public class ArriendoGestion {
     private IArriendoDAO arriendoDAO;
 
