@@ -18,4 +18,58 @@ public class Horario {
 
   }
 
+  public int getHorarioId (){
+    return horarioId;
+  }
+
+  public void setHorarioId (int horarioId){
+    this.horarioId = horarioId;
+
+  }
+
+  public String getNombre (){
+    return nombre;
+  }
+
+  public void setNombre (String nombre){
+    this.nombre = nombre;
+
+  }
+
+  public Date getFechaInicio (){
+    return fechaInicio;
+  }
+
+  public void setFechaInicio (Date fechaInicio){
+    this.fechaInicio = fechaInicio;
+
+  }
+
+  public Date getFechaFin (){
+    return fechaFin;
+  }
+
+  public void setFechaFin (Date fechaFin){
+    this.fechaFin = fechaFin;
+
+  }
+
+  public Date getHoraInicio (){
+    return horaInicio;
+  }
+
+  public void setHoraInicio (Date horaInicio){
+    this.horaInicio = horaInicio;
+
+  }
+
+  public Date getHoraFin (){
+    return fechaFin;
+  }
+
+  public void setHoraFin (Date horaFin){
+    this.horaFin = horaFin;
+
+  }
+
 }

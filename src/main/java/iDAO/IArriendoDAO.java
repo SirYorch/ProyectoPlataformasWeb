@@ -1,5 +1,4 @@
 import java.util.List;
-import objetos.Arriendo;
 public interface IArriendoDAO {
     public void create (Arriendo arriendo);
     public Arriendo read (int arriendoId);
