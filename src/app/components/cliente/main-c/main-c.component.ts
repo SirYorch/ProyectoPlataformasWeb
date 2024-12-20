@@ -4,20 +4,15 @@ import { ReadService } from '../../../services/read.service';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
+import { MenuCComponent } from "../menu-c/menu-c.component";
 @Component({
   selector: 'app-main-c',
   standalone: true,
-  imports: [],
+  imports: [MenuCComponent],
   templateUrl: './main-c.component.html',
   styleUrl: './main-c.component.scss'
 })
 export class MainCComponent implements OnInit{
-
-  @ViewChild('menu') menu!: ElementRef;
-
-  swvisible() {
-    this.menu.nativeElement.classList.toggle("oculto");
-  }
 
   constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
 
@@ -25,12 +20,6 @@ export class MainCComponent implements OnInit{
 
   
   user:any ;
-  
-  logout(){
-    this.googleuser.logout();
-    this.userService.clearUser();
-    this.router.navigate([''])
-  }
 
   nombre = "Usuario";
   estado = "Inactivo";

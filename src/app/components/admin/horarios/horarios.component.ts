@@ -6,17 +6,17 @@ import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
 import { Timestamp } from 'firebase/firestore'; // Importar Timestamp
 import { CommonModule } from '@angular/common';
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   selector: 'app-horarios',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule, MenuComponent],
   templateUrl: './horarios.component.html',
   styleUrl: './horarios.component.scss'
 })
 export class HorariosComponent {
 
-  @ViewChild('menu') menu!: ElementRef;
   @ViewChild('crear') crear!: ElementRef;
   @ViewChild('editar') editar!: ElementRef;
   @ViewChild('editarGeneral') editarGeneral!: ElementRef;
@@ -121,19 +121,6 @@ export class HorariosComponent {
     }
 
     return `${hour.toString().padStart(2, '0')}:${minutes.padStart(2, '0')}`;
-  }
-
-
-  // Métodos existentes que se mantienen
-  swvisible() {
-    this.menu.nativeElement.classList.toggle("oculto");
-    console.log("ocultado");
-  }
-
-  logout() {
-    this.googleuser.logout();
-    this.userService.clearUser();
-    this.router.navigate(['']);
   }
 
   desplegarCrear() {

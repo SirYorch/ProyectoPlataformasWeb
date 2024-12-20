@@ -5,27 +5,17 @@ import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   selector: 'app-espacio',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MenuComponent],
   templateUrl: './espacio.component.html',
   styleUrl: './espacio.component.scss'
 })
 export class EspacioComponent {
   
-  @ViewChild('menu') menu!: ElementRef;
-
-  swvisible() {
-    this.menu.nativeElement.classList.toggle("oculto");
-    console.log("ocultado");
-  }
-  logout(){
-    this.googleuser.logout();
-    this.userService.clearUser();
-    this.router.navigate([''])
-  }
   totales ="0";
   disponibles = "0";
   ocupadas = "0";

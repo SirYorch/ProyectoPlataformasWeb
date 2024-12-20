@@ -4,28 +4,18 @@ import { ReadService } from '../../../services/read.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
+import { MenuComponent } from "../menu/menu.component";
+
+
 
 @Component({
   selector: 'app-tarifas',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MenuComponent],
   templateUrl: './tarifas.component.html',
   styleUrl: './tarifas.component.scss'
 })
 export class TarifasComponent {
-
-  @ViewChild('menu') menu!: ElementRef;
-
-  swvisible() {
-    this.menu.nativeElement.classList.toggle("oculto");
-    console.log("ocultado");
-  }
-
-  logout(){
-    this.googleuser.logout();
-    this.userService.clearUser();
-    this.router.navigate([''])
-  }
 
  constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
 

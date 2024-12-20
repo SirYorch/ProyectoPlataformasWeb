@@ -3,34 +3,24 @@ import { GoogleAuthService } from '../../../services/google-auth.service';
 import { UserInfoService } from '../../../services/user-info.service';
 import { Router } from '@angular/router';
 import { ReadService } from '../../../services/read.service';
+import { MenuComponent } from "../menu/menu.component";
+
 
 @Component({
   selector: 'app-main-a',
   standalone: true,
-  imports: [],
+  imports: [MenuComponent],
   templateUrl: './main-a.component.html',
   styleUrl: './main-a.component.scss'
 })
 export class MainAComponent {
-  
-  @ViewChild('menu') menu!: ElementRef;
 
-  swvisible() {
-    this.menu.nativeElement.classList.toggle("oculto");
-  }
 
   constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
-
   }
 
   
   user:any ;
-  
-  logout(){
-    this.googleuser.logout();
-    this.userService.clearUser();
-    this.router.navigate(['']);
-  }
 
   nombre = "Usuario";
   estado = "Inactivo";

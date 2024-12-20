@@ -6,15 +6,15 @@ import { UserInfoService } from '../../../services/user-info.service';
 import { ArriendosService } from '../../../services/arriendos.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MenuComponent } from "../menu/menu.component";
 @Component({
   selector: 'app-arriendos',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, MenuComponent],
   templateUrl: './arriendos.component.html',
   styleUrl: './arriendos.component.scss'
 })
 export class ArriendosComponent {
-  @ViewChild('menu') menu!: ElementRef;
   @ViewChild('crear') crear!: ElementRef;
 
   arriendos: any[] = []; // Lista de arriendos
@@ -34,10 +34,6 @@ export class ArriendosComponent {
     this.crear.nativeElement.classList.toggle('desplegarCrear');
   }
 
-  // Método para cerrar sesión
-  logout() {
-    this.router.navigate(['']);
-  }
 
   // Buscar información del usuario asociada a una placa
   buscarUsuarioPorPlaca() {
@@ -112,9 +108,4 @@ export class ArriendosComponent {
     });
   }
   
-
-  // Alternar visibilidad del menú
-  swvisible() {
-    this.menu.nativeElement.classList.toggle('oculto');
-  }
 }

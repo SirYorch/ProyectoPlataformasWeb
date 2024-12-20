@@ -5,24 +5,17 @@ import { ReadService } from '../../../services/read.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
+import { MenuCComponent } from "../menu-c/menu-c.component";
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MenuCComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
 export class PerfilComponent implements OnInit{
   
-  @ViewChild('menu') menu!: ElementRef;
-
-  swvisible() {
-    this.menu.nativeElement.classList.toggle("oculto");
-    console.log("ocultado");
-  }
-
-
   constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
 
   }
@@ -30,12 +23,6 @@ export class PerfilComponent implements OnInit{
   
   user:any ;
   
-  logout(){
-    this.googleuser.logout();
-    this.userService.clearUser();
-    this.router.navigate([''])
-  }
-
   nombre = "Usuario";
   telefono = "000000000";
   direccion = "Vivienda"
