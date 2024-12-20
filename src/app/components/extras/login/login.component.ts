@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GoogleAuthService} from '../../../services/google-auth.service';
 import {  User } from '@angular/fire/auth';
 import {FormsModule} from '@angular/forms'
 import { ReadService } from '../../../services/read.service';
+import { Router } from '@angular/router';
+import { UserInfoService } from '../../../services/user-info.service';
+
 
 @Component({
   selector: 'app-login',
@@ -12,7 +15,7 @@ import { ReadService } from '../../../services/read.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   
   
   isRegisterView: boolean = false;
@@ -23,38 +26,78 @@ export class LoginComponent {
   direccion = "";
   cedula = "";
   placa = "";
-  pass = "";
-  confPass = "";
 
   errorMessage = "";
 
   private currentUser: User | null = null;
 
-  constructor(private googleAuthService: GoogleAuthService , private read: ReadService) {}
+  user:any = null;
+
+  constructor(private googleAuthService: GoogleAuthService , private router:Router,private userService:UserInfoService) {}
+  async ngOnInit(): Promise<void> {
+    // Leer los datos del usuario desde el localStorage
+    this.user = this.userService.getUser();
+    
+    if (!this.user) {
+      return; // Terminar la ejecución del método
+    }
+    
+    try {
+      // Verificar si el usuario existe en Firestore
+      const userExists = await this.googleAuthService.checkUserExists(this.user.uid);
+      if (!userExists) {
+        return; // Terminar la ejecución del método
+      }
+      
+      // Obtener la información del usuario
+      const usuario = await this.googleAuthService.getUserInfo(this.user.uid);
+      if (!usuario || usuario.stat !== 'Admin') {
+        // Redirigir al inicio si el estado del usuario no es 'Cliente'
+        this.router.navigate(['/cliente/principal']);
+      }else{
+        this.router.navigate(['/admin/principal']);
+      }
+    } catch (error) {
+      console.error('Error durante la validación del usuario:', error);
+    }
+  }
 
   toggleView(): void {
     this.isRegisterView = !this.isRegisterView;
+
+  }
+
+  logout(){
+    this.googleAuthService.logout();
+    this.isRegisterView = false;
   }
 
   async logguear() {
-    try {
-      const user = await this.googleAuthService.signInWithGoogle();
-      
-      if (user != null) {
-        this.currentUser = user;
+    this.googleAuthService.signInWithGoogle().then(async (user) => {
+      if(user!= null){
         const userExists = await this.googleAuthService.checkUserExists(user.uid);
-        
+        this.currentUser = user;
         if (userExists) {
-          
-          this.googleAuthService.router.navigate(['/cliente/principal']);
+          const role = await this.googleAuthService.getRol(user.uid);
+          console.log(role)
+          this.userService.saveUser({
+            uid: user.uid,
+          });
+          if (role === 'Admin') {
+            this.router.navigate(['/admin/principal']);
+          } else if (role === 'Cliente') {
+            this.router.navigate(['/cliente/principal']);
+          } else {
+            console.error('Rol no reconocido');
+          }
         } else {
+          // Mostrar vista de registro
           this.isRegisterView = true;
-          this.nombre = user.displayName || '';
         }
       }
-    } catch (error) {
-      console.error("Error en el inicio de sesión:", error);
-    }
+    }).catch((error) => {
+      console.error('Error en inicio de sesión:', error);
+    });
   }
 
     // Método para validar todos los campos
@@ -65,8 +108,6 @@ export class LoginComponent {
       this.direccion = this.direccion.trim();
       this.cedula = this.cedula.trim();
       this.placa = this.placa.trim();
-      this.pass = this.pass.trim();
-      this.confPass = this.confPass.trim();
 
 
           
@@ -95,16 +136,6 @@ export class LoginComponent {
         return false;
       }
 
-      if (this.pass.length < 5) {
-        this.errorMessage = "La contraseña no es valida";
-        return false;
-      }
-
-      if (this.pass !== this.confPass) {
-        this.errorMessage = "Las contraseñas no coinciden.";
-        return false;
-      }
-
       this.errorMessage = "";
       return true;
     }
@@ -118,16 +149,20 @@ export class LoginComponent {
           direccion: this.direccion,
           cedula: this.cedula,
           placa: this.placa,
-          pass: this.pass,
         });
         console.log('Registro completado');
+        this.userService.saveUser({
+          uid: this.currentUser.uid,
+        });
         this.googleAuthService.router.navigate(['/cliente/principal']);
       } catch (error) {
         console.error("Error al registrar usuario:", error);
       }
     } else {
-      console.log(this.errorMessage);
+      console.log(this.errorMessage); // Esto luego debemos crearlo como una venana emergente
       this.errorMessage = "";
     }
   }
+
+  
 }

@@ -203,6 +203,18 @@ body{
     transition: transform .1s linear;
 }
 
+.info{
+    color: var(--blueD);
+    max-width: 250px;
+    text-align: center;
+
+}
+.bienvenida p{
+    position: initial;
+    color: var(--blueD);
+    font-size: 25px;
+
+}
 .login-container , .register-container{
     position: absolute;
     backface-visibility: visible;
@@ -267,11 +279,20 @@ body{
 
 
 .bienvenida{
-    width: 80%;
+    
+    position: initial;
+    width: 75%;
     text-align: center;
     margin: 10px auto;
     color: var(--blueD);
-    margin-bottom:30px
+    margin-bottom: 20px;
+    max-width: fit-content;
+    height: fit-content;
+}
+.datos-bienvenida{
+    display: block;
+    height: fit-content;
+    overflow: visible;
 }
 
 .tarifas{
@@ -301,6 +322,9 @@ body{
     height: auto;
 }
   
+fieldset{
+    color: var(--blueD);
+}
 nav{
     background-color: var(--blueD);
     width: 100vw;
@@ -309,6 +333,8 @@ nav{
     position: fixed;
     top: 0;
     left: 0;
+    
+    z-index:100;
 }
 .menu-button{
     height:8vh;
@@ -337,12 +363,64 @@ nav{
     text-decoration: none;
     transition: font-size  .1s linear;
 }
-.li:hover{
+
+.li:hover,.contenidos ul li:hover{
     font-size: 46px;
 }
 .li:active{
     
     font-size: 50px;
+}
+.general .selector strong{
+    font-size: 27px;
+}
+.crearArriendos{
+    padding: 20px;
+    width: 300px;
+    position: absolute;
+    top: -100vh;;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px var(--blueL) solid;
+    background-color: var(--white);
+    border-radius: 10px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: top .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.crearArriendos .selector{
+    margin-top: 0;
+    margin-bottom: 10px;
+    width: calc(100% + 40px);margin-top: -20px;
+}
+.crearArriendos label{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.crearArriendos label input{
+    margin-left: 20px;
+    width:180px
+}
+.crearArriendos .exit a{
+    position: absolute;
+    width: auto;
+    height: auto;
+    top:2px;
+    margin: 0;
+    right: 20px;
+    color: var(--white);
+}
+.aa-section a{
+    position:unset;
+    font-size: 35px;
+    top:0
+}
+.desplegarCrear{
+    top:200px
 }
 img{
     width:100px;
@@ -361,30 +439,38 @@ main{
     width: auto;
     height: inherit;
     filter: blur(3px);
+    z-index:1;
+    left:0;
 }
 .bg1{
+    left: auto;
     right: 0;
 }
 article{
     position: relative;
     overflow: hidden;
-    height: 400px;
     width: 100vw;
+    max-height: 500px;
+    height: auto;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 .capa{
     position: absolute;
     background-color: var(--blueL);
     width: 100%;
-    height: inherit ;
+    height: 100% ;
     opacity: .7;
+    z-index: 2;
 }
 .capa1{
     background-color: var(--white);
 }
 article a, article p{
-    position: absolute;
-    flex-wrap: wrap;
+    margin: 0;
+    z-index: 3;
 }
 .texto1{
     color: var(--blueD);
@@ -396,10 +482,9 @@ article p{
     font-size: 30px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
     text-align: center;
-    left: 0;
-    right: 0;
-    top:70px
 }
 article a{
     bottom: 40px;
@@ -411,8 +496,9 @@ article a{
 
 footer{
     background-color: var(--blueD);
-    height:10vh;
+    height:auto;
     text-align: center;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -420,6 +506,7 @@ footer{
 footer div{
     font-size: 20px;
     color: var(--white);
+    margin: 0 0 10px 0;
 }
 
 
@@ -443,6 +530,7 @@ footer div{
     color: var(--white);
     font-size: 35px;
     border-top: 2px solid var(--white);
+    z-index: 99;
 }
 .contenidos ul{
     width: 100%;
@@ -467,7 +555,7 @@ footer div{
 }
 .selector{
     
-    width: 100vw;
+    width: 100%;
     height: 70px;
     background-color: var(--blueL);
     display: flex;
@@ -481,6 +569,10 @@ footer div{
     font-size: 35px;
     text-align: center;
 
+}
+
+.inic{
+    margin-bottom: 50px;
 }
 .ventana .imagen{
     width:200px;
@@ -701,14 +793,20 @@ textarea:focus{
     article{
         margin-top: 10vh;
         display: flex;
-        height: inherit;
+        height:100%;
+        max-height: 805px;
         max-width: 100%;
+    }
+    .inic{
+        margin-top: auto;
+        margin-bottom: auto;
     }
     .capa{
         display: flex;
     }
     article p{
-        top: 40vh;
+        margin-top: auto;
+        margin-bottom: auto;
     }
     article .menu-button{
         bottom: 20vh;
@@ -739,7 +837,8 @@ textarea:focus{
     .ventana {
         width: calc(100vw - 305px);
         margin-left: 305px;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
     .logg{
         width: 100vw;
@@ -781,6 +880,10 @@ textarea:focus{
         justify-content: center;
         align-items: center;
         width: 60%;
+    }
+    .bienvenida {
+        min-height: 0;
+        max-height: none;
     }
 
     .datos input{
@@ -895,12 +998,38 @@ textarea:focus{
     }
     .mprincipal{
         flex-direction: column;
-        overflow: scroll;
     }
     
-    .bienvenida{
-        width: 100%;
-        margin: 70px 0 150px 0;
+    .datos-bienvenida .bienvenida {
+        margin: 40px 50px 80px 50px;
+        flex: 1 1 0; 
+        max-width: 50%;
+        min-width: 50px;
+        text-align: center;
+        height: auto;
+    }
+   
+    .datos-bienvenida{
+        align-items: stretch;
+        display: flex;
+        flex-direction: row;
+        height: fit-content;
+        overflow: visible;
+        justify-content: space-around;
+        align-items: center;
+        height: fit-content;
+    }
+    .crearArriendos .selector{
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 10px;
+        width: calc(100% + 40px);
+        margin-top: -20px;
+    }
+    .crearArriendos .button{
+        
+        margin-bottom: 10px;
+        width: calc(100% );
     }
 
     .ventana .tc{

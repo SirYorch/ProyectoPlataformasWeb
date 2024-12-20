@@ -9,60 +9,133 @@
             <Strong>General</Strong>
             <div class="dato">
                 <p>Lunes - Viernes</p>
-                <P>6:45 AM - 8:00PM</P>
+                <P>{{horaIniciogl}} - {{horaFingl}}</P>
             </div>
             <div class="dato">
                 <p>Sabados - Domingos</p>
-                <p>8:00AM - 6:00PM</p>
+                <p>{{horaIniciogs}} - {{horaFings}}</p>
             </div>
         </section>
-        <button class="ah-button button">Editar</button>
+        <button class="ah-button button" (click)="desplegarEditarGeneral()">Editar</button>
     </div>
-    <div class="horario">
+    <div class="horario" *ngFor="let horario of horarios">
         <section class="ah">
-            <Strong>Especial</Strong>
+            <div class="exit"><a (click)="eliminar(horario)">X</a></div>
+            <Strong>{{horario.nombre}}</Strong>
             <div class="dato">
-                <p>31/12/2024</p>
-                <P>No abre</P>
+                <p>{{horario.fechaInicio}} - {{horario.fechaFin}} </p>
+                <P>{{horario.inicio}} - {{horario.fin}}</P>
             </div>
         </section>
-        <button class="ah-button button">Editar</button>
+        <button class="ah-button button" (click)="desplegarEditar(horario)">Editar</button>
     </div>
-    <div class="horario">
-        <section class="ah">
-            <Strong>Especial</Strong>
-            <div class="dato">
-                <p>31/10/2024</p>
-                <P>8:00AM - 1:00PM</P>
-            </div>
-        </section>
-        <button class="ah-button button">Editar</button>
-    </div>
-    <button class="ah-crear button ae-button bajo">Crear</button>
+    <button class="ah-crear button ae-button bajo " (click)="desplegarCrear()">Crear</button>
 </div>
 
-
-<!--Menu-->
-<nav>
-    <div class="menu">
-        <label class="hamburger">
-            <input type="checkbox" (click)="swvisible()">
-            <svg viewBox="0 0 32 32">
-              <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
-              <path class="line" d="M7 16 27 16"></path>
-            </svg>
-          </label>
-    </div>
+<div class="crearArriendos crearArriend" #crear>
+    <div class="exit"><a (click)="desplegarCrear()">X</a></div>
+    <div class="selector"> <strong>Crear</strong> </div>
+    <div>
+      <label>
+        Nombre:
+        <input type="text" [(ngModel)]="nombreHorario">
+      </label><br><br>
     
-</nav>
-<div class="contenidos oculto" #menu>
-    <ul>
-        <li><a class="li" href="">Inicio</a></li>
-        <li><a class="li" href="admin/principal">Menu principal</a></li>
-        <li><a class="li" href="admin/usuarios">Usuarios</a></li>
-        <li><a class="li" href="admin/espacio">Gestion Espacio</a></li>
-        <li><a class="li" href="admin/tarifas">Gestion Tarifas</a></li>
-        <li><a class="li" href="admin/horarios">Horarios de Atencion</a></li>
-        <li><a class="li" href="admin/arriendos">Arriendos</a></li>
-    </ul>
+      <label>
+        Fecha de apertura:
+        <input type="date" [(ngModel)]="fechaApertura">
+      </label><br><br>
+    
+      <label>
+        Hora de apertura:
+        <input type="time" [(ngModel)]="horaApertura">
+      </label><br><br>
+    
+      <label>
+        Fecha de cierre:
+        <input type="date" [(ngModel)]="fechaCierre">
+      </label><br><br>
+    
+      <label>
+        Hora de cierre:
+        <input type="time" [(ngModel)]="horaCierre">
+      </label><br><br>
+      </div>
+      <button (click)="crearHorario()" class="ah-button button">Crear</button>
 </div>
+
+<div class="crearArriendos" #editar>
+    <div class="exit"><a (click)="desplegarEditar(null)">X</a></div>
+    <div class="selector"> <strong>Editar</strong> </div>
+    <div>
+        <label>
+          Nombre:
+          <input type="text" [(ngModel)]="nombreHorario">
+        </label><br><br>
+      
+        <label>
+          Fecha de apertura:
+          <input type="date" [(ngModel)]="fechaApertura">
+        </label><br><br>
+      
+        <label>
+          Hora de apertura:
+          <input type="time" [(ngModel)]="horaApertura">
+        </label><br><br>
+      
+        <label>
+          Fecha de cierre:
+          <input type="date" [(ngModel)]="fechaCierre">
+        </label><br><br>
+      
+        <label>
+          Hora de cierre:
+          <input type="time" [(ngModel)]="horaCierre">
+        </label><br><br>
+    </div>
+    <button (click)="guardarEditar()" class="ah-button button">Guardar</button>
+      
+</div>
+
+<div class="crearArriendos general" #editarGeneral>
+  <div class="exit">
+    <a (click)="desplegarEditarGeneral()">X</a>
+  </div>
+  <div class="selector">
+    <strong>Editar General</strong>
+  </div>
+  <div>
+    <fieldset>
+      <legend>Horario de lunes a viernes</legend>
+      <label>
+        Hora de apertura:
+        <input type="time" name="aperturaLunesViernes" [(ngModel)]="horaIniciogl">
+      </label><br><br>
+      
+      <label>
+        Hora de cierre:
+        <input type="time" name="cierreLunesViernes" [(ngModel)]="horaFingl">
+      </label>
+    </fieldset>
+    <br>
+  
+    <!-- Horarios sábado y domingo -->
+    <fieldset>
+      <legend>Horario de sábado y domingo</legend>
+      <label>
+        Hora de apertura:
+        <input type="time" name="aperturaSabadoDomingo" [(ngModel)]="horaIniciogs">
+      </label><br><br>
+      
+      <label>
+        Hora de cierre:
+        <input type="time" name="cierreSabadoDomingo" [(ngModel)]="horaFings">
+      </label>
+    </fieldset>
+    
+  </div>
+  <button (click)="guardarGeneral()" class="ah-button button">Guardar General</button>
+</div>
+
+
+<app-menu></app-menu>

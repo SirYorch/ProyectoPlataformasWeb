@@ -1,55 +1,59 @@
 
 
 <!--Contenidos-->
-
 <div class="selector">
-    <strong>Gestión Tarifas</strong>
+    <strong>Menu principal</strong>
 </div>
-<div class="ventana vertical at">
-    <div>
-        <label class="ae-input motd"><p>Mensaje del Día</p> <textarea name="" id=""></textarea></label>
-    </div>
-    <div>
-        <label class="ae-input"><p class="input-p">Plazas totales</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Plazas disponibles</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Plazas ocupadas</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Plazas reservadas</p> <input  type="text"></label>
-        <label class="ae-input"><p class="input-p">Clientes en dia</p> <input  type="text"></label>
-        <button class="ae-button button bajo">Editar</button>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-<!--Menu-->
-<nav>
-    <div class="menu">
-        <label class="hamburger">
-            <input type="checkbox" (click)="swvisible()">
-            <svg viewBox="0 0 32 32">
-              <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
-              <path class="line" d="M7 16 27 16"></path>
-            </svg>
+<div class="ventana mprincipal">
+  <article class="datos-bienvenida">
+    <article class="bienvenida ">
+      <p>Bienvenido {{nombre}} el estado actual del parqueadero es {{estado}}</p>
+    </article>
+    <article class="bienvenida ">
+      <p>{{motd}}</p>
+    </article>
+    <article class="bienvenida ">
+      <p>Plazas disponibles ahora: {{plazas}}</p>
+    </article>
+  </article>
+  <div class="tc">
+      <div class="tarifas">
+          <h2>Tarifas</h2>
+        <label>
+            <p>Uso mínimo</p>
+            <s>${{val1}}</s>
+          </label><br>
+          <label>
+            <p>1-1:30 horas</p>
+            <s>${{val2}}</s>
+          </label><br>
+          <label>
+            <p>1:30-2 horas</p>
+            <s>${{val3}}</s>
+          </label><br>
+          <label>
+            <p>2-2:30 horas</p>
+            <s>${{val4}}</s>
+          </label><br>
+          <label>
+            <p>2:30-3 horas</p>
+            <s>${{val5}}</s>
+          </label><br>
+          <label>
+            <p>3-3:30 horas</p>
+            <s>${{val6}}</s>
+          </label><br>
+          <label>
+            <p>3:30-4 horas</p>
+            <s>${{val7}}</s>
+          </label><br>
+          <label>
+            <p>4 horas en adelante</p>
+            <s>${{val8}}</s>
           </label>
+        </div>
     </div>
-    
-</nav>
-<div class="contenidos oculto" #menu>
-    <ul>
-        <li><a class="li" href="">Inicio</a></li>
-        <li><a class="li" href="admin/principal">Menu principal</a></li>
-        <li><a class="li" href="admin/usuarios">Usuarios</a></li>
-        <li><a class="li" href="admin/espacio">Gestion Espacio</a></li>
-        <li><a class="li" href="admin/tarifas">Gestion Tarifas</a></li>
-        <li><a class="li" href="admin/horarios">Horarios de Atencion</a></li>
-        <li><a class="li" href="admin/arriendos">Arriendos</a></li>
-    </ul>
 </div>
 
+
+<app-menu></app-menu>

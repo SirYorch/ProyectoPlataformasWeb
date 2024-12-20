@@ -1,33 +1,32 @@
-
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { GoogleAuthService } from '../../../services/google-auth.service';
 import { ReadService } from '../../../services/read.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
-import { MenuCComponent } from "../menu-c/menu-c.component";
+import { MenuComponent } from "../menu/menu.component";
+
 
 @Component({
-  selector: 'app-perfil',
+  selector: 'app-perfil-a',
   standalone: true,
-  imports: [FormsModule, MenuCComponent],
-  templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.scss'
+  imports: [FormsModule, MenuComponent],
+  templateUrl: './perfil-a.component.html',
+  styleUrl: './perfil-a.component.scss'
 })
-export class PerfilComponent implements OnInit{
-  
+export class PerfilAComponent {
+
   constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
 
   }
 
-  
   user:any ;
-  
   nombre = "Usuario";
   telefono = "000000000";
   direccion = "Vivienda"
   cedula= "0000000000"
   placas= "AAA-0000"
+  
   
   async ngOnInit(): Promise<void> {
     // Leer los datos del usuario desde el localStorage
@@ -53,7 +52,7 @@ export class PerfilComponent implements OnInit{
       
       // Obtener la información del usuario
       const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario || usuario.stat !== 'Cliente') {
+      if (!usuario || usuario.stat !== 'Admin') {
         // Redirigir al inicio si el estado del usuario no es 'Cliente'
         
       this.router.navigate(['']); // Redirigir en caso de error
@@ -79,7 +78,5 @@ export class PerfilComponent implements OnInit{
       placa: this.placas,
     }) 
   }
-
-  
 
 }

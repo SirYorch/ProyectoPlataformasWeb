@@ -1,51 +1,63 @@
-<!--Contenidos-->
-
 <div class="selector">
     <strong>Arriendos</strong>
-</div>
-<div class="ventana vertical">
+  </div>
+  
+  <div class="ventana vertical">
     <section class="no-border aa-section">
-        <b>Placa</b>
-        <p>Estado</p>
+      <p>Eliminar</p>
+      <b>Placa</b>
+      <p >Estado</p>
+      <p class="extra">Inicio</p>
+      <p class="extra">Fin</p>
+      <p class="extra">Nombre</p>
     </section>
-    <section class="aa-section">
-        <b>ASD-293</b>
-        <p>Dentro</p>
-    </section>
-    <section class="aa-section">
-        <b>ASD-293</b>
-        <p>Dentro</p>
-    </section>
-    <section class="aa-section">
-        <b>ASD-293</b>
-        <p>Dentro</p>
-    </section>
-
-    <button class="button aa-button ae-button">Agregar</button>
-</div>
-
-<!--Menu-->
-<nav>
-    <div class="menu">
-        <label class="hamburger">
-            <input type="checkbox" (click)="swvisible()">
-            <svg viewBox="0 0 32 32">
-              <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
-              <path class="line" d="M7 16 27 16"></path>
-            </svg>
-          </label>
+  
+    <!-- Listado dinámico de arriendos -->
+<section *ngFor="let arriendo of arriendos" class="aa-section">
+    <div class="exit"><a (click)="eliminarArriendo(arriendo.id)">X</a></div>
+    <b>{{ arriendo.placa }}</b>
+    <p>{{ arriendo.estado }}</p>
+    <p class="extra">{{ arriendo.inicio }}</p>
+    <p class="extra">{{ arriendo.fin }}</p>
+    <p class="extra">{{ arriendo.nombreUsuario }}</p>
+  </section>
+  
+  
+    <button class="button aa-button ae-button" (click)="desplegarCrear()">Agregar</button>
+  </div>
+  
+  <div class="crearArriendos" #crear>
+    <div class="exit"><a (click)="desplegarCrear()">X</a></div>
+    <div class="selector">
+      <strong>Crear</strong>
     </div>
+    <label>
+      Placa
+      <input type="text" [(ngModel)]="nuevoArriendo.placa" (blur)="buscarUsuarioPorPlaca()" placeholder="Placa del vehículo" />
+    </label>
+    <label>
+      Nombre
+      <input type="text" [(ngModel)]="nuevoArriendo.nombreUsuario" disabled placeholder="Nombre del usuario" />
+    </label>
     
-</nav>
-<div class="contenidos oculto" #menu>
-    <ul>
-        <li><a class="li" href="">Inicio</a></li>
-        <li><a class="li" href="admin/principal">Menu principal</a></li>
-        <li><a class="li" href="admin/usuarios">Usuarios</a></li>
-        <li><a class="li" href="admin/espacio">Gestion Espacio</a></li>
-        <li><a class="li" href="admin/tarifas">Gestion Tarifas</a></li>
-        <li><a class="li" href="admin/horarios">Horarios de Atencion</a></li>
-        <li><a class="li" href="admin/arriendos">Arriendos</a></li>
-    </ul>
-</div>
+    <label>
+      Inicio
+      <input type="date" [(ngModel)]="nuevoArriendo.inicio" />
+    </label>
+    <label>
+      Fin
+      <input type="date" [(ngModel)]="nuevoArriendo.fin" />
+    </label>
+    <label>
+      Estado
+      <select [(ngModel)]="nuevoArriendo.estado">
+        <option value="Pendiente">Pendiente</option>
+        <option value="Dentro">Dentro</option>
+        <option value="Finalizado">Finalizado</option>
+      </select>
+    </label>
+    <button class="ah-button button" (click)="crearArriendo()">Guardar</button>
+  </div>
+  
 
+  <app-menu></app-menu>
