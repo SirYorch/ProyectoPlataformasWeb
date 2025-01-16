@@ -5,10 +5,11 @@ import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { MenuCComponent } from "../menu-c/menu-c.component";
+import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.component";
 @Component({
   selector: 'app-main-c',
   standalone: true,
-  imports: [MenuCComponent],
+  imports: [MenuCComponent, ParqueaderoComponent],
   templateUrl: './main-c.component.html',
   styleUrl: './main-c.component.scss'
 })

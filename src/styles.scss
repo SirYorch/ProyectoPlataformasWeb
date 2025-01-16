@@ -6,7 +6,13 @@
 
     --blueD: #6096BA ;
 
-    --blueL:#A4C1D5 ;
+    --blueL:#ACD2ED ;
+
+    --green:#B9FFB7;
+
+    --reserved:#58A4DA;
+
+    --used:#79B6E2;
 
     --Black:#557 ;   /*uso solo si es necesario;*/
 }
@@ -29,6 +35,70 @@ body{
     box-sizing: border-box;
 }
 
+h2{
+    color: var(--white);
+    font-size: 30px;
+    text-align: center;
+    margin: 20px;
+}
+.centrado{
+
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.Parqueadero{
+    background-color:var(--blueL);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 10px;
+    width: 70vw;
+}
+.Parqueadero .fila{
+    flex-direction:initial
+}
+
+.fila{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ventana .Parqueadero label{
+    color: var(--white);
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 10px;
+    margin: 5px;
+}
+.Parqueadero .marcadores{
+    display: flex;
+    flex-direction:row ;
+}
+
+.espacios label{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    display: inline-block;
+}
+.Parqueadero .marcadores .disponible{
+    color: var(--blueD);
+}
+.ocupado{
+    background-color: var(--used);
+}
+.disponible{
+    background-color: var(--green);
+}
+.reservado{
+    background-color: var(--reserved);
+}
 
     /* login  */
     .exit a{

@@ -4,12 +4,13 @@ import { UserInfoService } from '../../../services/user-info.service';
 import { Router } from '@angular/router';
 import { ReadService } from '../../../services/read.service';
 import { MenuComponent } from "../menu/menu.component";
+import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.component";
 
 
 @Component({
   selector: 'app-main-a',
   standalone: true,
-  imports: [MenuComponent],
+  imports: [MenuComponent, ParqueaderoComponent],
   templateUrl: './main-a.component.html',
   styleUrl: './main-a.component.scss'
 })
