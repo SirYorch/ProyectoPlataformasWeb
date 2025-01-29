@@ -3,9 +3,9 @@
   </div>
   
   <div class="ventana vertical">
-    <section class="no-border aa-section">
+    <section class="no-border aa-section arriendoss">
       <p>Eliminar</p>
-      <b>Placa</b>
+      <p><b>Placa</b></p>
       <p >Estado</p>
       <p class="extra">Inicio</p>
       <p class="extra">Fin</p>
@@ -13,9 +13,9 @@
     </section>
   
     <!-- Listado dinámico de arriendos -->
-<section *ngFor="let arriendo of arriendos" class="aa-section">
+<section *ngFor="let arriendo of arriendos" class="aa-section arriendoss">
     <div class="exit"><a (click)="eliminarArriendo(arriendo.id)">X</a></div>
-    <b>{{ arriendo.placa }}</b>
+    <p><b>{{ arriendo.placa }}</b></p>
     <p>{{ arriendo.estado }}</p>
     <p class="extra">{{ arriendo.inicio }}</p>
     <p class="extra">{{ arriendo.fin }}</p>

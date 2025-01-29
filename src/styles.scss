@@ -56,8 +56,10 @@ h2{
     align-items: center;
     justify-content: center;
     margin: auto;
+    margin-bottom: 20px;
     padding: 10px;
-    width: 70vw;
+    width: 80vw;
+    border-radius: 10px;
 }
 .Parqueadero .fila{
     flex-direction:initial
@@ -104,7 +106,7 @@ h2{
     .exit a{
         position: absolute;
         top: 30px;
-        right: 40px;
+        right: 10px;
         color: var(--blueD);
         font-size: 50px;
         text-decoration: none;
@@ -349,25 +351,24 @@ h2{
 
 
 .bienvenida{
-    
-    position: initial;
     width: 75%;
     text-align: center;
     margin: 10px auto;
     color: var(--blueD);
     margin-bottom: 20px;
     max-width: fit-content;
-    height: fit-content;
+    height: max-content;
 }
 .datos-bienvenida{
     display: block;
-    height: fit-content;
+    height:max-content;
     overflow: visible;
 }
 
 .tarifas{
+    display: flex;
     width: 90%;
-    margin: 10px auto;
+    margin: 0px auto;
     text-align: center;
     color: var(--blueD);
     margin-bottom:30px
@@ -375,6 +376,13 @@ h2{
 .tarifas label{
     display: flex;
     justify-content: space-around;
+}
+.tarifas p, .tarifas input{
+    width: 50%;
+    text-align: center;
+}
+.tarifas input{
+    width: 20vw;
 }
 .tarifas p,.tarifas s{
     text-decoration: none;
@@ -384,10 +392,12 @@ h2{
     display: flex;
     color: var(--blueD);
     text-align: center;
-    margin-bottom:30px
+    margin-bottom: 15px;
+}
+h2{
+    color: var(--blueD);
 }
 .croquis img{
-    margin-top: 30px;
     width: 90vw;
     height: auto;
 }
@@ -520,7 +530,6 @@ article{
     position: relative;
     overflow: hidden;
     width: 100vw;
-    max-height: 500px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -671,6 +680,10 @@ label{
     text-align: center;
     margin-bottom: 7px;
 }
+label p{
+    text-justify: center;
+}
+
 label input{
     color:var(--blueL);
     margin: auto;
@@ -699,9 +712,9 @@ label input:focus{
     
     transition: font-size .1s linear;
 }
+
+
 .cp{
-   
-    position: absolute;
     bottom: 20px;
     left: 0;
     right: 0;
@@ -773,20 +786,21 @@ section b{
 }
 .motd{
     flex-direction: column;
-    height: 150px;
+    height: fit-content;
 }
 textarea{
-    
+    resize: vertical;
     margin-top: 15px;
     width: 300px;
-    min-height: 100px;
     background-color: var(--blueL);
     border: none;
     border-radius: 20px;
     padding: 13px;
     font-size: 19px;
     color: var(--white);
+    height: 200px;
 }
+
 textarea:focus{
     outline: none;
     box-shadow: 0 0 15px var(--blueD) inset;
@@ -834,6 +848,13 @@ textarea:focus{
  }
 .no-border{
     border: none;
+}
+.arriendoss{
+    display: flex;
+}
+.arriendoss p, .arriendos .exit{
+    text-align: center;
+    width: 16%;
 }
 
 .aa-button{
@@ -958,6 +979,7 @@ textarea:focus{
 
     .datos input{
         width:400px;
+        color:var(--blueD)
     }
 
 
@@ -995,21 +1017,19 @@ textarea:focus{
     .ae-input input{
         right: 200px;
     }
-    .motd{
-        height: 350px;
-    }
+    
     textarea{
         min-height: 300px;
     }
     .ae-button{
-        position: absolute;
+        
         top:-90px;
         right: 100px;
         width:350px;
         height:50px;
     }
     .cp{
-        position: absolute;
+        
         top:-70px;
         right: 100px;
         left: auto;
@@ -1113,5 +1133,15 @@ textarea:focus{
     .croquis img{
         width: 90%;
     }
-    
+    .exit a{
+        right: 40px;
+    }
+    .arriendoss p{
+        width: 16%;
+    }
+    .arriendoss .exit{
+        justify-content: center;
+        text-align: center;
+        width: 16%;
+    }
 }
