@@ -1,85 +1,71 @@
-
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GoogleAuthService } from '../../../services/google-auth.service';
-import { ReadService } from '../../../services/read.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MenuCComponent } from "../menu-c/menu-c.component";
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [FormsModule, MenuCComponent],
+  imports: [FormsModule, CommonModule, MenuCComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
-export class PerfilComponent implements OnInit{
+export class PerfilComponent implements OnInit {
   
-  constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
+  constructor(private googleuser: GoogleAuthService, private router: Router, private userService: UserInfoService) {}
 
-  }
+  user: any;
+  nombre = "";
+  telefono = "";
+  direccion = "";
+  cedula = "";
+  placa = "";
+  tipo_usuario = "";
 
-  
-  user:any ;
-  
-  nombre = "Usuario";
-  telefono = "000000000";
-  direccion = "Vivienda"
-  cedula= "0000000000"
-  placas= "AAA-0000"
-  
   async ngOnInit(): Promise<void> {
-    // Leer los datos del usuario desde el localStorage
     this.user = this.userService.getUser();
     
     if (!this.user) {
-      // Redirigir al inicio de sesión si el usuario no está en localStorage
-      this.router.navigate(['login']); // Redirigir en caso de error
-      return; // Terminar la ejecución del método
+      this.router.navigate(['login']);
+      return;
     }
-    
+
     try {
-      // Verificar si el usuario existe en Firestore
       const userExists = await this.googleuser.checkUserExists(this.user.uid);
-
-
-
       if (!userExists) {
-        
-      this.router.navigate(['login']); // Redirigir en caso de error
-        return; // Terminar la ejecución del método
+        this.router.navigate(['login']);
+        return;
       }
-      
-      // Obtener la información del usuario
+
       const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario || usuario.stat !== 'Cliente') {
-        // Redirigir al inicio si el estado del usuario no es 'Cliente'
-        
-      this.router.navigate(['']); // Redirigir en caso de error
-      }else{
+      if (!usuario) {
+        this.router.navigate(['']);
+      } else {
         this.nombre = usuario.nombre;
         this.telefono = usuario.telefono;
         this.direccion = usuario.direccion;
-        this.cedula = usuario.cedula
-        this.placas = usuario.placa
-
+        this.cedula = usuario.cedula;
+        this.placa = usuario.placa;
+        this.tipo_usuario = usuario.tipo_usuario;
       }
     } catch (error) {
-      console.error('Error durante la validación del usuario:', error);
+      console.error('Error al obtener la información del usuario:', error);
     }
   }
 
-  async guardarInfo(){
-    await this.googleuser.registerUser(this.user.uid,{
+  async guardarInfo() {
+    await this.googleuser.actualizarUsuario(this.user.uid, {
       nombre: this.nombre,
       telefono: this.telefono,
       direccion: this.direccion,
       cedula: this.cedula,
-      placa: this.placas,
-    }) 
+      placa: this.placa,
+      tipo_usuario: this.tipo_usuario
+    });
+
+    console.log("Información actualizada correctamente");
   }
-
-  
-
 }

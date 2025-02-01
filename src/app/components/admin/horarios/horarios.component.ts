@@ -78,7 +78,7 @@ export class HorariosComponent {
     }
   }
 
-  guardarGeneral() {
+  async guardarGeneral() {
     const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
     // Crear los timestamps usando Firebase.firestore.Timestamp
@@ -95,11 +95,13 @@ export class HorariosComponent {
       salida2: cierreSabadoDomingo,
     };
 
-    // Guardar los datos en Firestore
-    this.googleuser.saveGeneral(horarioData)
-      .then(() => console.log('Horario guardado correctamente'))
-      .catch((error) => console.error('Error al guardar el horario:', error));
+    try {
+      await this.googleuser.saveGeneral(horarioData); // ✅ Se usa `await` correctamente
+      console.log('Horario guardado correctamente');
+  } catch (error) {
+      console.error('Error al guardar el horario:', error);
   }
+}
 
   // Función para crear un timestamp de Firestore a partir de fecha y hora
   createFirestoreTimestamp(date: string, time: string): Timestamp {

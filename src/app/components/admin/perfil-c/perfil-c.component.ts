@@ -77,7 +77,7 @@ export class PerfilCComponent {
   }
 
   async guardarInfo(){
-    await this.googleuser.SaveUser(this.user,{
+    await this.googleuser.actualizarUsuario(this.user,{
       nombre: this.nombre,
       telefono: this.telefono,
       direccion: this.direccion,

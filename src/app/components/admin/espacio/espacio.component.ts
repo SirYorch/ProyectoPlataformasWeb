@@ -72,18 +72,19 @@ export class EspacioComponent {
     this.user = this.userService.getUser();
     
     if (!this.user) {
-      // Redirigir al inicio de sesión si el usuario no está en localStorage
       this.router.navigate(['login']); // Redirigir en caso de error
-      return; // Terminar la ejecución del método
+      return;
     }
     
     try {
-      // Verificar si el usuario existe en Firestore
       const userExists = await this.googleuser.checkUserExists(this.user.uid);
       const tarifas:any|null = await this.googleuser.getTarifas();
-      const espacio:any|null = await this.googleuser.getEspacio();
-      console.log(tarifas)
-      console.log(espacio)
+      const espacio:any|null = await this.googleuser.getEspacios();  // ✅ Cambiado a `getEspacios()`
+
+      console.log(tarifas);
+      console.log(espacio);
+
+      // Asignar valores de tarifas
       this.motd = tarifas.motd;
       this.parqueaderoEstado = tarifas.parqueaderoEstado;
       this.plazasDisponibles = tarifas.plazasDisponibles;
@@ -95,27 +96,26 @@ export class EspacioComponent {
       this.tarifas6 = tarifas.tarifas6;
       this.tarifas7 = tarifas.tarifas7;
       this.tarifas8 = tarifas.tarifas8;
+
+      // Asignar valores del espacio
       this.ocupadas = espacio.ocupados;
       this.reservadas = espacio.reservados;
       this.totales = espacio.totales;
       this.dia = espacio.dia;
 
-
       if (!userExists) {
-        
-      this.router.navigate(['login']); // Redirigir en caso de error
-        return; // Terminar la ejecución del método
+        this.router.navigate(['login']); // Redirigir en caso de error
+        return;
       }
       
-      // Obtener la información del usuario
+      // Verificar si el usuario es admin
       const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario || usuario.stat !== 'Admin') {
-        // Redirigir al inicio si el estado del usuario no es 'Cliente'
-        
-      this.router.navigate(['']); // Redirigir en caso de error
+      if (!usuario || usuario.tipo_usuario !== 'Admin') {
+        this.router.navigate(['']); // Redirigir si no es admin
       }
     } catch (error) {
       console.error('Error durante la validación del usuario:', error);
     }
-  }
+}
+
 }
