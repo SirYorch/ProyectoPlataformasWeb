@@ -53,21 +53,25 @@ export class LoginComponent implements OnInit {
   async logguear() {
     const result = await this.googleAuthService.signInWithGoogle();
     if (result) {
-      this.currentUser = result.user;
-      if (result.isNewUser) {
-        this.isRegisterView = true;
-      } else {
-        const tipoUsuario = await this.googleAuthService.getTipoUsuario(this.currentUser.uid);
-        this.userService.saveUser({ uid: this.currentUser.uid });
+        this.currentUser = result.user;
+        const userExists = await this.googleAuthService.checkUserExists(this.currentUser.uid);
 
-        if (tipoUsuario === 'ADMIN') {
-          this.router.navigate(['/admin/principal']);
+        if (!userExists) {
+            console.log("Usuario no encontrado en la base de datos. Mostrando formulario de registro...");
+            this.isRegisterView = true; // Mostrar formulario de registro
         } else {
-          this.router.navigate(['/cliente/principal']);
+            const tipoUsuario = await this.googleAuthService.getTipoUsuario(this.currentUser.uid);
+            this.userService.saveUser({ uid: this.currentUser.uid });
+
+            if (tipoUsuario === 'ADMIN') {
+                this.router.navigate(['/admin/principal']);
+            } else {
+                this.router.navigate(['/cliente/principal']);
+            }
         }
-      }
     }
-  }
+}
+
 
   async register() {
     if (this.currentUser && this.validarCampos()) {

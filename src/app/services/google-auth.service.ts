@@ -13,11 +13,10 @@ export class GoogleAuthService {
   private espaciosUrl = 'http://localhost:8080/api/espacios';
   private horariosUrl = 'http://localhost:8080/api/horarios';
 
-  public router = inject(Router);
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient, private auth: Auth) {}
+  constructor(private http: HttpClient, private auth: Auth, private router: Router) {}
 
   setUser(data: any): void {
     this.userSubject.next(data);
@@ -45,32 +44,41 @@ export class GoogleAuthService {
 
   async checkUserExists(uid: string): Promise<boolean> {
     try {
-      const response = await this.http.get<boolean>(`${this.apiUrl}/${uid}`).toPromise();
-      return response ? true : false;
-    } catch (error) {
-      console.error("Error al verificar si el usuario existe:", error);
-      return false;
+        const response = await this.http.get<any>(`${this.apiUrl}/${uid}`).toPromise();
+        return response !== null && response !== undefined; // Devuelve `false` si no encuentra el usuario
+    } catch (error: unknown) { // Agregamos ": unknown" explícitamente
+        const err = error as any; // Convertimos error a "any" para evitar problemas de tipado
+        if (err.status === 404) {
+            return false; // Si es error 404, significa que el usuario no existe aún
+        }
+        console.error("Error al verificar si el usuario existe:", err.message || err);
+        return false; // En caso de otros errores, asumir que no existe
     }
-  }
+}
 
-  async registerUser(uid: string, userData: any): Promise<void> {
-    try {
+
+async registerUser(uid: string, userData: any): Promise<void> {
+  try {
       await this.http.post(`${this.apiUrl}`, { uid, ...userData }).toPromise();
       console.log("Usuario registrado en PostgreSQL");
-    } catch (error) {
-      console.error("Error al registrar usuario:", error);
-    }
+  } catch (error: unknown) {
+      const err = error as any; // Convertimos error a "any"
+      console.error("Error al registrar usuario:", err.message || err);
   }
+}
 
-  async getTipoUsuario(uid: string): Promise<string | null> {
-    try {
+async getTipoUsuario(uid: string): Promise<string | null> {
+  try {
       const response = await this.http.get<any>(`${this.apiUrl}/${uid}`).toPromise();
       return response ? response.tipo_usuario : null;
-    } catch (error) {
-      console.error("Error al obtener tipo de usuario:", error);
+  } catch (error: unknown) {
+      const err = error as any; // Convertimos error a "any"
+      console.error("Error al obtener tipo de usuario:", err.message || err);
       return null;
-    }
   }
+}
+
+
 
   async obtenerUsuarios(): Promise<any[]> {
     try {
