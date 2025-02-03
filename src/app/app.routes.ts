@@ -11,6 +11,9 @@ import { LoginComponent } from './components/extras/login/login.component';
 import { MainCComponent } from './components/cliente/main-c/main-c.component';
 import { PerfilCComponent } from './components/admin/perfil-c/perfil-c.component';
 import { PerfilAComponent } from './components/admin/perfil-a/perfil-a.component';
+import { HistorialComponent } from './components/cliente/historial/historial.component';
+import { ReservasComponent } from './components/admin/reservas/reservas.component';
+import { TicketsComponent } from './components/admin/tickets/tickets.component';
 
 export const routes: Routes = [
     {
@@ -60,5 +63,17 @@ export const routes: Routes = [
     {
         path:"login",
         component: LoginComponent
+    },
+    {
+        path:"cliente/historial",
+        component: HistorialComponent
+    },
+    {
+        path:"admin/reservas",
+        component: ReservasComponent
+    },
+    {
+        path:"admin/tickets",
+        component: TicketsComponent
     },
 ];

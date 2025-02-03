@@ -6,11 +6,12 @@ import { UserInfoService } from '../../../services/user-info.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from "../menu/menu.component";
+import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.component";
 
 @Component({
   selector: 'app-espacio',
   standalone: true,
-  imports: [FormsModule, MenuComponent],
+  imports: [FormsModule, MenuComponent, ParqueaderoComponent],
   templateUrl: './espacio.component.html',
   styleUrl: './espacio.component.scss'
 })
@@ -28,16 +29,8 @@ export class EspacioComponent {
   }
   
   motd = "0";
-  parqueaderoEstado = "0";
-  plazasDisponibles = "0";
-  tarifas1 = "0";
-  tarifas2 = "0";
-  tarifas3 = "0";
-  tarifas4 = "0";
-  tarifas5 = "0";
-  tarifas6 = "0";
-  tarifas7 = "0";
-  tarifas8 = "0";
+  filas =0;
+  columnas =0;
   
 
   user:any;
@@ -46,16 +39,7 @@ export class EspacioComponent {
     this.googleuser.saveTarifas(
       {
         motd:this.motd,
-        parqueaderoEstado: this.parqueaderoEstado,
-        plazasDisponibles:this.plazasDisponibles,
-        tarifas1:this.tarifas1,
-        tarifas2:this.tarifas2,
-        tarifas3:this.tarifas3,
-        tarifas4:this.tarifas4,
-        tarifas5:this.tarifas5,
-        tarifas6:this.tarifas6,
-        tarifas7:this.tarifas7,
-        tarifas8:this.tarifas8,
+
       }
     );
     this.googleuser.saveEspacio({
@@ -85,16 +69,6 @@ export class EspacioComponent {
       console.log(tarifas)
       console.log(espacio)
       this.motd = tarifas.motd;
-      this.parqueaderoEstado = tarifas.parqueaderoEstado;
-      this.plazasDisponibles = tarifas.plazasDisponibles;
-      this.tarifas1 = tarifas.tarifas1;
-      this.tarifas2 = tarifas.tarifas2;
-      this.tarifas3 = tarifas.tarifas3;
-      this.tarifas4 = tarifas.tarifas4;
-      this.tarifas5 = tarifas.tarifas5;
-      this.tarifas6 = tarifas.tarifas6;
-      this.tarifas7 = tarifas.tarifas7;
-      this.tarifas8 = tarifas.tarifas8;
       this.ocupadas = espacio.ocupados;
       this.reservadas = espacio.reservados;
       this.totales = espacio.totales;

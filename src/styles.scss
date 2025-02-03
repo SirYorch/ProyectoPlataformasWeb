@@ -50,19 +50,44 @@ h2{
     transform: translateY(-50%);
 }
 .Parqueadero{
-    background-color:var(--blueL);
+    background-color:var(--white);
+    border: 2px solid var(--blueL);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items:baseline;
     justify-content: center;
     margin: auto;
     margin-bottom: 20px;
     padding: 10px;
     width: 80vw;
+    overflow-x: hidden;
     border-radius: 10px;
+    position: relative;
+}
+.Parqueadero h2, .Parqueadero .marcadores{
+    position: absolute;
+}
+.Parqueadero h2{
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.Parqueadero .marcadores{
+    bottom: 5px;
+    left: 0;
+    right: 0;
+}
+#espacios{
+    margin-top:50px;
+    margin-bottom: 50px;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
 }
 .Parqueadero .fila{
-    flex-direction:initial
+    flex-direction: row;
+    flex-wrap: nowrap;
+    min-width: fit-content;
 }
 
 .fila{
@@ -82,6 +107,7 @@ h2{
     display: flex;
     flex-direction:row ;
 }
+
 
 .espacios label{
     width: 40px;
@@ -364,7 +390,6 @@ h2{
     height:max-content;
     overflow: visible;
 }
-
 .tarifas{
     display: flex;
     width: 90%;
@@ -376,17 +401,30 @@ h2{
 .tarifas label{
     display: flex;
     justify-content: space-around;
+    width: 100%;
 }
 .tarifas p, .tarifas input{
+    height: auto;
     width: 50%;
     text-align: center;
+}
+.tarifas p{
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .tarifas input{
     width: 20vw;
 }
 .tarifas p,.tarifas s{
     text-decoration: none;
+    
     display: inline-block;
+}
+.tarifas p{
+    width: 60%;
+}
+.tarifas s{
+    width: 40%;
 }
 .croquis{
     display: flex;
@@ -457,7 +495,7 @@ nav{
 .crearArriendos{
     padding: 20px;
     width: 300px;
-    position: absolute;
+    position: fixed;
     top: -100vh;;
     left: 50%;
     transform: translateX(-50%);
@@ -511,7 +549,7 @@ main{
     margin-top: calc(13vh + 5px);
     height: auto;
     max-width:100vw;
-    background-color: #E7ECEF;
+    background-color: var(--white);
     overflow: hidden;
 }
 .bg{
@@ -626,7 +664,7 @@ footer div{
 .ventana{
     position: relative;
     width: 100vw;
-    height: 750px;
+    // height: 750px;
     display: flex;
     flex-direction: column;
     background-color: var(--white);
@@ -662,7 +700,7 @@ footer div{
     border-radius: 50%;
     overflow: hidden;
     display: flex;
-    background-color: #f3f3f3;
+    background-color: var(--white);
 }
 .ventana .imagen img{
     width: 75%;
@@ -679,9 +717,6 @@ label{
     display: flex;
     text-align: center;
     margin-bottom: 7px;
-}
-label p{
-    text-justify: center;
 }
 
 label input{
@@ -866,7 +901,37 @@ textarea:focus{
 .aa-section{   
     justify-content: space-around;
 }
+.editar-espacio{
+    margin-bottom: 40px;
+}
 
+.absoluto{
+    margin-bottom: 20px;
+}
+
+.entrar, .reservar{
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+
+.exit-small a{
+    font-size: 40px;
+    top: 5px;
+    right: 10px;
+}
+.ver-reservas{
+    width: 140px;;
+    right: 50px;
+}
+
+.reservas{
+    width: 98%;
+}
+.margen-bottom{
+    margin-bottom: 20px;
+}
 @media only screen and (min-width: 1200px) {
     body{
         margin: 0;
@@ -928,7 +993,6 @@ textarea:focus{
     .ventana {
         width: calc(100vw - 305px);
         margin-left: 305px;
-        overflow-x: hidden;
         overflow-y: auto;
     }
     .logg{
@@ -987,8 +1051,6 @@ textarea:focus{
     .ventana{
         display: flex;
         flex-direction: row;
-        height: 90vh;
-        
     }
     .perfil{
         
@@ -1011,8 +1073,8 @@ textarea:focus{
     }
     .ventana .espacio{
         padding: 0 150px;
-        height: 100%;
-        display: flex;
+        height: 20%;
+        justify-content:flex-start;
     }
     .ae-input input{
         right: 200px;
@@ -1088,8 +1150,19 @@ textarea:focus{
     }
     .mprincipal{
         flex-direction: column;
+        overflow-y: visible;
     }
-    
+    .entrar{
+        top:-170px;
+    }
+
+    .reservar{
+width: 200px;
+margin: auto 100px;
+    }
+    .percentage{
+        width: 200px;
+    }
     .datos-bienvenida .bienvenida {
         margin: 40px 50px 80px 50px;
         flex: 1 1 0; 
@@ -1121,6 +1194,9 @@ textarea:focus{
         margin-bottom: 10px;
         width: calc(100% );
     }
+    .absoluto{
+        position: absolute;
+    }
 
     .ventana .tc{
         display: flex;
@@ -1143,5 +1219,22 @@ textarea:focus{
         justify-content: center;
         text-align: center;
         width: 16%;
+    }
+    app-parqieadero{
+        width: min-content;
+    }
+    .Parqueadero{
+        align-items: center;
+        text-align: center;
+        width: fit-content;
+    }
+    .fila{
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    .exit-small a{
+        top:-2px;
+        right: 10px;
+
     }
 }

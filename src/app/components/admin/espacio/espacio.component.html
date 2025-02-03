@@ -7,13 +7,11 @@
 </div>
 <div class="ventana vertical">
     <div class="espacio">
-        <label class="ae-input"><p>Plazas totales</p> <input  type="text" [(ngModel)]="totales"></label>
-        <label class="ae-input"><p>Plazas disponibles</p> <input  type="text" [(ngModel)]="plazasDisponibles"></label>
-        <label class="ae-input"><p>Plazas ocupadas</p> <input  type="text" [(ngModel)]="ocupadas"></label>
-        <label class="ae-input"><p>Plazas reservadas</p> <input  type="text" [(ngModel)]="reservadas"></label>
-        <label class="ae-input"><p>Clientes en dia</p> <input  type="text" [(ngModel)]="dia"></label>
+        <label class="ae-input"><p>Numero de filas</p> <input  type="text" [(ngModel)]="filas"></label>
+        <label class="ae-input"><p>Numero de columnas</p> <input  type="text" [(ngModel)]="columnas"></label>
     </div>
-    <button class="ae-button button bajo" (click)="guardarDatos()">Editar</button>
+    <button class="ae-button button bajo absoluto editar-espacio" (click)="guardarDatos()">Editar</button>
+    <app-parqueadero></app-parqueadero>
 </div>
 
 
