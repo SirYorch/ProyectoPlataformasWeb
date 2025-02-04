@@ -70,17 +70,7 @@ export class EspacioComponent {
 
       // Asignar valores de tarifas
       this.motd = tarifas.motd;
-      this.parqueaderoEstado = tarifas.parqueaderoEstado;
-      this.plazasDisponibles = tarifas.plazasDisponibles;
-      this.tarifas1 = tarifas.tarifas1;
-      this.tarifas2 = tarifas.tarifas2;
-      this.tarifas3 = tarifas.tarifas3;
-      this.tarifas4 = tarifas.tarifas4;
-      this.tarifas5 = tarifas.tarifas5;
-      this.tarifas6 = tarifas.tarifas6;
-      this.tarifas7 = tarifas.tarifas7;
-      this.tarifas8 = tarifas.tarifas8;
-
+      
       // Asignar valores del espacio
       this.ocupadas = espacio.ocupados;
       this.reservadas = espacio.reservados;

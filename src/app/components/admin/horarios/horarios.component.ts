@@ -1,12 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { GoogleAuthService } from '../../../services/google-auth.service';
-import { ReadService } from '../../../services/read.service';
 import { Router } from '@angular/router';
-import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
-import { Timestamp } from 'firebase/firestore'; // Importar Timestamp
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from "../menu/menu.component";
+import { UserInfoService } from '../../../services/user-info.service';
+import { HorarioService } from '../../../services/horario.service'; // 📌 Nuevo servicio
 
 @Component({
   selector: 'app-horarios',
@@ -21,17 +19,16 @@ export class HorariosComponent {
   @ViewChild('editar') editar!: ElementRef;
   @ViewChild('editarGeneral') editarGeneral!: ElementRef;
 
-  horarios: any;
+  horarios: any[] = [];
   general: any;
   user: any;
-  horaIniciogl = "6:45 AM";
-  horaIniciogs = "8:00AM";
-  horaFingl = "8:00PM";
-  horaFings = "6:00PM";
+  horaIniciogl = "06:45";
+  horaIniciogs = "08:00";
+  horaFingl = "20:00";
+  horaFings = "18:00";
 
   constructor(
-    private googleuser: GoogleAuthService,
-    private read: ReadService,
+    private horarioService: HorarioService, // 📌 Usamos HorarioService
     private router: Router,
     private userService: UserInfoService
   ) {}
@@ -44,92 +41,43 @@ export class HorariosComponent {
     }
 
     try {
-      const userExists = await this.googleuser.checkUserExists(this.user.uid);
-      this.horarios = await this.googleuser.getHorarios();
-      this.general = await this.googleuser.getGeneral();
+      this.horarios = await this.horarioService.getHorarios(); // ✅ Obtener horarios de PostgreSQL
+      this.general = await this.horarioService.getGeneral();   // ✅ Obtener configuración general
+      
+      console.log("📌 Horarios obtenidos:", this.horarios);
+      console.log("📌 Configuración general obtenida:", this.general);
 
-      console.log(this.horarios);
-      console.log(this.general);
-      // Convertir las horas al formato de 24 horas
-      this.horaIniciogl = this.convertTo24HourFormat(
-        `${this.general.entrada1.hora}:${this.general.entrada1.minutos} ${this.general.entrada1.ampm}`
-      );
-      this.horaIniciogs = this.convertTo24HourFormat(
-        `${this.general.entrada2.hora}:${this.general.entrada2.minutos} ${this.general.entrada2.ampm}`
-      );
-      this.horaFingl = this.convertTo24HourFormat(
-        `${this.general.salida1.hora}:${this.general.salida1.minutos} ${this.general.salida1.ampm}`
-      );
-      this.horaFings = this.convertTo24HourFormat(
-        `${this.general.salida2.hora}:${this.general.salida2.minutos} ${this.general.salida2.ampm}`
-      );
+      this.horaIniciogl = this.general.entrada1;
+      this.horaIniciogs = this.general.entrada2;
+      this.horaFingl = this.general.salida1;
+      this.horaFings = this.general.salida2;
 
-      if (!userExists) {
-        this.router.navigate(['login']);
-        return;
-      }
-
-      const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario || usuario.stat !== 'Admin') {
-        this.router.navigate(['']);
-      }
     } catch (error) {
-      console.error('Error durante la validación del usuario:', error);
+      console.error('❌ Error al obtener horarios:', error);
     }
   }
 
   async guardarGeneral() {
-    const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
-
-    // Crear los timestamps usando Firebase.firestore.Timestamp
-    const aperturaLunesViernes = this.createFirestoreTimestamp(today, this.horaIniciogl);
-    const cierreLunesViernes = this.createFirestoreTimestamp(today, this.horaFingl);
-    const aperturaSabadoDomingo = this.createFirestoreTimestamp(today, this.horaIniciogs);
-    const cierreSabadoDomingo = this.createFirestoreTimestamp(today, this.horaFings);
-
-    // Preparar los datos para guardarlos
     const horarioData = {
-      entrada1: aperturaLunesViernes,
-      entrada2: aperturaSabadoDomingo,
-      salida1: cierreLunesViernes,
-      salida2: cierreSabadoDomingo,
+      entrada1: this.horaIniciogl,
+      entrada2: this.horaIniciogs,
+      salida1: this.horaFingl,
+      salida2: this.horaFings
     };
 
     try {
-      await this.googleuser.saveGeneral(horarioData); // ✅ Se usa `await` correctamente
-      console.log('Horario guardado correctamente');
-  } catch (error) {
-      console.error('Error al guardar el horario:', error);
-  }
-}
-
-  // Función para crear un timestamp de Firestore a partir de fecha y hora
-  createFirestoreTimestamp(date: string, time: string): Timestamp {
-    const [hours, minutes] = time.split(':').map(Number); // Divide horas y minutos
-    const fullDate = new Date(date); // Crea un objeto Date con la fecha
-    fullDate.setHours(hours, minutes, 0, 0); // Establece hora, minutos, segundos, milisegundos
-    return Timestamp.fromDate(fullDate); // Retorna el timestamp de Firestore
-  }
-
-  convertTo24HourFormat(time: string): string {
-    const [hours, minutes] = time.split(/[: ]/); // Divide horas y minutos
-    const period = time.slice(-2).toUpperCase(); // Obtiene AM o PM
-    let hour = parseInt(hours, 10);
-
-    if (period === "PM" && hour !== 12) {
-      hour += 12;
-    } else if (period === "AM" && hour === 12) {
-      hour = 0;
+      await this.horarioService.saveGeneral(horarioData); // ✅ Guardar en PostgreSQL
+      console.log('✅ Horario general guardado correctamente');
+    } catch (error) {
+      console.error('❌ Error al guardar el horario:', error);
     }
-
-    return `${hour.toString().padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
   desplegarCrear() {
     this.crear.nativeElement.classList.toggle("desplegarCrear");
   }
 
-  desplegarEditar(horario:any) {
+  desplegarEditar(horario: any) {
     this.editar.nativeElement.classList.toggle("desplegarCrear");
     this.cambiarDatos(horario);
   }
@@ -138,75 +86,61 @@ export class HorariosComponent {
     this.editarGeneral.nativeElement.classList.toggle("desplegarCrear");
   }
 
-  eliminar(horario:any) {
+  eliminar(horario: any) {
+    this.horarios = this.horarios.filter((horarioE: any) => horarioE !== horario);
     console.log(this.horarios);
-    this.horarios = this.horarios.filter((horarioE:any)=> horarioE !== horario);
-    console.log(this.horarios);
-    this.googleuser.saveHorarios(this.horarios);
+    this.horarioService.saveHorarios(this.horarios); // ✅ Guardar cambios en PostgreSQL
   }
 
   nombreHorario= "";
   fechaApertura= "";
-  fechaCierre="";
-  horaApertura:any="";
-  horaCierre:any="";
+  fechaCierre= "";
+  horaApertura= "";
+  horaCierre= "";
+  horarioe:any;
+
   cambiarDatos(horario: any) {
-    if(horario != null){
-      this.horarioe =horario;
+    if (horario) {
+      this.horarioe = horario;
       console.log(horario);
       this.nombreHorario = horario.nombre;
       this.fechaApertura = horario.fechaInicio;
       this.fechaCierre = horario.fechaFin;
-      this.horaApertura = this.convertirHora(horario.inicio);
-      this.horaCierre = this.convertirHora(horario.fin);
+      this.horaApertura = horario.inicio;
+      this.horaCierre = horario.fin;
     }
-}
-
-convertirHora(horaString: string): string {
-  const [tiempo, periodo] = horaString.split(' ');
-  const [horas, minutos] = tiempo.split(':');
-  let horasNum = parseInt(horas);
-  
-  // Ajustar para PM
-  if (periodo === 'PM' && horasNum !== 12) {
-      horasNum += 12;
   }
-  // Ajustar para AM
-  if (periodo === 'AM' && horasNum === 12) {
-      horasNum = 0;
+
+  guardarEditar() {
+    this.horarioe.nombre = this.nombreHorario;
+    this.horarioe.fechaInicio = this.fechaApertura;
+    this.horarioe.fechaFin = this.fechaCierre;
+    this.horarioe.inicio = this.horaApertura;
+    this.horarioe.fin = this.horaCierre;
+    
+    this.horarioService.saveHorarios(this.horarios);
+    this.desplegarEditar(null);
+    this.resetForm();
   }
-  
-  // Retornar en formato HH:mm para input type="time"
-  return `${horasNum.toString().padStart(2, '0')}:${minutos}`;
-}
-horarioe:any ;
 
-guardarEditar(){
-  this.horarioe.nombre = this.nombreHorario
-  this.horarioe.fechaInicio = this.fechaApertura
-  this.horarioe.fechaFin = this.fechaCierre
-  this.horarioe.inicio = this.horaApertura
-  this.horarioe.fin = this.horaCierre;
-  this.googleuser.saveHorarios(this.horarios);
-  this.desplegarEditar(null);
-  this.horarioe = null;
-  this.nombreHorario= "";
-  this.fechaApertura= "";
-  this.fechaCierre= "";
-  this.horaApertura= "";
-  this.horaCierre = "";
-}
-
-crearHorario(){
-  const horario  = {
-    fechaFin: this.fechaCierre,
-    fechaInicio: this.fechaApertura,
-    fin: this.horaCierre,
-    inicio: this.horaApertura,
-    nombre: this.nombreHorario,
+  crearHorario() {
+    const horario = {
+      fechaFin: this.fechaCierre,
+      fechaInicio: this.fechaApertura,
+      fin: this.horaCierre,
+      inicio: this.horaApertura,
+      nombre: this.nombreHorario,
+    };
+    this.horarios.push(horario);
+    this.horarioService.saveHorarios(this.horarios);
   }
-  this.horarios.push(horario)
-  this.googleuser.saveHorarios(this.horarios);
-}
 
+  resetForm() {
+    this.horarioe = null;
+    this.nombreHorario = "";
+    this.fechaApertura = "";
+    this.fechaCierre = "";
+    this.horaApertura = "";
+    this.horaCierre = "";
+  }
 }

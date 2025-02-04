@@ -13,7 +13,7 @@ import { MenuCComponent } from "../menu-c/menu-c.component";
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
-export class PerfilComponent implements OnInit {
+export class PerfilComponent  {
   
   constructor(private googleuser: GoogleAuthService, private router: Router, private userService: UserInfoService) {}
 
@@ -25,36 +25,7 @@ export class PerfilComponent implements OnInit {
   placa = "";
   tipo_usuario = "";
 
-  async ngOnInit(): Promise<void> {
-    this.user = this.userService.getUser();
-    
-    if (!this.user) {
-      this.router.navigate(['login']);
-      return;
-    }
-
-    try {
-      const userExists = await this.googleuser.checkUserExists(this.user.uid);
-      if (!userExists) {
-        this.router.navigate(['login']);
-        return;
-      }
-
-      const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario) {
-        this.router.navigate(['']);
-      } else {
-        this.nombre = usuario.nombre;
-        this.telefono = usuario.telefono;
-        this.direccion = usuario.direccion;
-        this.cedula = usuario.cedula;
-        this.placa = usuario.placa;
-        this.tipo_usuario = usuario.tipo_usuario;
-      }
-    } catch (error) {
-      console.error('Error al obtener la información del usuario:', error);
-    }
-  }
+  
 
   async guardarInfo() {
     await this.googleuser.actualizarUsuario(this.user.uid, {
