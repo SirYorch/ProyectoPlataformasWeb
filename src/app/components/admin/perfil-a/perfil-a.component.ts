@@ -26,48 +26,9 @@ export class PerfilAComponent {
   direccion = "Vivienda"
   cedula= "0000000000"
   placas= "AAA-0000"
+  stat= "Cliente"
   
-  
-  async ngOnInit(): Promise<void> {
-    // Leer los datos del usuario desde el localStorage
-    this.user = this.userService.getUser();
-    
-    if (!this.user) {
-      // Redirigir al inicio de sesión si el usuario no está en localStorage
-      this.router.navigate(['login']); // Redirigir en caso de error
-      return; // Terminar la ejecución del método
-    }
-    
-    try {
-      // Verificar si el usuario existe en Firestore
-      const userExists = await this.googleuser.checkUserExists(this.user.uid);
 
-
-
-      if (!userExists) {
-        
-      this.router.navigate(['login']); // Redirigir en caso de error
-        return; // Terminar la ejecución del método
-      }
-      
-      // Obtener la información del usuario
-      const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario || usuario.stat !== 'Admin') {
-        // Redirigir al inicio si el estado del usuario no es 'Cliente'
-        
-      this.router.navigate(['']); // Redirigir en caso de error
-      }else{
-        this.nombre = usuario.nombre;
-        this.telefono = usuario.telefono;
-        this.direccion = usuario.direccion;
-        this.cedula = usuario.cedula
-        this.placas = usuario.placa
-
-      }
-    } catch (error) {
-      console.error('Error durante la validación del usuario:', error);
-    }
-  }
 
   async guardarInfo(){
     await this.googleuser.registerUser(this.user.uid,{

@@ -895,7 +895,6 @@ textarea:focus{
 }
 .arriendoss{
     display: flex;
-    width: 100%;
 }
 .arriendoss p, .arriendos .exit{
     text-align: center;
@@ -1117,6 +1116,7 @@ textarea:focus{
         
         width: calc(100vw - 305px);
         margin-left: 305px;
+        height: calc(100vh - 70px);
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
@@ -1259,5 +1259,8 @@ margin: auto 100px;
     }
     .ocultos{
         transition: top 0;
+    }
+    .historial-container{ 
+        flex-direction: column;
     }
 }

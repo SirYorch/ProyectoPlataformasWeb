@@ -2,23 +2,26 @@
 <!--Contenido-->
 
 <div class="selector">
-    <strong>Perfil</strong>
-  </div>
-  <div class="ventana perfil">
+  <strong>Perfil</strong>
+</div>
+<div class="ventana perfil">
+  <div class="profile">
     <div class="imagen"><img src="profile.webp"></div>
-    <div class="datos">
-        <label class="cp-input">Nombre: <input [(ngModel)]="nombre" ></label>
-        <label class="cp-input">Telefono: <input [(ngModel)]="telefono"></label>
-        <label class="cp-input">Dirección: <input [(ngModel)]="direccion"></label>
-        <label class="cp-input">Cédula: <input [(ngModel)]="cedula"></label>
-        <label class="cp-input">Placas de vehiculo: <input [(ngModel)]="placas"></label>
-        <label class="cp-input">Función: <input [(ngModel)]="stat"></label>
-        
-    </div>
-    
-  <button class="cp button ae-button absoluto" (click)="guardarInfo()">Editar</button>
-  
+    <button class="cp button ae-button historial" id="historial-button">Historial</button>
   </div>
+  <div class="datos">
+      <label class="cp-input">Nombre: <input [(ngModel)]="nombre" ></label>
+      <label class="cp-input">Telefono: <input [(ngModel)]="telefono"></label>
+      <label class="cp-input">Dirección: <input [(ngModel)]="direccion"></label>
+      <label class="cp-input">Cédula: <input [(ngModel)]="cedula"></label>
+      <label class="cp-input">Placas de vehiculo: <input [(ngModel)]="placas"></label>
+      <label class="cp-input">Stat: <input [(ngModel)]="stat"></label>
+      <button class="cp button ae-button  absoluto" (click)="guardarInfo()">Editar</button>
+  </div>
+  
+
+</div>
+
   
   
 <app-menu></app-menu>

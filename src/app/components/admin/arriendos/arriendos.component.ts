@@ -25,9 +25,6 @@ export class ArriendosComponent {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.obtenerArriendos();
-  }
 
   // Mostrar/Ocultar el formulario de creación
   desplegarCrear() {

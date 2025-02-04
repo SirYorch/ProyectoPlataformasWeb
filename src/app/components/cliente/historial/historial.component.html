@@ -1,7 +1,7 @@
 <div class="selector">
     <strong>Historial</strong>
   </div>
-  <div class="ventana completo">
+  <div class="ventana completo historial-container">
 
     <section class="no-border aa-section arriendoss">
       <p>Placa</p>
@@ -11,6 +11,14 @@
     </p>
       <p class="extra">Nombre</p>
     </section>
+       <!-- Listado dinámico de arriendos -->
+<section *ngFor="let arriendo of arriendos" class="aa-section arriendoss">
+  <div class="exit"><a>X</a></div>
+  <p class="extra"><b>{{ arriendo.fecha }}</b></p>
+  <p >{{ arriendo.estado }}</p>
+  <p class="extra">{{ arriendo.hora_entrada }}</p>
+  <p class="extra">{{ arriendo.hora_salida }}</p>
+</section>
   
   </div>
 

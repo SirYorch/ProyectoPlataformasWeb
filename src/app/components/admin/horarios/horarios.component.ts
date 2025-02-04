@@ -32,31 +32,6 @@ export class HorariosComponent {
     private router: Router,
     private userService: UserInfoService
   ) {}
-
-  async ngOnInit(): Promise<void> {
-    this.user = this.userService.getUser();
-    if (!this.user) {
-      this.router.navigate(['login']);
-      return;
-    }
-
-    try {
-      this.horarios = await this.horarioService.getHorarios(); // ✅ Obtener horarios de PostgreSQL
-      this.general = await this.horarioService.getGeneral();   // ✅ Obtener configuración general
-      
-      console.log("📌 Horarios obtenidos:", this.horarios);
-      console.log("📌 Configuración general obtenida:", this.general);
-
-      this.horaIniciogl = this.general.entrada1;
-      this.horaIniciogs = this.general.entrada2;
-      this.horaFingl = this.general.salida1;
-      this.horaFings = this.general.salida2;
-
-    } catch (error) {
-      console.error('❌ Error al obtener horarios:', error);
-    }
-  }
-
   async guardarGeneral() {
     const horarioData = {
       entrada1: this.horaIniciogl,
