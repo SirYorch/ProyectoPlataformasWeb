@@ -648,6 +648,9 @@ footer div{
     font-size: 35px;
     border-top: 2px solid var(--white);
     z-index: 99;
+    
+    transition: top .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    
 }
 .contenidos ul{
     width: 100%;
@@ -659,7 +662,8 @@ footer div{
 }
 
 .oculto{
-    display: none;
+    top:-100vh;
+    transition: top .5s cubic-bezier(0.215, 0.610, 0.355, 1);
 }
 .ventana{
     position: relative;
@@ -835,6 +839,11 @@ textarea{
     color: var(--white);
     height: 200px;
 }
+.historial{
+    margin: 40px auto;
+}
+
+.hist
 
 textarea:focus{
     outline: none;
@@ -886,6 +895,7 @@ textarea:focus{
 }
 .arriendoss{
     display: flex;
+    width: 100%;
 }
 .arriendoss p, .arriendos .exit{
     text-align: center;
@@ -1057,8 +1067,12 @@ textarea:focus{
         padding-bottom: 170px;
         align-items: center;
         overflow: visible;
+        height: 95vh;
+        justify-content: space-around;
     }
-
+    .datos ,.profile{
+        width:30vw
+    }
 
     .vertical{
         flex-direction: column;
@@ -1215,6 +1229,9 @@ margin: auto 100px;
     .arriendoss p{
         width: 16%;
     }
+    #historial-button{
+        margin: 40px auto;
+    }
     .arriendoss .exit{
         justify-content: center;
         text-align: center;
@@ -1236,5 +1253,11 @@ margin: auto 100px;
         top:-2px;
         right: 10px;
 
+    }
+    .contenidos{
+        transition: top 0;
+    }
+    .ocultos{
+        transition: top 0;
     }
 }
