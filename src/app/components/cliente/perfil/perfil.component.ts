@@ -13,7 +13,7 @@ import { MenuCComponent } from "../menu-c/menu-c.component";
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
-export class PerfilComponent {
+export class PerfilComponent  {
   
   constructor(private googleuser: GoogleAuthService, private router: Router, private userService: UserInfoService) {}
 
@@ -25,7 +25,7 @@ export class PerfilComponent {
   placa = "";
   tipo_usuario = "";
 
-
+  
 
   async guardarInfo() {
     await this.googleuser.actualizarUsuario(this.user.uid, {

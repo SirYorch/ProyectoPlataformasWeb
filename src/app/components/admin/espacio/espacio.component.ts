@@ -70,7 +70,7 @@ export class EspacioComponent {
 
       // Asignar valores de tarifas
       this.motd = tarifas.motd;
-
+      
       // Asignar valores del espacio
       this.ocupadas = espacio.ocupados;
       this.reservadas = espacio.reservados;
