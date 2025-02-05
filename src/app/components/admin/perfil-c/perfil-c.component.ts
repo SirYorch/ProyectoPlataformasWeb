@@ -65,20 +65,20 @@ export class PerfilCComponent {
         direccion: this.direccion,
         cedula: this.cedula,
         placa: this.placas,
-        tipo_usuario: this.stat
+        tipo_usuario: this.stat // ✅ Asegurando que se envía el tipo de usuario
       });
-
+  
       console.log(" Usuario actualizado correctamente");
-
-      // ✅ Mostrar mensaje de confirmación
+  
       this.mensajeConfirmacion = "✔ Cambios guardados correctamente.";
       setTimeout(() => {
-        this.mensajeConfirmacion = ""; // Ocultar mensaje después de 3 segundos
+        this.mensajeConfirmacion = "";
       }, 3000);
-
+  
     } catch (error) {
       console.error("Error al actualizar usuario:", error);
       this.mensajeConfirmacion = " Error al guardar cambios.";
     }
   }
+  
 }

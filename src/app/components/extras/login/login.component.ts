@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
 
         this.userService.saveUser({ uid: this.currentUser.uid });
 
-        // 🔹 Redirigir según el tipo de usuario
+        // Redirigir según el tipo de usuario
         if (tipoUsuario === 'ADMIN') {
           console.log("Redirigiendo a Administrador...");
           this.router.navigate(['/admin/principal']);
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // ✅ Registra al usuario en PostgreSQL y lo redirige
+  // Registra al usuario en PostgreSQL y lo redirige
   async register() {
     if (this.currentUser && this.validarCampos()) {
       try {

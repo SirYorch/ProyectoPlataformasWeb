@@ -38,13 +38,15 @@ export class UsuarioService {
 
   async actualizarUsuario(uid: string, datos: any): Promise<void> {
     try {
-      await lastValueFrom(this.http.put(`${this.apiUrl}/${uid}`, datos));
-      console.log(" Usuario actualizado");
+        await lastValueFrom(this.http.put(`${this.apiUrl}/${uid}`, datos));
+        console.log("Usuario actualizado correctamente");
+        alert("Usuario actualizado con éxito.");
     } catch (error) {
-      console.error(" Error al actualizar usuario:", error);
-      alert("Error al actualizar usuario.");
+        console.error(" Error al actualizar usuario:", error);
+        alert("Error al actualizar usuario.");
     }
-  }
+}
+
 
   async cambiarTipoUsuario(uid: string, nuevoTipo: string): Promise<void> {
     try {

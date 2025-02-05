@@ -19,6 +19,8 @@ export class PerfilAComponent implements OnInit {
   direccion = "Vivienda";
   cedula = "0000000000";
   placas = "AAA-0000";
+  stat = "CLIENTE"; 
+
 
   constructor(
     private usuarioService: UsuarioService,
@@ -48,6 +50,8 @@ export class PerfilAComponent implements OnInit {
       this.direccion = usuario.direccion;
       this.cedula = usuario.cedula;
       this.placas = usuario.placa;
+      this.stat = usuario.tipo_usuario; //  Guardar el tipo de usuario
+
 
     } catch (error) {
       console.error(' Error durante la validación del usuario:', error);
@@ -62,14 +66,16 @@ export class PerfilAComponent implements OnInit {
         telefono: this.telefono,
         direccion: this.direccion,
         cedula: this.cedula,
-        placa: this.placas
+        placa: this.placas,
+        tipo_usuario: this.stat // ✅ Asegurar que se envía
       });
-
+  
       alert("Información actualizada correctamente");
-      console.log(" Usuario actualizado en PostgreSQL");
+      console.log("Usuario actualizado en PostgreSQL");
     } catch (error) {
-      console.error(" Error al actualizar usuario:", error);
-      alert(" Error al actualizar información");
+      console.error("Error al actualizar usuario:", error);
+      alert("Error al actualizar información");
     }
   }
+  
 }
