@@ -65,7 +65,7 @@ export class PerfilCComponent {
         direccion: this.direccion,
         cedula: this.cedula,
         placa: this.placas,
-        tipo_usuario: this.stat // ✅ Asegurando que se envía el tipo de usuario
+        tipo_usuario: this.stat // Asegurando que se envía el tipo de usuario
       });
   
       console.log(" Usuario actualizado correctamente");
