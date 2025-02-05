@@ -67,7 +67,7 @@ export class PerfilAComponent implements OnInit {
         direccion: this.direccion,
         cedula: this.cedula,
         placa: this.placas,
-        tipo_usuario: this.stat // ✅ Asegurar que se envía
+        tipo_usuario: this.stat //  Asegurar que se envía
       });
   
       alert("Información actualizada correctamente");

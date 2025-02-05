@@ -75,7 +75,7 @@ export class GoogleAuthService {
     }
   }
 
-  // ✅ Obtiene el tipo de usuario desde PostgreSQL
+  //  Obtiene el tipo de usuario desde PostgreSQL
   async getTipoUsuario(uid: string): Promise<string | null> {
     try {
       const response = await this.http.get<any>(`${this.apiUrl}/${uid}`).toPromise();

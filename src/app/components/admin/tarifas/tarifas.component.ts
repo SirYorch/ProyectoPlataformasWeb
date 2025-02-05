@@ -1,103 +1,73 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { GoogleAuthService } from '../../../services/google-auth.service';
-import { ReadService } from '../../../services/read.service';
+import { Component, OnInit } from '@angular/core';
+import { TarifaService } from '../../../services/tarifa.service';
 import { Router } from '@angular/router';
-import { UserInfoService } from '../../../services/user-info.service';
+import { UsuarioService } from '../../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from "../menu/menu.component";
-
-
-
+import { CommonModule } from '@angular/common';
+import { UserInfoService } from '../../../services/user-info.service';
 @Component({
   selector: 'app-tarifas',
   standalone: true,
-  imports: [FormsModule, MenuComponent],
+  imports: [FormsModule, MenuComponent, CommonModule],
   templateUrl: './tarifas.component.html',
-  styleUrl: './tarifas.component.scss'
+  styleUrls: ['./tarifas.component.scss']
 })
-export class TarifasComponent {
+export class TarifasComponent implements OnInit {
+  tarifas: any[] = [];
+  motd = "";
+  parqueaderoEstado = "";
+  plazasDisponibles = "";
+  user: any = null;
 
- constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
+  constructor(
+    private tarifaService: TarifaService,
+    private router: Router,
+    private userService: UserInfoService,
+    private usuarioService: UsuarioService
+  ) {}
 
-  }
-    
-  motd = "0";
-  parqueaderoEstado = "0";
-  plazasDisponibles = "0";
-  tarifas1 = "0";
-  tarifas2 = "0";
-  tarifas3 = "0";
-  tarifas4 = "0";
-  tarifas5 = "0";
-  tarifas6 = "0";
-  tarifas7 = "0";
-  tarifas8 = "0";
-
-  
-  guardarDatos(){
-    this.googleuser.saveTarifas(
-      {
-        motd:this.motd,
-        parqueaderoEstado: this.parqueaderoEstado,
-        plazasDisponibles:this.plazasDisponibles,
-        tarifas1:this.tarifas1,
-        tarifas2:this.tarifas2,
-        tarifas3:this.tarifas3,
-        tarifas4:this.tarifas4,
-        tarifas5:this.tarifas5,
-        tarifas6:this.tarifas6,
-        tarifas7:this.tarifas7,
-        tarifas8:this.tarifas8,
-      }
-    );
-  }
-
-  user:any = null;
-  
   async ngOnInit(): Promise<void> {
-    // Leer los datos del usuario desde el localStorage
     this.user = this.userService.getUser();
-    
+
     if (!this.user) {
-      // Redirigir al inicio de sesión si el usuario no está en localStorage
-      this.router.navigate(['login']); // Redirigir en caso de error
-      return; // Terminar la ejecución del método
+      this.router.navigate(['login']);
+      return;
     }
-    
+
     try {
-      // Verificar si el usuario existe en Firestore
-      const userExists = await this.googleuser.checkUserExists(this.user.uid);
-      const tarifas:any|null = await this.googleuser.getTarifas();
-      console.log(tarifas)
-      this.motd = tarifas.motd;
-      this.parqueaderoEstado = tarifas.parqueaderoEstado;
-      this.plazasDisponibles = tarifas.plazasDisponibles;
-      this.tarifas1 = tarifas.tarifas1;
-      this.tarifas2 = tarifas.tarifas2;
-      this.tarifas3 = tarifas.tarifas3;
-      this.tarifas4 = tarifas.tarifas4;
-      this.tarifas5 = tarifas.tarifas5;
-      this.tarifas6 = tarifas.tarifas6;
-      this.tarifas7 = tarifas.tarifas7;
-      this.tarifas8 = tarifas.tarifas8;
+      //  Obtener la información del administrador desde PostgreSQL
+      const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
 
+      if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
+        this.router.navigate(['']);
+        return;
+      }
 
-      if (!userExists) {
-        
-      this.router.navigate(['login']); // Redirigir en caso de error
-        return; // Terminar la ejecución del método
-      }
-      
-      // Obtener la información del usuario
-      const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario || usuario.stat !== 'Admin') {
-        // Redirigir al inicio si el estado del usuario no es 'Cliente'
-        
-      this.router.navigate(['']); // Redirigir en caso de error
-      }
+      // Obtener tarifas desde PostgreSQL
+      this.tarifas = await this.tarifaService.obtenerTarifas();
     } catch (error) {
-      console.error('Error durante la validación del usuario:', error);
+      console.error("Error al obtener tarifas:", error);
     }
   }
-  
+  async actualizarTarifa(id: number, precio: number) {
+    try {
+      await this.tarifaService.actualizarTarifa(id, { precio });
+      alert("Tarifa actualizada correctamente");
+    } catch (error) {
+      alert("Error al actualizar tarifa");
+    }
+  }
+
+  async guardarDatos() {
+    try {
+      for (let tarifa of this.tarifas) {
+        await this.tarifaService.actualizarTarifa(tarifa.id, tarifa);
+      }
+      alert("Tarifas actualizadas correctamente.");
+    } catch (error) {
+      console.error("Error al actualizar tarifas:", error);
+      alert("Error al actualizar tarifas.");
+    }
+  }
 }
