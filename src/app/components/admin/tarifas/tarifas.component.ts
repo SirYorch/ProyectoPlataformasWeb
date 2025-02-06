@@ -1,19 +1,17 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { GoogleAuthService } from '../../../services/google-auth.service';
-import { ReadService } from '../../../services/read.service';
+import { Component, OnInit } from '@angular/core';
+import { TarifaService } from '../../../services/tarifa.service';
 import { Router } from '@angular/router';
-import { UserInfoService } from '../../../services/user-info.service';
+import { UsuarioService } from '../../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from "../menu/menu.component";
-
-
-
+import { CommonModule } from '@angular/common';
+import { UserInfoService } from '../../../services/user-info.service';
 @Component({
   selector: 'app-tarifas',
   standalone: true,
-  imports: [FormsModule, MenuComponent],
+  imports: [FormsModule, MenuComponent, CommonModule],
   templateUrl: './tarifas.component.html',
-  styleUrl: './tarifas.component.scss'
+  styleUrls: ['./tarifas.component.scss']
 })
 export class TarifasComponent {
 

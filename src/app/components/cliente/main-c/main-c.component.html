@@ -1,66 +1,36 @@
 <div class="selector">
-    <strong>Menu principal</strong>
-  </div>
+  <strong>Menú principal</strong>
+</div>
 
-  
-  <div class="ventana mprincipal">
-      <article class="datos-bienvenida">
-        <article class="bienvenida ">
-          <p>Bienvenido {{nombre}} el estado actual del parqueadero es {{estado}}</p>
-        </article>
-        <article class="bienvenida ">
-          <p>{{motd}}</p>
-        </article>
-        <button class="cp button ae-button  absoluto entrar" >Entrar</button><br>
-        <button class="cp button ae-button reservar" >Reservar</button>
+<div class="ventana mprincipal">
+  <article class="datos-bienvenida">
+      <article class="bienvenida">
+          <p>Bienvenido {{nombre}}, el estado actual del parqueadero es {{estado}}</p>
       </article>
-      
-      <div class="tc">
-          <div class="tarifas">
-              <h2>Tarifas</h2>
-            <label>
-                <p>Uso mínimo</p>
-                <s>${{val1}}</s>
-              </label><br>
+      <article class="bienvenida">
+          <p>{{motd}}</p>
+      </article>
+      <button class="cp button ae-button absoluto entrar">Entrar</button><br>
+      <button class="cp button ae-button reservar">Reservar</button>
+  </article>
+
+  <div class="tc">
+      <div class="tarifas">
+          <h2>Tarifas</h2>
+          <div *ngFor="let tarifa of tarifas">
               <label>
-                <p>1-1:30 horas</p>
-                <s>${{val2}}</s>
+                  <p>{{ tarifa.descripcion }} horas</p>
+                  <s>${{ tarifa.precio }}</s>
               </label><br>
-              <label>
-                <p>1:30-2 horas</p>
-                <s>${{val3}}</s>
-              </label><br>
-              <label>
-                <p>2-2:30 horas</p>
-                <s>${{val4}}</s>
-              </label><br>
-              <label>
-                <p>2:30-3 horas</p>
-                <s>${{val5}}</s>
-              </label><br>
-              <label>
-                <p>3-3:30 horas</p>
-                <s>${{val6}}</s>
-              </label><br>
-              <label>
-                <p>3:30-4 horas</p>
-                <s>${{val7}}</s>
-              </label><br>
-              <label>
-                <p>4 horas en adelante</p>
-                <s>${{val8}}</s>
-              </label>
-          </div>
-          <div class="croquis">
-              <h2>Croquis</h2>
-              <img src="croquis.webp" alt="croquis">
           </div>
       </div>
-
-      <app-parqueadero></app-parqueadero>
+      <div class="croquis">
+          <h2>Croquis</h2>
+          <img src="croquis.webp" alt="croquis">
+      </div>
   </div>
 
-  
+  <app-parqueadero></app-parqueadero>
+</div>
 
-
-  <app-menu-c></app-menu-c>
+<app-menu-c></app-menu-c>
