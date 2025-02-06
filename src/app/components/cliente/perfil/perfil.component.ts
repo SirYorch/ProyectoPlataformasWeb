@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, viewChild, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { UsuarioService } from '../../../services/usuario.service';
@@ -15,7 +15,7 @@ import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-di
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
-export class PerfilComponent implements OnInit {
+export class PerfilComponent  {
   user: any;
   nombre = "";
   telefono = "";
@@ -24,41 +24,54 @@ export class PerfilComponent implements OnInit {
   placa = "";
   tipo_usuario = "";
 
+
+  @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+  @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+
+  desplegarExito(){
+    this.PopUpsComponent.desplegarSuccess("Se muestra un mensaje de exito");
+  }
+  desplegarError(){
+    this.PopUpsComponent.desplegarError("Se meustra un mensaje de error");
+  }
+  desplegarConfirmacion(){
+    this.ConfirmDialogsComponent.desplegarConfirmacion("Quiere enviar un cuadro de exito?", ()=>this.desplegarExito());
+  }
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
     private userService: UserInfoService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    this.user = this.userService.getUser();
+  // async ngOnInit(): Promise<void> {
+  //   this.user = this.userService.getUser();
 
-    if (!this.user) {
-      this.router.navigate(['login']);
-      return;
-    }
+  //   if (!this.user) {
+  //     this.router.navigate(['login']);
+  //     return;
+  //   }
 
-    try {
-      // ✅ Obtener datos del usuario desde PostgreSQL
-      const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
+  //   try {
+  //     // ✅ Obtener datos del usuario desde PostgreSQL
+  //     const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
 
-      if (!usuario || usuario.tipo_usuario !== 'CLIENTE') {
-        this.router.navigate(['']);
-        return;
-      }
+  //     if (!usuario || usuario.tipo_usuario !== 'CLIENTE') {
+  //       this.router.navigate(['']);
+  //       return;
+  //     }
 
-      // ✅ Cargar los datos en el formulario
-      this.nombre = usuario.nombre;
-      this.telefono = usuario.telefono;
-      this.direccion = usuario.direccion;
-      this.cedula = usuario.cedula;
-      this.placa = usuario.placa;
-      this.tipo_usuario = usuario.tipo_usuario;
-    } catch (error) {
-      console.error("Error al obtener datos del usuario:", error);
-      this.router.navigate(['login']);
-    }
-  }
+  //     // ✅ Cargar los datos en el formulario
+  //     this.nombre = usuario.nombre;
+  //     this.telefono = usuario.telefono;
+  //     this.direccion = usuario.direccion;
+  //     this.cedula = usuario.cedula;
+  //     this.placa = usuario.placa;
+  //     this.tipo_usuario = usuario.tipo_usuario;
+  //   } catch (error) {
+  //     console.error("Error al obtener datos del usuario:", error);
+  //     this.router.navigate(['login']);
+  //   }
+  // }
 
   async guardarInfo() {
     try {

@@ -12,4 +12,16 @@ export class PopUpsComponent {
 
     @ViewChild('success') success!: ElementRef;
     @ViewChild('error') error!: ElementRef;
+
+    desplegarSuccess(contenido: string  ){
+      this.mensaje = contenido;
+      this.success.nativeElement.classList.remove("hide-pop")
+      setTimeout(()=>{console.log("retirando");this.success.nativeElement.classList.add("hide-pop");},2000)
+    }
+
+    desplegarError(contenido: string  ){
+      this.mensaje = contenido;
+      this.success.nativeElement.classList.remove("hide-pop")
+      setTimeout(()=>{console.log("retirando");this.success.nativeElement.classList.add("hide-pop");},2000)
+    }
 }
