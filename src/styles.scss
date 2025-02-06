@@ -347,7 +347,7 @@ h2{
     /* The size of the SVG defines the overall size */
     height: 60px;
     /* Define the transition for transforming the SVG */
-    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: top .3s cubic-bezier(0.215, 0.610, 0.355, 1.275);
   }
   
   .line {
@@ -357,8 +357,8 @@ h2{
     stroke-linejoin: round;
     stroke-width: 3;
     /* Define the transition for transforming the Stroke */
-    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-                stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: stroke-dasharray 600ms cubic-bezier(0.215, 0.610, 0.355, 1.275)
+                stroke-dashoffset 600ms cubic-bezier(0.215, 0.610, 0.355, 1.275);
   }
   
   .line-top-bottom {
@@ -506,7 +506,7 @@ nav{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: top .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: top .4s cubic-bezier(0.215, 0.610, 0.355, 1.275);
 }
 .crearArriendos .selector{
     margin-top: 0;
@@ -649,7 +649,7 @@ footer div{
     border-top: 2px solid var(--white);
     z-index: 99;
     
-    transition: top .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition: top .5s cubic-bezier(0.215, 0.610, 0.355, 1.275);
     
 }
 .contenidos ul{
@@ -663,7 +663,7 @@ footer div{
 
 .oculto{
     top:-100vh;
-    transition: top .5s cubic-bezier(0.215, 0.610, 0.355, 1);
+    transition: top .5s cubic-bezier(0.215, 0.610, 0.355, 1.275);
 }
 .ventana{
     position: relative;
@@ -855,6 +855,65 @@ textarea:focus{
     height: auto;
     display: flex;
     flex-direction: column;
+    top:0
+}
+.pop{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 400px;
+    height: fit-content;
+    margin: auto;
+    border: 5px solid var(--blueL);
+    transition: top .3s cubic-bezier(0.215, 0.610, 0.355, 1.275);
+    border-radius: 15px;
+}
+
+.option{
+    width: 100px;
+    margin: 10px;
+}
+.confirm-dialog{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.error{
+    border: 5px solid var(--Black);
+}
+
+.pop h2{
+    border-bottom: 3px solid var(--blueL);
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    padding: 10px;
+    
+}
+.success{
+    border: 5px solid var(--green);
+}
+.success h2{
+    border-bottom: 3px solid var(--green);
+}
+.error h2{
+    border-bottom: 3px solid var(--Black);
+}
+.pop p{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.hide-pop{
+    top:-200vh
 }
 .horario section{
     height: auto;

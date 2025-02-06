@@ -54,50 +54,5 @@ export class TarifasComponent {
 
   user:any = null;
   
-  async ngOnInit(): Promise<void> {
-    // Leer los datos del usuario desde el localStorage
-    this.user = this.userService.getUser();
-    
-    if (!this.user) {
-      // Redirigir al inicio de sesión si el usuario no está en localStorage
-      this.router.navigate(['login']); // Redirigir en caso de error
-      return; // Terminar la ejecución del método
-    }
-    
-    try {
-      // Verificar si el usuario existe en Firestore
-      const userExists = await this.googleuser.checkUserExists(this.user.uid);
-      const tarifas:any|null = await this.googleuser.getTarifas();
-      console.log(tarifas)
-      this.motd = tarifas.motd;
-      this.parqueaderoEstado = tarifas.parqueaderoEstado;
-      this.plazasDisponibles = tarifas.plazasDisponibles;
-      this.tarifas1 = tarifas.tarifas1;
-      this.tarifas2 = tarifas.tarifas2;
-      this.tarifas3 = tarifas.tarifas3;
-      this.tarifas4 = tarifas.tarifas4;
-      this.tarifas5 = tarifas.tarifas5;
-      this.tarifas6 = tarifas.tarifas6;
-      this.tarifas7 = tarifas.tarifas7;
-      this.tarifas8 = tarifas.tarifas8;
-
-
-      if (!userExists) {
-        
-      this.router.navigate(['login']); // Redirigir en caso de error
-        return; // Terminar la ejecución del método
-      }
-      
-      // Obtener la información del usuario
-      const usuario = await this.googleuser.getUserInfo(this.user.uid);
-      if (!usuario || usuario.stat !== 'Admin') {
-        // Redirigir al inicio si el estado del usuario no es 'Cliente'
-        
-      this.router.navigate(['']); // Redirigir en caso de error
-      }
-    } catch (error) {
-      console.error('Error durante la validación del usuario:', error);
-    }
-  }
   
 }

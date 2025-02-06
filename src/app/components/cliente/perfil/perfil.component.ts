@@ -5,11 +5,13 @@ import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MenuCComponent } from "../menu-c/menu-c.component";
+import { PopUpsComponent } from "../../extras/pop-ups/pop-ups.component";
+import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-dialogs.component";
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [FormsModule, CommonModule, MenuCComponent],
+  imports: [FormsModule, CommonModule, MenuCComponent, PopUpsComponent, ConfirmDialogsComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
