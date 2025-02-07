@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
           tipo_usuario: "CLIENTE"
         });
 
-        // 🔹 Verificar usuario en PostgreSQL antes de redirigir
+        // Verificar usuario en PostgreSQL antes de redirigir
         const usuario = await this.googleAuthService.getUserInfo(this.currentUser.uid);
         
         if (usuario && usuario.tipo_usuario === "CLIENTE") {
