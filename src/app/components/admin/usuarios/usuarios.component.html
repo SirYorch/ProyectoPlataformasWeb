@@ -3,8 +3,9 @@
 </div>
 <div class="ventana vertical">
     <section class="seccion usuario" *ngFor="let usuario of usuarios">
-        <p>{{usuario.placa}}</p>
-        <p class="extra">{{usuario.nombre}}</p>
+        
+        <p >{{usuario.nombre}}</p>
+        <p class="extra">{{usuario.placa}}</p>
         <p class="extra">{{usuario.telefono}}</p>
         <p class="extra">{{usuario.tipo_usuario}}</p>
         <button class="au button" (click)="verUsuario(usuario.uid)">Ver</button>

@@ -64,7 +64,7 @@ h2{
     border-radius: 10px;
     position: relative;
 }
-.Parqueadero h2, .Parqueadero .marcadores{
+.Parqueadero h2, .Parqueadero p, .Parqueadero .marcadores{
     position: absolute;
 }
 .Parqueadero h2{
@@ -77,8 +77,18 @@ h2{
     left: 0;
     right: 0;
 }
+.Parqueadero p{
+    top: 60px;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: var(--blueD)
+}
+.marcadores{
+    justify-content: space-around;
+}
 #espacios{
-    margin-top:50px;
+    margin-top:80px;
     margin-bottom: 50px;
     width: fit-content;
     max-width: 100%;
@@ -95,7 +105,13 @@ h2{
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
+.Parqueadero label{
+    color: var(--white);
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 10px;
+    margin: 5px;
+}
 .ventana .Parqueadero label{
     color: var(--white);
     border-radius: 10px;
@@ -845,10 +861,20 @@ textarea{
 
 .hist
 
+textarea:focus-visible{
+    outline: none;
+    box-shadow: 0 0 15px var(--blueD) inset;
+}
+
+textarea:active{
+    outline: none;
+    box-shadow: 0 0 15px var(--blueD) inset;
+}
 textarea:focus{
     outline: none;
     box-shadow: 0 0 15px var(--blueD) inset;
 }
+
 
 .horario{
     width: 100vw;
@@ -875,6 +901,13 @@ textarea:focus{
     border: 5px solid var(--blueL);
     transition: top .3s cubic-bezier(0.215, 0.610, 0.355, 1.275);
     border-radius: 15px;
+}
+.eliminar-tarifa{
+    max-width:60px
+}
+
+.tarifas .tarifa-descripcion{
+    width:200px
 }
 
 .option{
@@ -1000,6 +1033,38 @@ textarea:focus{
 .margen-bottom{
     margin-bottom: 20px;
 }
+
+.crearTarifas{
+    width: 300px;
+}
+.crearTarifas label p, .crearTarifas label input{
+    width: 50%;
+}
+.crearTarifas label{
+    margin-top: 10px auto ;
+}
+
+.Parqueadero label{
+    color: var(--white);
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.absolute{
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    transition: top .3s cubic-bezier(0.215, 0.610, 0.355, 1.275);
+}
+.parking-hidden{
+    top: -100vh;
+
+}
+
 @media only screen and (min-width: 1200px) {
     body{
         margin: 0;
@@ -1113,7 +1178,9 @@ textarea:focus{
         width:400px;
         color:var(--blueD)
     }
-
+    .tarifas .tarifa-simple{
+        width: 100%;
+    }
 
     
     .ventana{
@@ -1184,8 +1251,6 @@ textarea:focus{
         display: flex;
         justify-content: space-around;
         width: 50%;
-        height: 100%;
-
     }
     .motd p{
         margin-bottom: 40px
@@ -1321,5 +1386,11 @@ margin: auto 100px;
     }
     .historial-container{ 
         flex-direction: column;
+    }
+    .tarifas .tarifa-descripcion{
+        width:280px
+    }
+    .at .crearTarifas{
+        width: 500px;
     }
 }

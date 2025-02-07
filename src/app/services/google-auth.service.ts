@@ -8,11 +8,16 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class GoogleAuthService {
-  private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/usuarios'; // URL del backend en Jakarta EE
-  private tarifasUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/tarifas';
-  private espaciosUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/espacios';
-  private horariosUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/horarios';
+  //private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/usuarios'; // URL del backend en Jakarta EE
+  // private tarifasUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/tarifas';
+  // private espaciosUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/espacios';
+  // private horariosUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/horarios';
+  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/usuarios'; // URL del backend en Jakarta EE
+  private tarifasUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/tarifas';
+  private espaciosUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/espacios';
+  private horariosUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/horarios';
 
+  
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
 

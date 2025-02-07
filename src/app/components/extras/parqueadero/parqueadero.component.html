@@ -1,55 +1,19 @@
 <div class="Parqueadero">
     <h2>Parqueadero</h2>
-    <div class="espacios" id="espacios">
-        <div class="fila">
-            <label class="ocupado"></label>
-            <label class="ocupado"></label>
-            <label class="reservado"></label>
-            <label class="ocupado"></label>
-            <label class="ocupado"></label>
-            <label class="ocupado"></label>
-            <label class="reservado"></label>
-            <label class="reservado"></label>
+    <p>{{mensaje}}</p>
+    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == false && seleccionReservar == false">
+        <div class="fila" *ngFor="let fila of lugares">
+            <label *ngFor="let lugar of fila" class="{{lugar.estado}}">{{lugar.posicion}}</label>
         </div>
-        <div class="fila">
-            <label class="disponible"></label>
-            <label class="ocupado"></label>
-            <label class="ocupado"></label>
-            <label class="reservado"></label>
-            <label class="disponible"></label>
-            <label class="ocupado"></label>
-            <label class="disponible"></label>
-            <label class="reservado"></label>
+    </div>
+    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == true && seleccionReservar == false">
+        <div class="fila" *ngFor="let fila of lugares">
+            <label *ngFor="let lugar of fila" class="{{lugar.estado}}" (click)="ocupar(lugar,fila)">{{lugar.posicion}}</label>
         </div>
-        <div class="fila">
-            <label class="ocupado"></label>
-            <label class="reservado"></label>
-            <label class="reservado"></label>
-            <label class="reservado"></label>
-            <label class="disponible"></label>
-            <label class="reservado"></label>
-            <label class="ocupado"></label>
-            <label class="disponible"></label>
-        </div>
-        <div class="fila">
-            <label class="disponible"></label>
-            <label class="reservado"></label>
-            <label class="disponible"></label>
-            <label class="disponible"></label>
-            <label class="ocupado"></label>
-            <label class="reservado"></label>
-            <label class="disponible"></label>
-            <label class="reservado"></label>
-        </div>
-        <div class="fila">
-            <label class="disponible"></label>
-            <label class="ocupado"></label>
-            <label class="ocupado"></label>
-            <label class="reservado"></label>
-            <label class="reservado"></label>
-            <label class="disponible"></label>
-            <label class="ocupado"></label>
-            <label class="ocupado"></label>
+    </div>
+    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == false && seleccionReservar == true">
+        <div class="fila" *ngFor="let fila of lugares">
+            <label *ngFor="let lugar of fila" class="{{lugar.estado}}" (click)="reservar(lugar,fila)">{{lugar.posicion}}</label>
         </div>
     </div>
     <div class="marcadores">

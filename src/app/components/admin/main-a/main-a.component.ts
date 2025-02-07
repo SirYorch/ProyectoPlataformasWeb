@@ -31,33 +31,33 @@ export class MainAComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.user = this.userService.getUser();
+    // this.user = this.userService.getUser();
 
-    if (!this.user) {
-      this.router.navigate(['login']);
-      return;
-    }
+    // if (!this.user) {
+    //   this.router.navigate(['login']);
+    //   return;
+    // }
 
-    try {
-      //  Obtener la información del usuario desde PostgreSQL
-      const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
+    // try {
+    //   //  Obtener la información del usuario desde PostgreSQL
+    //   const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
       
-      if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
-        this.router.navigate(['']);
-        return;
-      }
+    //   if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
+    //     this.router.navigate(['']);
+    //     return;
+    //   }
 
-      this.nombre = usuario.nombre;
-      this.estado = "Activo"; // Puedes cambiar esto según tus datos
-      this.motd = "Bienvenido al sistema"; // Mensaje de prueba
-      this.plazas = "50"; // Número de plazas de prueba
+    //   this.nombre = usuario.nombre;
+    //   this.estado = "Activo"; // Puedes cambiar esto según tus datos
+    //   this.motd = "Bienvenido al sistema"; // Mensaje de prueba
+    //   this.plazas = "50"; // Número de plazas de prueba
 
-      // Obtener tarifas desde PostgreSQL
-      this.tarifas = await this.tarifaService.obtenerTarifas();
+    //   // Obtener tarifas desde PostgreSQL
+    //   this.tarifas = await this.tarifaService.obtenerTarifas();
       
-    } catch (error) {
-      console.error(' Error al validar el usuario:', error);
-      this.router.navigate(['login']);
-    }
+    // } catch (error) {
+    //   console.error(' Error al validar el usuario:', error);
+    //   this.router.navigate(['login']);
+    // }
   }
 }

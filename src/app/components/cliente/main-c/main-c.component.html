@@ -10,8 +10,8 @@
       <article class="bienvenida">
           <p>{{motd}}</p>
       </article>
-      <button class="cp button ae-button absoluto entrar">Entrar</button><br>
-      <button class="cp button ae-button reservar">Reservar</button>
+      <button class="cp button ae-button absoluto entrar" (click)="desplegarEntrar()">Entrar</button><br>
+      <button class="cp button ae-button reservar" (click)="desplegarReservar()">Reservar</button>
   </article>
 
   <div class="tc">
@@ -33,4 +33,12 @@
   <app-parqueadero></app-parqueadero>
 </div>
 
+<app-parqueadero class="absolute parking-hidden" #entrar></app-parqueadero>
+<app-parqueadero class="absolute parking-hidden" #reservar></app-parqueadero>
+
+
+<app-pop-ups></app-pop-ups>
+<app-confirm-dialogs></app-confirm-dialogs>
+
 <app-menu-c></app-menu-c>
+

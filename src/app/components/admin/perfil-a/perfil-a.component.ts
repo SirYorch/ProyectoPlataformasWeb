@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from "../menu/menu.component";
+import { PopUpsComponent } from "../../extras/pop-ups/pop-ups.component";
+import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-dialogs.component";
 
 @Component({
   selector: 'app-perfil-a',
   standalone: true,
-  imports: [FormsModule, MenuComponent],
+  imports: [FormsModule, MenuComponent, PopUpsComponent, ConfirmDialogsComponent],
   templateUrl: './perfil-a.component.html',
   styleUrl: './perfil-a.component.scss'
 })
@@ -29,34 +31,34 @@ export class PerfilAComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.user = this.userService.getUser();
+    // this.user = this.userService.getUser();
     
-    if (!this.user) {
-      this.router.navigate(['login']);
-      return;
-    }
+    // if (!this.user) {
+    //   this.router.navigate(['login']);
+    //   return;
+    // }
 
-    try {
-      //  Obtener la información del administrador desde PostgreSQL
-      const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
+    // try {
+    //   //  Obtener la información del administrador desde PostgreSQL
+    //   const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
 
-      if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
-        this.router.navigate(['']);
-        return;
-      }
+    //   if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
+    //     this.router.navigate(['']);
+    //     return;
+    //   }
 
-      this.nombre = usuario.nombre;
-      this.telefono = usuario.telefono;
-      this.direccion = usuario.direccion;
-      this.cedula = usuario.cedula;
-      this.placas = usuario.placa;
-      this.stat = usuario.tipo_usuario; //  Guardar el tipo de usuario
+    //   this.nombre = usuario.nombre;
+    //   this.telefono = usuario.telefono;
+    //   this.direccion = usuario.direccion;
+    //   this.cedula = usuario.cedula;
+    //   this.placas = usuario.placa;
+    //   this.stat = usuario.tipo_usuario; //  Guardar el tipo de usuario
 
 
-    } catch (error) {
-      console.error(' Error durante la validación del usuario:', error);
-      this.router.navigate(['login']);
-    }
+    // } catch (error) {
+    //   console.error(' Error durante la validación del usuario:', error);
+    //   this.router.navigate(['login']);
+    // }
   }
 
   async guardarInfo() {

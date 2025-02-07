@@ -35,7 +35,7 @@ export class PerfilComponent  {
     this.PopUpsComponent.desplegarError("Se meustra un mensaje de error");
   }
   desplegarConfirmacion(){
-    this.ConfirmDialogsComponent.desplegarConfirmacion("Quiere enviar un cuadro de exito?", ()=>this.desplegarExito());
+    this.ConfirmDialogsComponent.desplegarConfirmacion("Quiere enviar un cuadro de exito?", ()=>this.desplegarError());
   }
   constructor(
     private usuarioService: UsuarioService,

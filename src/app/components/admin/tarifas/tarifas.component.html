@@ -13,15 +13,34 @@
 
   <div class="tarifas">
       <h2>Tarifas</h2>
-      <div *ngFor="let tarifa of tarifas">
+      <div *ngFor="let tarifa of tarifas" class="tarifa-simple">
           <label>
-              <p>{{ tarifa.descripcion }}</p>
+            <p class="eliminar-tarifa">X</p>
+              <input type="text"  class=" tarifa-descripcion" [(ngModel)]="tarifa.descripcion" />
               <input type="text" [(ngModel)]="tarifa.precio" />
-          </label><br>
+          </label>
       </div>
 
+      <button class="ae-button button bajo " (click)="desplegarCrearTarifa()">Crear Tarifa</button>
       <button class="ae-button button bajo absoluto" (click)="guardarDatos()">Guardar Tarifas</button>
+
   </div>
+
+  <div class="crearArriendos crearTarifas" #crear>
+    <div class="exit"><a (click)="desplegarCrearTarifa()">X</a></div>
+    <div class="selector"> <strong>Crear tarifa</strong> </div>
+    <label>
+        <p>Nombre:</p>
+        <input type="text" [(ngModel)]="Descripcion">
+    </label>
+    <label>
+        <p>Precio:</p>
+        <input type="text" [(ngModel)]="Precio">
+    </label>
+
+    <button (click)="guardarEditar()" class="ah-button button">Guardar</button>
+      
+</div>
 </div>
 
 <app-menu></app-menu>
