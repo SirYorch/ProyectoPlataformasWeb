@@ -69,11 +69,13 @@ export class GoogleAuthService {
   // Registra un usuario en PostgreSQL
   async registerUser(uid: string, userData: any): Promise<void> {
     try {
+      console.log(" Intentando registrar usuario en PostgreSQL...", userData);
+
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      await this.http.post(`${this.apiUrl}`, { uid, ...userData }, { headers }).toPromise();
+      const response = await this.http.post(`${this.apiUrl}`, { uid, ...userData }, { headers }).toPromise();
       console.log(" Usuario registrado en PostgreSQL");
 
-      // 🔹 Redirigir a la página principal del cliente después del registro
+      //  Redirigir a la página principal del cliente después del registro
       this.router.navigate(['/cliente/principal']);
     } catch (error: unknown) {
       console.error(" Error al registrar usuario:", error);

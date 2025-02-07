@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { UserInfoService } from '../../../services/user-info.service';
 import { GoogleAuthService } from '../../../services/google-auth.service';
 import { ReadService } from '../../../services/read.service';
+
 @Component({
   selector: 'app-tarifas',
   standalone: true,
@@ -32,9 +33,14 @@ throw new Error('Method not implemented.');
 }
 @ViewChild('crear') crear!: ElementRef;
 
- constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
-
-  }
+constructor(
+  private googleuser: GoogleAuthService,
+  private read: ReadService,
+  private router: Router,
+  private userService: UserInfoService,
+  private usuarioService: UsuarioService,
+  private tarifaService: TarifaService
+) {}
     
   motd = "Mensaje del dia";
   tarifas: {descripcion:string , precio:number}[] = [{
@@ -80,8 +86,4 @@ throw new Error('Method not implemented.');
       }
     );
   }
-
-  user:any = null;
-  
-  
 }

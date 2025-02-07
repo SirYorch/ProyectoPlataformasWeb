@@ -23,7 +23,7 @@ export class MainCComponent implements OnInit {
   estado = "Inactivo";
   motd = "Mensaje del Día";
   plazas = "0";
-  tarifas: any[] = []; // ✅ Ahora se maneja un array de tarifas
+  tarifas: any[] = []; //  Ahora se maneja un array de tarifas
 
   constructor(
     private tarifaService: TarifaService,

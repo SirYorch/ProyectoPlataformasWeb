@@ -41,10 +41,10 @@ export class HorariosComponent {
     };
 
     try {
-      await this.horarioService.saveGeneral(horarioData); // ✅ Guardar en PostgreSQL
-      console.log('✅ Horario general guardado correctamente');
+      await this.horarioService.saveGeneral(horarioData); //  Guardar en PostgreSQL
+      console.log('Horario general guardado correctamente');
     } catch (error) {
-      console.error('❌ Error al guardar el horario:', error);
+      console.error(' Error al guardar el horario:', error);
     }
   }
 
@@ -64,7 +64,7 @@ export class HorariosComponent {
   eliminar(horario: any) {
     this.horarios = this.horarios.filter((horarioE: any) => horarioE !== horario);
     console.log(this.horarios);
-    this.horarioService.saveHorarios(this.horarios); // ✅ Guardar cambios en PostgreSQL
+    this.horarioService.saveHorarios(this.horarios); // Guardar cambios en PostgreSQL
   }
 
   nombreHorario= "";

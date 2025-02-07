@@ -64,22 +64,21 @@ export class UsuariosComponent implements OnInit {
     //   console.error("Error al obtener usuarios:", error);
     // }
   }
-  
+
   verUsuario(uid: string) {
     this.userService.saveOtherUser(uid);
     this.router.navigate(['admin/perfilCliente']);
   }
-  
+
   async eliminarUsuario(uid: string) {
     if (confirm("¿Seguro que deseas eliminar este usuario?")) {
-        try {
-            await this.usuarioService.eliminarUsuario(uid);
-            this.usuarios = this.usuarios.filter(usuario => usuario.uid !== uid);
-            console.log(` Usuario ${uid} eliminado de la lista.`);
-        } catch (error) {
-            console.error(" Error al eliminar usuario:", error);
-        }
+      try {
+        await this.usuarioService.eliminarUsuario(uid);
+        this.usuarios = this.usuarios.filter(usuario => usuario.uid !== uid);
+        console.log(` Usuario ${uid} eliminado de la lista.`);
+      } catch (error) {
+        console.error(" Error al eliminar usuario:", error);
+      }
     }
-}
-
+  }
 }

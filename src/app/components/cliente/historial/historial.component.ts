@@ -3,6 +3,9 @@ import { MenuComponent } from "../../admin/menu/menu.component";
 import { MenuCComponent } from "../menu-c/menu-c.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserInfoService } from '../../../services/user-info.service';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
   selector: 'app-historial',
@@ -12,6 +15,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './historial.component.scss'
 })
 export class HistorialComponent {
+  user: any;
+  constructor(
+    private router: Router,
+    private userService: UserInfoService,
+    private usuarioService: UsuarioService
+  ) {}
   arriendos:{id: number,
     fecha: string,
     hora_entrada: string,
@@ -43,4 +52,5 @@ export class HistorialComponent {
       estado: "Pagado"
     }  
   ]
+  
 }
