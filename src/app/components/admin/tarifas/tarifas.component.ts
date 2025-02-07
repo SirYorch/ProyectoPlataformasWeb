@@ -37,6 +37,7 @@ export class TarifasComponent implements OnInit {
     this.user = this.userService.getUser();
 
     if (!this.user) {
+      console.warn("Usuario no autenticado, redirigiendo a login...");
       this.router.navigate(['login']);
       return;
     }
@@ -45,8 +46,15 @@ export class TarifasComponent implements OnInit {
       //  Obtener la información del usuario desde PostgreSQL
       const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
 
-      if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
-        this.router.navigate(['']);
+      if (!usuario) {
+        console.warn("Usuario no encontrado en la base de datos, redirigiendo a login...");
+        this.router.navigate(['login']);
+        return;
+      }
+
+      if (usuario.tipo_usuario !== 'ADMIN') {
+        console.warn("Acceso denegado: Usuario CLIENTE intentando acceder a tarifas ADMIN.");
+        this.router.navigate(['login']);
         return;
       }
 
@@ -56,6 +64,7 @@ export class TarifasComponent implements OnInit {
 
     } catch (error) {
       console.error("Error al obtener tarifas o usuario:", error);
+      this.router.navigate(['login']);
     }
   }
 
