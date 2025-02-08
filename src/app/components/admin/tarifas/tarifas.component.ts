@@ -17,6 +17,8 @@ import { ReadService } from '../../../services/read.service';
   styleUrls: ['./tarifas.component.scss']
 })
 export class TarifasComponent {
+  user: any;
+  tipo: Promise<string> | undefined;
 desplegarCrearTarifa() {
   this.crear.nativeElement.classList.toggle("desplegarCrear");
 }
@@ -54,28 +56,6 @@ constructor(
 {
     descripcion: "Tarifa premium",
     precio: 25.00
-},{
-  descripcion: "Tarifa básica",
-  precio: 10.50
-},
-{
-  descripcion: "Tarifa estándar",
-  precio: 15.75
-},
-{
-  descripcion: "Tarifa premium",
-  precio: 25.00
-},{
-  descripcion: "Tarifa básica",
-  precio: 10.50
-},
-{
-  descripcion: "Tarifa estándar",
-  precio: 15.75
-},
-{
-  descripcion: "Tarifa premium",
-  precio: 25.00
 }];
 
   
@@ -86,4 +66,45 @@ constructor(
       }
     );
   }
+
+
+  async ngOnInit(): Promise<void> {
+    this.validarUsuario();
+ 
+    //eliminar las tarifas predeterminadas y tomar las tarifas de la base de datos.
+
+    //metodo para poder crear tarifas.
+
+    //metodo para poder editar tarifas.
+
+    //objeto publico en el back para poder utilizar la elctura de horario entrada y salida rpedeterminado y el motd.
+
+    //leer el motd 
+
+    //actualizar el motd
+
+   }
+ 
+   validarUsuario(){
+ 
+     this.user = this.userService.getUser();
+     this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+     this.tipo?.then(tipoUsuario => {
+       switch (tipoUsuario) {
+       case 'ADMIN':
+         break;
+       case 'CLIENTE':
+         this.router.navigate(['cliente/principal']);
+         break;
+       case 'ERROR':
+       default:
+         console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+         this.router.navigate(['/login']);
+         break;
+       }
+     }).catch(error => {
+       console.error("Error al validar el usuario:", error);
+       this.router.navigate(['/login']);
+     });
+   }
 }

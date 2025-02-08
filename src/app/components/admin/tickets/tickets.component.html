@@ -15,16 +15,20 @@
     <section class="aa-section arriendoss no-border">
         
         <p> Cliente</p>
-        <p> Fecha</p>
+        <p class="extra"> Fecha inicio</p>
+        <p class="extra"> Hora inicio</p>
+        <p> Fecha fin</p>
+        <p class="extra"> Hora fin</p>
         <p> Precio</p>
         
     </section>
-    <section class="aa-section arriendoss">
-        
-        <p> Cliente</p>
-        <p> Fecha</p>
-        <p> Precio</p>
-        
+    <section class="aa-section arriendoss" *ngFor="let ticket of tickets">
+        <p> {{ticket.usuario.nombre}}</p>
+        <p class="extra"> {{ticket.fechaFin | date:'dd/MM/yyyy' }}</p>
+        <p class="extra"> {{ticket.fechaFin | date:'HH:mm' }}</p>
+        <p> {{ticket.fechaInicio | date:'dd/MM/yyyy' }}</p>
+        <p class="extra"> {{ticket.fechaInicio | date:'HH:mm' }}</p>
+        <p> {{ticket.precio}}</p>
     </section>
 </div>
 

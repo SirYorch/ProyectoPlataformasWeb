@@ -22,6 +22,7 @@ export class PerfilAComponent implements OnInit {
   cedula = "0000000000";
   placas = "AAA-0000";
   stat = "CLIENTE"; 
+  tipo: Promise<string> | undefined;
 
 
   constructor(
@@ -29,37 +30,42 @@ export class PerfilAComponent implements OnInit {
     private router: Router,
     private userService: UserInfoService
   ) {}
-
   async ngOnInit(): Promise<void> {
-    // this.user = this.userService.getUser();
+    this.validarUsuario();
+
+    //asignacion de espacio desde el backend.
+
+    //eliminar valores predeterminados de reservas y cargar las reservas desde el backend.
+
+    //agregar funcionalidad de VER reserva (despliega una ventana de parqueadero, mostrando donde esta ubicado el lugar)
+
+    //agregar funcionalidad de ELIMINAR reserva
+
     
-    // if (!this.user) {
-    //   this.router.navigate(['login']);
-    //   return;
-    // }
-
-    // try {
-    //   //  Obtener la información del administrador desde PostgreSQL
-    //   const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
-
-    //   if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
-    //     this.router.navigate(['']);
-    //     return;
-    //   }
-
-    //   this.nombre = usuario.nombre;
-    //   this.telefono = usuario.telefono;
-    //   this.direccion = usuario.direccion;
-    //   this.cedula = usuario.cedula;
-    //   this.placas = usuario.placa;
-    //   this.stat = usuario.tipo_usuario; //  Guardar el tipo de usuario
-
-
-    // } catch (error) {
-    //   console.error(' Error durante la validación del usuario:', error);
-    //   this.router.navigate(['login']);
-    // }
-  }
+   }
+ 
+   validarUsuario(){
+ 
+     this.user = this.userService.getUser();
+     this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+     this.tipo?.then(tipoUsuario => {
+       switch (tipoUsuario) {
+       case 'ADMIN':
+         break;
+       case 'CLIENTE':
+         this.router.navigate(['cliente/principal']);
+         break;
+       case 'ERROR':
+       default:
+         console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+         this.router.navigate(['/login']);
+         break;
+       }
+     }).catch(error => {
+       console.error("Error al validar el usuario:", error);
+       this.router.navigate(['/login']);
+     });
+   }
 
   async guardarInfo() {
     try {
@@ -72,10 +78,8 @@ export class PerfilAComponent implements OnInit {
         tipo_usuario: this.stat //  Asegurar que se envía
       });
   
-      alert("Información actualizada correctamente");
       console.log("Usuario actualizado en PostgreSQL");
     } catch (error) {
-      console.error("Error al actualizar usuario:", error);
       alert("Error al actualizar información");
     }
   }

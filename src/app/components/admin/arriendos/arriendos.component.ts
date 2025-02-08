@@ -7,6 +7,7 @@ import { ArriendosService } from '../../../services/arriendos.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from "../menu/menu.component";
+import { UsuarioService } from '../../../services/usuario.service';
 @Component({
   selector: 'app-arriendos',
   standalone: true,
@@ -17,13 +18,106 @@ import { MenuComponent } from "../menu/menu.component";
 export class ArriendosComponent {
   @ViewChild('crear') crear!: ElementRef;
 
-  arriendos: any[] = []; // Lista de arriendos
+  arriendos: {
+    usuario:{
+      uid:string,
+      nombre:string,
+      telefono:string,
+      direccion:string,
+      cedula:string,
+      placa:string,
+    },id:number, fechaInicio:Date,fechaFin:Date, lugar:{
+      id:number,
+      posicion:string,
+      estado:string,
+    }
+  }[] = [
+    {
+      usuario: {
+        uid: "UID12345",
+        nombre: "Juan Pérez",
+        telefono: "0987654321",
+        direccion: "Av. Siempre Viva 123",
+        cedula: "1723456789",
+        placa: "ABC-1234",
+      },
+      id: 1,
+      fechaInicio: new Date("2025-02-07T08:00:00"),
+      fechaFin: new Date("2025-02-07T10:00:00"),
+      lugar: {
+        id: 101,
+        posicion: "A1",
+        estado: "Ocupado",
+      }
+    },
+    {
+      usuario: {
+        uid: "UID67890",
+        nombre: "María González",
+        telefono: "0998765432",
+        direccion: "Calle Los Pinos 456",
+        cedula: "1729876543",
+        placa: "XYZ-5678",
+      },
+      id: 2,
+      fechaInicio: new Date("2025-02-07T14:00:00"),
+      fechaFin: new Date("2025-02-07T16:30:00"),
+      lugar: {
+        id: 102,
+        posicion: "B3",
+        estado: "Reservado",
+      }
+    }
+  ];; // Lista de arriendos
   nuevoArriendo = { placa: '', inicio: '', fin: '', estado: 'Pendiente', nombreUsuario: '' };
+  user: any;
+  tipo: Promise<string> | undefined;
 
   constructor(
     private arriendosService: ArriendosService,
-    private router: Router
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private userService: UserInfoService
   ) {}
+
+
+  async ngOnInit(): Promise<void> {
+    this.validarUsuario();
+    
+    //actualizacion de manejo por dates
+
+    //actualizacion de envio y recepcion de datos
+
+    //eliminar valores predeterminados de arriendos y cargar los arriendos desde el backend
+
+    //agregar funcionalidad de CREAR arriendo
+
+    //agregar funcionalidad de ELIMINAR arriendo    
+  }
+  
+
+  validarUsuario(){
+
+    this.user = this.userService.getUser();
+    this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+    this.tipo?.then(tipoUsuario => {
+      switch (tipoUsuario) {
+      case 'ADMIN':
+        break;
+      case 'CLIENTE':
+        this.router.navigate(['cliente/principal']);
+        break;
+      case 'ERROR':
+      default:
+        console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+        this.router.navigate(['/login']);
+        break;
+      }
+    }).catch(error => {
+      console.error("Error al validar el usuario:", error);
+      this.router.navigate(['/login']);
+    });
+  }
 
 
   // Mostrar/Ocultar el formulario de creación
@@ -86,23 +180,7 @@ export class ArriendosComponent {
 
   // Obtener todos los arriendos
   obtenerArriendos() {
-    this.arriendosService.obtenerTodosLosArriendos().then((snapshot) => {
-      this.arriendos = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          placa: doc.id, // Asumimos que la placa es el ID del documento
-          inicio: data['inicio'].toDate ? data['inicio'].toDate().toLocaleDateString() : data['inicio'],
-          fin: data['fin'].toDate ? data['fin'].toDate().toLocaleDateString() : data['fin'],
-          estado: data['estado'] || 'Pendiente',
-          nombreUsuario: data['nombreUsuario'] || '',
-          
-        };
-      });
-      console.log(this.arriendos); // Verifica los datos procesados
-    }).catch((error) => {
-      console.error('Error al obtener arriendos:', error);
-    });
+
   }
   
 }

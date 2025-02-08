@@ -23,8 +23,8 @@
             <div class="exit"><a (click)="eliminar(horario)">X</a></div>
             <Strong>{{horario.nombre}}</Strong>
             <div class="dato">
-                <p>{{horario.fechaInicio}} - {{horario.fechaFin}} </p>
-                <P>{{horario.inicio}} - {{horario.fin}}</P>
+                <p>{{horario.fechaInicio  | date:'dd/MM/yyyy'}} - {{horario.fechaFin  | date:'dd/MM/yyyy'}} </p>
+                <P>{{horario.fechaInicio | date:'HH:mm'}} - {{horario.fechaFin | date:'HH:mm'}}</P>
             </div>
         </section>
         <button class="ah-button button" (click)="desplegarEditar(horario)">Editar</button>

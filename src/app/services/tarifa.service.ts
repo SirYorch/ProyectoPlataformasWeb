@@ -6,7 +6,8 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class TarifaService {
-  private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/tarifas';
+  //private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/tarifas';
+  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/tarifas';
 
   constructor(private http: HttpClient) {}
 

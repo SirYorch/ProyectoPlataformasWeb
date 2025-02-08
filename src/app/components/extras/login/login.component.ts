@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GoogleAuthService } from '../../../services/google-auth.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PopUpsComponent } from "../pop-ups/pop-ups.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PopUpsComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -22,9 +23,21 @@ export class LoginComponent implements OnInit {
   errorMessage = "";
   user: any = null;
   currentUser: any = null;
+  tipo: Promise<string | void> = Promise.resolve();
+  valido: boolean = true;
 
   constructor(private googleAuthService: GoogleAuthService, private router: Router, private userService: UserInfoService) {}
 
+
+  @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+  
+
+  desplegarExito(mensaje:string){
+    this.PopUpsComponent.desplegarSuccess(mensaje);
+  }
+  desplegarError(mensaje:string){
+    this.PopUpsComponent.desplegarError(mensaje);
+  }
   //  Cambia entre vista de inicio de sesión y registro
   toggleView(): void {
     this.isRegisterView = !this.isRegisterView;
@@ -32,29 +45,34 @@ export class LoginComponent implements OnInit {
 
   //  Verifica si hay un usuario autenticado en PostgreSQL
   async ngOnInit(): Promise<void> {
+   this.validarUsuario();
+
+
+   ///mostrar mensaje de usuario detectado antes de cada uno de los redireccionamientos
+  }
+
+  validarUsuario(){
+
     this.user = this.userService.getUser();
-
-    if (!this.user) return;
-
-    try {
-      console.log(" Verificando existencia del usuario en PostgreSQL...");
-      const userExists = await this.googleAuthService.checkUserExists(this.user.uid);
-
-      if (userExists) {
-        const tipoUsuario = await this.googleAuthService.getTipoUsuario(this.user.uid);
-        this.userService.saveUser({ uid: this.user.uid });
-
-        if (tipoUsuario === 'ADMIN') {
-          console.log(" Usuario ADMIN detectado. Redirigiendo...");
-          this.router.navigate(['/admin/principal']);
-        } else if (tipoUsuario === 'CLIENTE') {
-          console.log(" Usuario CLIENTE detectado. Redirigiendo...");
-          this.router.navigate(['/cliente/principal']);
-        }
+    this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+    this.tipo?.then(tipoUsuario => {
+      switch (tipoUsuario) {
+      case 'ADMIN':
+        this.router.navigate(['admin/principal']);
+        break;
+      case 'CLIENTE':
+        this.router.navigate(['cliente/principal']);
+        break;
+      case 'ERROR':
+      default:
+        console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+        this.router.navigate(['/login']);
+        break;
       }
-    } catch (error) {
-      console.error(' Error durante la validación del usuario:', error);
-    }
+    }).catch(error => {
+      console.error("Error al validar el usuario:", error);
+      this.router.navigate(['/login']);
+    });
   }
 
   //  Inicia sesión con Google y consulta PostgreSQL
@@ -64,13 +82,11 @@ export class LoginComponent implements OnInit {
 
       if (result) {
         this.currentUser = result.user;
-        console.log(" Usuario autenticado con Google:", this.currentUser);
 
         // Verificar existencia en PostgreSQL
         const userExists = await this.googleAuthService.checkUserExists(this.currentUser.uid);
 
         if (!userExists) {
-          console.log(" Usuario no encontrado en PostgreSQL. Mostrando formulario de registro...");
           this.isRegisterView = true;
           return;
         }
@@ -79,7 +95,6 @@ export class LoginComponent implements OnInit {
         const tipoUsuario = await this.googleAuthService.getTipoUsuario(this.currentUser.uid);
         
         if (!tipoUsuario) {
-          console.log(" No se pudo obtener el tipo de usuario. Redirigiendo a login.");
           this.router.navigate(['/login']);
           return;
         }
@@ -87,21 +102,17 @@ export class LoginComponent implements OnInit {
         this.userService.saveUser({ uid: this.currentUser.uid });
 
         // Redirigir según el tipo de usuario
+
         if (tipoUsuario === 'ADMIN') {
-          console.log("Redirigiendo a Administrador...");
           this.router.navigate(['/admin/principal']);
         } else if (tipoUsuario === 'CLIENTE') {
-          console.log(" Redirigiendo a Cliente...");
           this.router.navigate(['/cliente/principal']);
         } else {
-          console.log("⚠️ Tipo de usuario desconocido. Redirigiendo a login.");
           this.router.navigate(['/login']);
         }
       } else {
-        console.log(" No se pudo autenticar con Google.");
       }
     } catch (error) {
-      console.error(" Error durante el inicio de sesión:", error);
     }
   }
 
@@ -124,16 +135,16 @@ export class LoginComponent implements OnInit {
         const usuario = await this.googleAuthService.getUserInfo(this.currentUser.uid);
         
         if (usuario && usuario.tipo_usuario === "CLIENTE") {
-          console.log(" Registro exitoso. Redirigiendo a cliente/principal...");
+          this.desplegarExito(" Registro exitoso. Redirigiendo a cliente/principal...");
           this.userService.saveUser({ uid: this.currentUser.uid });
-          this.router.navigate(['/cliente/principal']);
+          setTimeout(()=>{this.router.navigate(['/cliente/principal'])},1000);
         } else {
-          console.log(" No se pudo validar el usuario en la base de datos. Redirigiendo a login...");
-          this.router.navigate(['/login']);
+          this.desplegarError(" No se pudo validar el usuario en la base de datos. Redirigiendo a login...");
+          setTimeout(()=>{this.router.navigate(['/login'])},1000);
         }
 
       } catch (error) {
-        console.error(" Error al registrar usuario:", error);
+        this.desplegarError(`Error al registrar usuario: ${(error as any).message}`);
       }
     }
   }
@@ -147,27 +158,31 @@ export class LoginComponent implements OnInit {
     this.placa = this.placa.trim();
 
     if (this.nombre.length < 5) {
-      this.errorMessage = "⚠️ El nombre debe tener al menos 5 caracteres.";
-      return false;
+      this.errorMessage = "El nombre debe tener al menos 5 caracteres.";
+      this.valido = false;
     }
     if (!/^\d{10}$/.test(this.telefono)) {
-      this.errorMessage = "⚠️ El teléfono debe tener 10 dígitos numéricos.";
-      return false;
+      this.errorMessage = "El teléfono debe tener 10 dígitos numéricos.";
+      this.valido = false;
     }
     if (this.direccion.length < 5) {
-      this.errorMessage = "⚠️ La dirección debe tener al menos 5 caracteres.";
-      return false;
+      this.errorMessage = "La dirección debe tener al menos 5 caracteres.";
+      this.valido = false;
     }
     if (!/^\d{10}$/.test(this.cedula)) {
-      this.errorMessage = "⚠️ La cédula debe tener 10 dígitos numéricos.";
-      return false;
+      this.errorMessage = "La cédula debe tener 10 dígitos numéricos.";
+      this.valido = false;
     }
     if (this.placa.length < 5) {
-      this.errorMessage = "⚠️ La placa no es válida.";
-      return false;
+      this.errorMessage = "La placa no es válida.";
+      this.valido = false;
     }
 
-    this.errorMessage = "";
+    if(!this.valido){
+      this.desplegarError(this.errorMessage);
+      return false;
+    }
+    
     return true;
   }
 

@@ -16,12 +16,12 @@ export class PopUpsComponent {
     desplegarSuccess(contenido: string  ){
       this.mensaje = contenido;
       this.success.nativeElement.classList.remove("hide-pop")
-      setTimeout(()=>{console.log("retirando");this.success.nativeElement.classList.add("hide-pop");},2000)
+      setTimeout(()=>{console.log("retirando");this.success.nativeElement.classList.add("hide-pop");},1500)
     }
 
     desplegarError(contenido: string  ){
       this.mensaje = contenido;
-      this.success.nativeElement.classList.remove("hide-pop")
-      setTimeout(()=>{console.log("retirando");this.success.nativeElement.classList.add("hide-pop");},2000)
+      this.error.nativeElement.classList.remove("hide-pop")
+      setTimeout(()=>{console.log("retirando");this.error.nativeElement.classList.add("hide-pop");},1500)
     }
 }

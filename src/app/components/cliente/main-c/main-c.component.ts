@@ -23,7 +23,19 @@ export class MainCComponent implements OnInit {
   estado = "Inactivo";
   motd = "Mensaje del Día";
   plazas = "0";
-  tarifas: any[] = []; //  Ahora se maneja un array de tarifas
+  tarifas: any[] = [{
+      descripcion: "Tarifa básica",
+      precio: 10.50
+  },
+  {
+      descripcion: "Tarifa estándar",
+      precio: 15.75
+  },
+  {
+      descripcion: "Tarifa premium",
+      precio: 25.00
+  }]
+  tipo: Promise<string> | undefined;
 
   constructor(
     private tarifaService: TarifaService,
@@ -75,30 +87,50 @@ export class MainCComponent implements OnInit {
       this.reservar.nativeElement.classList.add('parking-hidden');
       this.entrar.nativeElement.classList.add('parking-hidden');
     }
-
+  //  Verifica si hay un usuario autenticado en PostgreSQL
   async ngOnInit(): Promise<void> {
-    // this.user = this.userService.getUser();
+    this.validarUsuario();
+ 
+ 
+    //mostrar mensajes personalizados de usuario.
+
+    //mostrar mensaje del dia
+
+    //enviar solicitud para entrar y ocupar un espacio.
+
+    //enviar solicitud para reservar un espacio.
+
+    //enviar solicitud para salir del parqueadero.
+
+    //cambiar el boton de entrar a salir, cuando el vehiculo tenga un ticket sin fechaSalida.
+
+    //no pedir seleccion de espacio si existe una reserva.
+
+    //cargar las tarifas del parqueadero desde la base de datos.
 
 
-
-    // if (!this.user) {
-    //   this.router.navigate(['login']);
-    //   return;
-    // }
-
-    // try {
-    //   //  Obtener la información del administrador desde PostgreSQL
-    //   const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
-
-    //   if (!usuario || usuario.tipo_usuario !== 'CLIENTE') {
-    //     this.router.navigate(['']);
-    //     return;
-    //   }
-
-    //   // Obtener tarifas desde PostgreSQL
-    //   this.tarifas = await this.tarifaService.obtenerTarifas();
-    // } catch (error) {
-    //   console.error("Error al obtener tarifas:", error);
-    // }
-  }
+    //cargar los lugares y transformarlos desde el la app de parqueadero.
+   }
+ 
+   validarUsuario(){
+ 
+     this.user = this.userService.getUser();
+     this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+     this.tipo?.then(tipoUsuario => {
+       switch (tipoUsuario) {
+       case 'ADMIN':
+         break;
+       case 'CLIENTE':
+         break;
+       case 'ERROR':
+       default:
+         console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+         this.router.navigate(['/login']);
+         break;
+       }
+     }).catch(error => {
+       console.error("Error al validar el usuario:", error);
+       this.router.navigate(['/login']);
+     });
+   }
 }

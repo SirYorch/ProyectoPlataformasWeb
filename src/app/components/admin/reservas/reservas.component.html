@@ -5,14 +5,14 @@
 
 <div class="ventana vertical">
 
-    <section class="aa-section arriendoss">
+    <section class="aa-section arriendoss" *ngFor="let reserva of reservas">
         
-        <p> Cliente</p>
+        <p> {{reserva.usuario.nombre}}</p>
         <button class="button percentage">Ver</button>
         <div class="exit">
             <a >X</a>
         </div>
-        </section>
+    </section>
 </div>
 
 

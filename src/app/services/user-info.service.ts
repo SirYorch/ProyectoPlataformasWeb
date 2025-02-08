@@ -1,13 +1,43 @@
 import { Injectable } from '@angular/core';
+import { GoogleAuthService } from './google-auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserInfoService {
+
+  user:any = null; //necesario para poder hacer validaciones automaticas.
+
+
+  async validarUsuario(usuario:any): Promise<string | void> {
+    this.user = usuario;
+
+    if (!this.user) return 'NO_USER';
+
+    try {
+      const userExists = await this.googleAuthService.checkUserExists(this.user.uid);
+
+      if (userExists) {
+        const tipoUsuario = await this.googleAuthService.getTipoUsuario(this.user.uid);
+        this.saveUser({ uid: this.user.uid });
+
+        if (tipoUsuario === 'ADMIN') {
+          return 'ADMIN' ;
+        } else if (tipoUsuario === 'CLIENTE') {
+          return 'CLIENTE' ;
+        }
+      }
+    } catch (error) {
+        return 'ERROR';
+      }
+  
+      return 'UNKNOWN';
+    }
+  
   private storageKey = 'authenticatedUser'; // Clave para almacenar el usuario en localStorage
   private otro = 'otro'; // Clave para almacenar el usuario en localStorage
 
-  constructor() {}
+  constructor(private googleAuthService: GoogleAuthService) {}
 
   // Guardar usuario en el localStorage
   saveUser(user: any): void {

@@ -19,13 +19,30 @@ export class HorariosComponent {
   @ViewChild('editar') editar!: ElementRef;
   @ViewChild('editarGeneral') editarGeneral!: ElementRef;
 
-  horarios: any[] = [];
+  horarios: {
+    nombre: string,
+    fechaInicio: Date,
+    fechaFin: Date,
+  }[] = [
+    {
+      nombre: "Horario Mañana",
+      fechaInicio: new Date("2025-02-07T08:00:00"),
+      fechaFin: new Date("2025-02-07T12:00:00"),
+    },
+    {
+      nombre: "Horario Tarde",
+      fechaInicio: new Date("2025-02-07T13:00:00"),
+      fechaFin: new Date("2025-02-07T17:00:00"),
+    }];
   general: any;
   user: any;
   horaIniciogl = "06:45";
   horaIniciogs = "08:00";
   horaFingl = "20:00";
   horaFings = "18:00";
+  tipo: Promise<string> | undefined;
+horaApertura: any;
+horaCierre: any;
 
   constructor(
     private horarioService: HorarioService, // 📌 Usamos HorarioService
@@ -68,10 +85,8 @@ export class HorariosComponent {
   }
 
   nombreHorario= "";
-  fechaApertura= "";
-  fechaCierre= "";
-  horaApertura= "";
-  horaCierre= "";
+  fechaApertura: Date = new Date();
+  fechaCierre:Date = new Date();;
   horarioe:any;
 
   cambiarDatos(horario: any) {
@@ -81,8 +96,6 @@ export class HorariosComponent {
       this.nombreHorario = horario.nombre;
       this.fechaApertura = horario.fechaInicio;
       this.fechaCierre = horario.fechaFin;
-      this.horaApertura = horario.inicio;
-      this.horaCierre = horario.fin;
     }
   }
 
@@ -90,8 +103,6 @@ export class HorariosComponent {
     this.horarioe.nombre = this.nombreHorario;
     this.horarioe.fechaInicio = this.fechaApertura;
     this.horarioe.fechaFin = this.fechaCierre;
-    this.horarioe.inicio = this.horaApertura;
-    this.horarioe.fin = this.horaCierre;
     
     this.horarioService.saveHorarios(this.horarios);
     this.desplegarEditar(null);
@@ -102,8 +113,6 @@ export class HorariosComponent {
     const horario = {
       fechaFin: this.fechaCierre,
       fechaInicio: this.fechaApertura,
-      fin: this.horaCierre,
-      inicio: this.horaApertura,
       nombre: this.nombreHorario,
     };
     this.horarios.push(horario);
@@ -113,9 +122,50 @@ export class HorariosComponent {
   resetForm() {
     this.horarioe = null;
     this.nombreHorario = "";
-    this.fechaApertura = "";
-    this.fechaCierre = "";
-    this.horaApertura = "";
-    this.horaCierre = "";
+    this.fechaApertura= new Date();;
+    this.fechaCierre = new Date();;
   }
+
+
+    async ngOnInit(): Promise<void> {
+      this.validarUsuario();
+      
+      // actualizacion de objeto public para lectura de datos motd y fechas lunes-viernes y sabado-domingo
+     //Actualizar manejo de fechas y horas dentro de java
+
+     //manejo de fechas para lunes-viernes y sabado-domingo
+
+     //eliminar valores predeterminados y cargar los horarios desde el backend.
+
+     //creacion de horarios solicitud post
+
+     //edicion de horarios solicitud put
+
+      //eliminar horarios solicitud delete
+      
+    }
+    
+
+    validarUsuario(){
+  
+      this.user = this.userService.getUser();
+      this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+      this.tipo?.then(tipoUsuario => {
+        switch (tipoUsuario) {
+        case 'ADMIN':
+          break;
+        case 'CLIENTE':
+          this.router.navigate(['cliente/principal']);
+          break;
+        case 'ERROR':
+        default:
+          console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+          this.router.navigate(['/login']);
+          break;
+        }
+      }).catch(error => {
+        console.error("Error al validar el usuario:", error);
+        this.router.navigate(['/login']);
+      });
+    }
 }

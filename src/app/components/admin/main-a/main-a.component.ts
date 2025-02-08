@@ -18,10 +18,21 @@ export class MainAComponent implements OnInit {
   nombre = "Usuario";
   estado = "Inactivo";
   motd = "Mensaje del Día";
-  plazas = "0";
   
   // Ahora las tarifas se manejarán en un array
-  tarifas: any[] = [];
+  tarifas: any[] = [{
+    descripcion: "Tarifa básica",
+    precio: 10.50
+},
+{
+    descripcion: "Tarifa estándar",
+    precio: 15.75
+},
+{
+    descripcion: "Tarifa premium",
+    precio: 25.00
+}]; //valores predeterminados, se deberan borrar cuando se tomen los nuevos.
+  tipo: Promise<string> | undefined;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -30,34 +41,40 @@ export class MainAComponent implements OnInit {
     private userService: UserInfoService
   ) {}
 
+  
   async ngOnInit(): Promise<void> {
-    // this.user = this.userService.getUser();
+    this.validarUsuario();
+ 
+    //tomar el nombre del usuario.
 
-    // if (!this.user) {
-    //   this.router.navigate(['login']);
-    //   return;
-    // }
+    //tomar el motd
 
-    // try {
-    //   //  Obtener la información del usuario desde PostgreSQL
-    //   const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
-      
-    //   if (!usuario || usuario.tipo_usuario !== 'ADMIN') {
-    //     this.router.navigate(['']);
-    //     return;
-    //   }
-
-    //   this.nombre = usuario.nombre;
-    //   this.estado = "Activo"; // Puedes cambiar esto según tus datos
-    //   this.motd = "Bienvenido al sistema"; // Mensaje de prueba
-    //   this.plazas = "50"; // Número de plazas de prueba
-
-    //   // Obtener tarifas desde PostgreSQL
-    //   this.tarifas = await this.tarifaService.obtenerTarifas();
-      
-    // } catch (error) {
-    //   console.error(' Error al validar el usuario:', error);
-    //   this.router.navigate(['login']);
-    // }
-  }
+    //tomar el horario del parqueadero para ver si esta activo o no.
+ 
+    //tomar las tarifas, eliminar las tarifas predeterminadas
+   }
+ 
+   validarUsuario(){
+ 
+     this.user = this.userService.getUser();
+     this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+     this.tipo?.then(tipoUsuario => {
+       switch (tipoUsuario) {
+       case 'ADMIN':
+         this.router.navigate(['admin/principal']);
+         break;
+       case 'CLIENTE':
+         this.router.navigate(['cliente/principal']);
+         break;
+       case 'ERROR':
+       default:
+         console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+         this.router.navigate(['/login']);
+         break;
+       }
+     }).catch(error => {
+       console.error("Error al validar el usuario:", error);
+       this.router.navigate(['/login']);
+     });
+   }
 }

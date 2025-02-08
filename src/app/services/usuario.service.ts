@@ -6,7 +6,8 @@ import { lastValueFrom, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/usuarios';
+  //private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/usuarios';
+  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/usuarios';
 
   constructor(private http: HttpClient) {}
 

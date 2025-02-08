@@ -27,6 +27,7 @@ export class PerfilComponent  {
 
   @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
   @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+  tipo: Promise<string> | undefined;
 
   desplegarExito(){
     this.PopUpsComponent.desplegarSuccess("Se muestra un mensaje de exito");
@@ -43,52 +44,69 @@ export class PerfilComponent  {
     private userService: UserInfoService
   ) {}
 
+
+   //  Verifica si hay un usuario autenticado en PostgreSQL
   async ngOnInit(): Promise<void> {
-    this.user = this.userService.getUser();
-
-     if (!this.user) {
-       this.router.navigate(['login']);
-       return;
-     }
-
-     try {
-       //  Obtener datos del usuario desde PostgreSQL
-       const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
-
-       if (!usuario || usuario.tipo_usuario !== 'CLIENTE') {
-         this.router.navigate(['']);
-         return;
+    this.validarUsuario();
+ 
+    try {
+      //  Obtener datos del usuario desde PostgreSQL
+      const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);;
+      console.log("Usuario:", usuario);
+      //  Cargar los datos en el formulario
+      this.nombre = usuario.nombre;
+      this.telefono = usuario.telefono;
+      this.direccion = usuario.direccion;
+      this.cedula = usuario.cedula;
+      this.placa = usuario.placa;
+      this.tipo_usuario = usuario.tipo_usuario;
+    } catch (error) {
+      console.error("Error al obtener datos del usuario:", error);
+      this.router.navigate(['login']);
+    }
+   }
+ 
+   validarUsuario(){
+ 
+     this.user = this.userService.getUser();
+     this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+     this.tipo?.then(tipoUsuario => {
+       switch (tipoUsuario) {
+       case 'ADMIN':
+         break;
+       case 'CLIENTE':
+         break;
+       case 'ERROR':
+       default:
+         console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+         this.router.navigate(['/login']);
+         break;
        }
-
-       //  Cargar los datos en el formulario
-       this.nombre = usuario.nombre;
-       this.telefono = usuario.telefono;
-       this.direccion = usuario.direccion;
-       this.cedula = usuario.cedula;
-       this.placa = usuario.placa;
-       this.tipo_usuario = usuario.tipo_usuario;
-     } catch (error) {
-       console.error("Error al obtener datos del usuario:", error);
-       this.router.navigate(['login']);
-     }
+     }).catch(error => {
+       console.error("Error al validar el usuario:", error);
+       this.router.navigate(['/login']);
+     });
    }
 
-  async guardarInfo() {
-    try {
-      await this.usuarioService.actualizarUsuario(this.user.uid, {
-        nombre: this.nombre,
-        telefono: this.telefono,
-        direccion: this.direccion,
-        cedula: this.cedula,
-        placa: this.placa,
-        tipo_usuario: this.tipo_usuario
-      });
 
-      console.log("Información actualizada correctamente");
-      alert("✔ Cambios guardados correctamente.");
+   async guardarInfo() {
+    try {
+      this.ConfirmDialogsComponent.desplegarConfirmacion("Esta seguro de querer actualizar la información?", async ()=>{
+        await this.usuarioService.actualizarUsuario(this.user.uid, {
+          nombre: this.nombre,
+          telefono: this.telefono,
+          direccion: this.direccion,
+          cedula: this.cedula,
+          placa: this.placa,
+          tipo_usuario: this.tipo_usuario
+        });
+
+        this.PopUpsComponent.desplegarSuccess("Los datos se han actualizado");
+
+      });
+      
     } catch (error) {
-      console.error("Error al actualizar usuario:", error);
-      alert("Error al guardar cambios.");
+      this.PopUpsComponent.desplegarError("Error al actualizar los datos");
     }
   }
 }

@@ -52,19 +52,48 @@ export class UsuariosComponent implements OnInit {
   // <p class="extra">{{usuario.tipo_usuario}}</p>
   // <button class="au button" (click)="verUsuario(usuario.uid)">Ver</button>
 
-  private usuarioService = inject(UsuarioService);
-  private router = inject(Router);
-  private userService = inject(UserInfoService);
+  user: any;
+  tipo: Promise<string> | undefined;
+
+    constructor(
+      private usuarioService: UsuarioService,
+      private router: Router,
+      private userService: UserInfoService
+    ) {}
 
   async ngOnInit(): Promise<void> {
-    // try {
-    //   this.usuarios = await this.usuarioService.obtenerUsuarios(); // ✅ Ahora usamos await en la Promise
-    //   console.log("Usuarios obtenidos:", this.usuarios);
-    // } catch (error) {
-    //   console.error("Error al obtener usuarios:", error);
-    // }
-  }
+    this.validarUsuario();
+ 
+    //eliminar lista predeterminada de usuarios, y tomar la lista de usuarios de la base de datos.
 
+    // revisar el funcionamiento nuevo del boton ver de cada usuario para modificar los datos.
+
+   }
+ 
+   validarUsuario(){
+ 
+     this.user = this.userService.getUser();
+     this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+     this.tipo?.then(tipoUsuario => {
+       switch (tipoUsuario) {
+       case 'ADMIN':
+         break;
+       case 'CLIENTE':
+         this.router.navigate(['cliente/principal']);
+         break;
+       case 'ERROR':
+       default:
+         console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+         this.router.navigate(['/login']);
+         break;
+       }
+     }).catch(error => {
+       console.error("Error al validar el usuario:", error);
+       this.router.navigate(['/login']);
+     });
+   }
+
+   
   verUsuario(uid: string) {
     this.userService.saveOtherUser(uid);
     this.router.navigate(['admin/perfilCliente']);

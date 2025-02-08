@@ -16,19 +16,12 @@ import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.compo
   styleUrl: './espacio.component.scss'
 })
 export class EspacioComponent {
-  
-  totales ="0";
-  disponibles = "0";
-  ocupadas = "0";
-  reservadas = "0";
-  dia = "0";
-
+  tipo: Promise<string> | undefined;
 
   constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
 
   }
   
-  motd = "0";
   filas =0;
   columnas =0;
   
@@ -36,19 +29,44 @@ export class EspacioComponent {
   user:any;
 
   guardarDatos(){
-    this.googleuser.saveTarifas(
-      {
-        motd:this.motd,
+    
 
-      }
-    );
-    this.googleuser.saveEspacio({
-        ocupados:this.ocupadas,
-        reservados:this.reservadas,
-        totales:this.totales,
-        dia:this.dia,
-      }
-    )
+
   }
+  
+    async ngOnInit(): Promise<void> {
+      this.validarUsuario();
+   
+      
+      //guardar datos de filas y columnas en el back
+
+      //modificar el guardar filas y columnas para que se eliminen todas y se inserten de nuevo las que se deban crear.
+  
+      //actualizar el componente para poder ver los cambios del parqueadero.
+  
+     }
+   
+     validarUsuario(){
+   
+       this.user = this.userService.getUser();
+       this.tipo = this.userService.validarUsuario(this.user).then(tipo => tipo ?? "ERROR");
+       this.tipo?.then(tipoUsuario => {
+         switch (tipoUsuario) {
+         case 'ADMIN':
+           break;
+         case 'CLIENTE':
+           this.router.navigate(['cliente/principal']);
+           break;
+         case 'ERROR':
+         default:
+           console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
+           this.router.navigate(['/login']);
+           break;
+         }
+       }).catch(error => {
+         console.error("Error al validar el usuario:", error);
+         this.router.navigate(['/login']);
+       });
+     }
   
 }

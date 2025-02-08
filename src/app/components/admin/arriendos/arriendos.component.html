@@ -6,7 +6,6 @@
     <section class="no-border aa-section arriendoss">
       <p>Eliminar</p>
       <p><b>Placa</b></p>
-      <p >Estado</p>
       <p class="extra">Inicio</p>
       <p class="extra">Fin</p>
       <p class="extra">Nombre</p>
@@ -14,12 +13,11 @@
   
     <!-- Listado dinámico de arriendos -->
 <section *ngFor="let arriendo of arriendos" class="aa-section arriendoss">
-    <div class="exit"><a (click)="eliminarArriendo(arriendo.id)">X</a></div>
-    <p><b>{{ arriendo.placa }}</b></p>
-    <p>{{ arriendo.estado }}</p>
-    <p class="extra">{{ arriendo.inicio }}</p>
-    <p class="extra">{{ arriendo.fin }}</p>
-    <p class="extra">{{ arriendo.nombreUsuario }}</p>
+    <div class="exit"><a (click)="eliminarArriendo(arriendo.usuario.placa)">X</a></div>
+    <p><b>{{ arriendo.usuario.placa }}</b></p>
+    <p class="extra">{{ arriendo.fechaInicio | date:'dd/MM/yyyy'}}</p>
+    <p class="extra">{{ arriendo.fechaFin  | date:'dd/MM/yyyy' }}</p>
+    <p class="extra">{{ arriendo.usuario.nombre }}</p>
   </section>
   
   
