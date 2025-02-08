@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario.service';
 import { ConfirmDialogsComponent } from '../../extras/confirm-dialogs/confirm-dialogs.component';
 import { PopUpsComponent } from '../../extras/pop-ups/pop-ups.component';
+import { PublicoService } from '../../../services/publico.service';
+import { HorarioService } from '../../../services/horario.service';
 
 @Component({
   selector: 'app-main-c',
@@ -17,33 +19,6 @@ import { PopUpsComponent } from '../../extras/pop-ups/pop-ups.component';
   styleUrl: './main-c.component.scss'
 })
 export class MainCComponent implements OnInit {
-
-  user: any;
-  nombre = "Usuario";
-  estado = "Inactivo";
-  motd = "Mensaje del Día";
-  plazas = "0";
-  tarifas: any[] = [{
-      descripcion: "Tarifa básica",
-      precio: 10.50
-  },
-  {
-      descripcion: "Tarifa estándar",
-      precio: 15.75
-  },
-  {
-      descripcion: "Tarifa premium",
-      precio: 25.00
-  }]
-  tipo: Promise<string> | undefined;
-
-  constructor(
-    private tarifaService: TarifaService,
-    private router: Router,
-    private userService: UserInfoService,
-    private usuarioService: UsuarioService
-  ) {}
-
 
     @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
     @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
@@ -87,14 +62,58 @@ export class MainCComponent implements OnInit {
       this.reservar.nativeElement.classList.add('parking-hidden');
       this.entrar.nativeElement.classList.add('parking-hidden');
     }
-  //  Verifica si hay un usuario autenticado en PostgreSQL
+    user: any;
+  usuario:any;
+  publico:any;
+  nombre = "Usuario";
+  estado = "Inactivo";
+  motd = "Mensaje del Día";
+  
+  // Ahora las tarifas se manejarán en un array
+  tarifas: any[] = [{
+    descripcion: "Tarifa básica",
+    precio: 10.50
+},
+{
+    descripcion: "Tarifa estándar",
+    precio: 15.75
+},
+{
+    descripcion: "Tarifa premium",
+    precio: 25.00
+}]; //valores predeterminados, se deberan borrar cuando se tomen los nuevos.
+  tipo: Promise<string> | undefined;
+  horarios: any[] | undefined;
+  tarifasProm: Promise<any[]> | undefined;
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private tarifaService: TarifaService,
+    private router: Router,
+    private userService: UserInfoService,
+    private publicoService: PublicoService,
+    private horarioService: HorarioService,
+    private tarifasService: TarifaService,
+  ) {}
+
+  
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
  
- 
-    //mostrar mensajes personalizados de usuario.
 
-    //mostrar mensaje del dia
+    this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
+    this.nombre = this.usuario.nombre;
+
+    this.publico = await this.publicoService.obtenerDatos();
+    this.motd = this.publico.motd;
+
+    this.horarios = await this.horarioService.getHorarios();
+    this.checkEstadoParqueadero(this.horarios);
+
+    this.tarifasProm = this.tarifaService.obtenerTarifas();
+    this.tarifasProm.then(valor =>{
+      this.tarifas = valor;
+    })
 
     //enviar solicitud para entrar y ocupar un espacio.
 
@@ -102,14 +121,7 @@ export class MainCComponent implements OnInit {
 
     //enviar solicitud para salir del parqueadero.
 
-    //cambiar el boton de entrar a salir, cuando el vehiculo tenga un ticket sin fechaSalida.
-
-    //no pedir seleccion de espacio si existe una reserva.
-
-    //cargar las tarifas del parqueadero desde la base de datos.
-
-
-    //cargar los lugares y transformarlos desde el la app de parqueadero.
+    //comprobar que no exista una reserva para entrar y elegir un espacio.
    }
  
    validarUsuario(){
@@ -121,6 +133,7 @@ export class MainCComponent implements OnInit {
        case 'ADMIN':
          break;
        case 'CLIENTE':
+         this.router.navigate(['cliente/principal']);
          break;
        case 'ERROR':
        default:
@@ -133,4 +146,55 @@ export class MainCComponent implements OnInit {
        this.router.navigate(['/login']);
      });
    }
+
+checkEstadoParqueadero(horarios:any[]) {
+  const fechaActual = new Date(); // Obtiene la fecha y hora actual del dispositivo
+  const diaSemana = fechaActual.getDay(); // Obtiene el día de la semana (0: domingo, 1: lunes, ..., 6: sábado)
+  
+    // 1. Comparar con la lista de horarios
+    for (const horario of horarios) {
+      const fechaInicio = new Date(horario.fechaInicio);
+      const fechaFin = new Date(horario.fechaFin);
+
+      // Verificar si la fecha actual está dentro del rango del horario
+      if (fechaActual >= fechaInicio && fechaActual <= fechaFin) {
+        return this.verificarHora(fechaActual, horario); // Verificar la hora
+      }
+    }
+
+    // 2. Si no coincide con ningún horario, verificar la lista publico
+    if (diaSemana >= 1 && diaSemana <= 5) {
+      // Lunes a viernes
+      const fechaInicio1 = new Date(this.publico.fechaInicio1);
+      const fechaFin1 = new Date(this.publico.fechaFin1);
+      return this.verificarHora(fechaActual, { fechaInicio: fechaInicio1, fechaFin: fechaFin1 });
+    } else if (diaSemana === 0 || diaSemana === 6) {
+      // Sábado o domingo
+      const fechaInicio2 = new Date(this.publico.fechaInicio2);
+      const fechaFin2 = new Date(this.publico.fechaFin2);
+      return this.verificarHora(fechaActual, { fechaInicio: fechaInicio2, fechaFin: fechaFin2 });
+    }
+
+    return 'Horario no disponible'; // Si no se encuentra un horario válido
+}
+
+private verificarHora(fechaActual: Date, horario: any){
+  const horaActual = fechaActual.getHours();
+  const minutosActual = fechaActual.getMinutes();
+  const horaInicio = horario.fechaInicio.getHours();
+  const minutosInicio = horario.fechaInicio.getMinutes();
+  const horaFin = horario.fechaFin.getHours();
+  const minutosFin = horario.fechaFin.getMinutes();
+
+  // Convertir todo a minutos para facilitar la comparación
+  const totalMinutosActual = horaActual * 60 + minutosActual;
+  const totalMinutosInicio = horaInicio * 60 + minutosInicio;
+  const totalMinutosFin = horaFin * 60 + minutosFin;
+
+  if (totalMinutosActual >= totalMinutosInicio && totalMinutosActual <= totalMinutosFin) {
+    this.estado = "Abierto"
+  } else {
+    this.estado = "Cerrado"
+  }
+}
 }

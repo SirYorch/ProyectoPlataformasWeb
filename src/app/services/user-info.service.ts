@@ -5,6 +5,9 @@ import { GoogleAuthService } from './google-auth.service';
   providedIn: 'root'
 })
 export class UserInfoService {
+  obtenerUsuario(uid: any): any {
+    throw new Error('Method not implemented.');
+  }
 
   user:any = null; //necesario para poder hacer validaciones automaticas.
 
