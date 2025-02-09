@@ -9,11 +9,11 @@
             <Strong>General</Strong>
             <div class="dato">
                 <p>Lunes - Viernes</p>
-                <P>{{horaIniciogl}} - {{horaFingl}}</P>
+                <P>{{horarioGeneral.entrada1 |  date:'HH:mm'}} - {{horarioGeneral.salida1| date:'HH:mm'}}</P>
             </div>
             <div class="dato">
                 <p>Sabados - Domingos</p>
-                <p>{{horaIniciogs}} - {{horaFings}}</p>
+                <p>{{horarioGeneral.entrada2 | date:'HH:mm'}} - {{horarioGeneral.salida2 |  date:'HH:mm'}}</p>
             </div>
         </section>
         <button class="ah-button button" (click)="desplegarEditarGeneral()">Editar</button>
@@ -33,7 +33,7 @@
 </div>
 
 <div class="crearArriendos crearArriend" #crear>
-    <div class="exit"><a (click)="desplegarCrear()">X</a></div>
+    <div class="exit"><a (click)="ocultarCrear()">X</a></div>
     <div class="selector"> <strong>Crear</strong> </div>
     <div>
       <label>
@@ -65,7 +65,7 @@
 </div>
 
 <div class="crearArriendos" #editar>
-    <div class="exit"><a (click)="desplegarEditar(null)">X</a></div>
+    <div class="exit"><a (click)="ocultarEditar()">X</a></div>
     <div class="selector"> <strong>Editar</strong> </div>
     <div>
         <label>
@@ -99,7 +99,7 @@
 
 <div class="crearArriendos general" #editarGeneral>
   <div class="exit">
-    <a (click)="desplegarEditarGeneral()">X</a>
+    <a (click)="ocultarEditarGeneral()">X</a>
   </div>
   <div class="selector">
     <strong>Editar General</strong>

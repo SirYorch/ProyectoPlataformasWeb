@@ -15,6 +15,8 @@
     --used:#79B6E2;
 
     --Black:#557 ;   /*uso solo si es necesario;*/
+    
+    --gray:#e1edf6;
 }
 
 * {
@@ -132,6 +134,9 @@ h2{
     display: inline-block;
 }
 .Parqueadero .marcadores .disponible{
+    color: var(--blueD);
+}
+.Parqueadero .espacios .disponible{
     color: var(--blueD);
 }
 .ocupado{
@@ -901,6 +906,10 @@ textarea:focus{
     border: 5px solid var(--blueL);
     transition: top .3s cubic-bezier(0.215, 0.610, 0.355, 1.275);
     border-radius: 15px;
+    text-align: center;
+}
+.pop p{
+    padding:0  30px ;
 }
 .eliminar-tarifa{
     max-width:60px
@@ -1063,6 +1072,13 @@ textarea:focus{
 .parking-hidden{
     top: -100vh;
 
+}
+
+.Oculto{
+    background-color: var(--gray);
+}
+.AltaVisibilidad{
+    background-color: var(--Black);
 }
 
 @media only screen and (min-width: 1200px) {

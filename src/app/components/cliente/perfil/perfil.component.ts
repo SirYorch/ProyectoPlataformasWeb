@@ -23,11 +23,11 @@ export class PerfilComponent  {
   cedula = "";
   placa = "";
   tipo_usuario = "";
-
+  tipo: Promise<string> | undefined;
 
   @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
   @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
-  tipo: Promise<string> | undefined;
+  
 
   desplegarExito(){
     this.PopUpsComponent.desplegarSuccess("Se muestra un mensaje de exito");

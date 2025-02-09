@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EspacioService } from '../../../services/espacio.service';
+import { LugarService } from '../../../services/lugar.service';
 
 @Component({
   selector: 'app-parqueadero',
@@ -8,7 +10,7 @@ import { Component } from '@angular/core';
   templateUrl: './parqueadero.component.html',
   styleUrl: './parqueadero.component.scss'
 })
-export class ParqueaderoComponent {
+export class ParqueaderoComponent implements OnInit{
   mensaje = "";
   oculto= false;
   seleccionOcupar = false;
@@ -17,10 +19,26 @@ export class ParqueaderoComponent {
   funcion: () => void = () => {
     console.log("Ejecutando función...");
   };
+  espacios: any=
+    {
+      filas: 1,
+      columnas: 0,
+      id: 0
+    }
+  ;
 
 
-  cambiarVisibilidad(){
+  cambiarVisibilidad(id:number){
     this.oculto = !this.oculto;
+    for(let fila of this.lugares){
+      for(let lugar of fila){
+        lugar.estado = "Oculto";
+        if(lugar.id == id){
+          lugar.estado = "AltaVisibilidad"
+        }
+      }
+    }
+    
   }
   cambiarSeleccionOcupar( metodo: () => void){
     this.seleccionOcupar = true;
@@ -99,5 +117,51 @@ export class ParqueaderoComponent {
       { "id": 40, "posicion": "E8", "estado": "ocupado" }
     ]
   ]
+
+  constructor(
+    private espacioService:EspacioService,private lugarService:LugarService
+  ){
+
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.espacios = (await this.espacioService.getEspacios().then(response=>{return response}));
+    this.lugares = await this.lugarService.getLugares();
+    this.lugares = this.transformarLugares(this.espacios)
+
+    ///enviar espacio para reservas y entrar.
+  }
+
+  async actualizarLugares(){
+    this.lugares = await this.lugarService.getLugares();
+
+    this.lugares = this.transformarLugares(this.espacios)
+  }
+
+  transformarLugares(espacios: any): any[][] {
+    const filas = espacios.filas; // Número de filas
+    const columnas = espacios.columnas; // Número de columnas
+  
+    const matrizLugares: any[][] = []; // Matriz bidimensional para almacenar los lugares
+  
+    let index = 0; // Índice para recorrer la lista de lugares
+  
+    // Recorrer las filas
+    for (let i = 0; i < filas; i++) {
+      const fila: any[] = []; // Array para almacenar los lugares de la fila actual
+  
+      // Recorrer las columnas
+      for (let j = 0; j < columnas; j++) {
+        if (index < this.lugares.length) {
+          fila.push(this.lugares[index]); // Agregar el lugar actual a la fila
+          index++; // Incrementar el índice
+        }
+      }
+  
+      matrizLugares.push(fila); // Agregar la fila a la matriz
+    }
+  
+    return matrizLugares; // Retornar la matriz de lugares
+  }
 
 }

@@ -54,6 +54,7 @@ export class UsuariosComponent implements OnInit {
 
   user: any;
   tipo: Promise<string> | undefined;
+  usuariosProm: Promise<any[]> | undefined;
 
     constructor(
       private usuarioService: UsuarioService,
@@ -64,6 +65,11 @@ export class UsuariosComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
  
+
+    this.usuariosProm = this.usuarioService.obtenerUsuarios();
+    this.usuariosProm.then(response =>{
+      this.usuarios = response;
+    })
     //eliminar lista predeterminada de usuarios, y tomar la lista de usuarios de la base de datos.
 
     // revisar el funcionamiento nuevo del boton ver de cada usuario para modificar los datos.

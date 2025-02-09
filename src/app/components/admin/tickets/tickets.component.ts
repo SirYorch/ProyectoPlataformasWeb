@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
+import { TicketService } from '../../../services/ticket.service';
 
 @Component({
   selector: 'app-tickets',
@@ -24,7 +25,7 @@ export class TicketsComponent {
     direccion:string,
     cedula:string,
     placa:string,
-  }, fechaInicio:Date ,fechaFin:Date, precio: number}[] = [
+  },id:number, fechaInicio:Date ,fechaFin:Date, precio: number}[] = [
     {
       usuario: {
         uid: "UID12345",
@@ -37,29 +38,19 @@ export class TicketsComponent {
       fechaInicio: new Date("2025-02-07T08:00:00"),
       fechaFin: new Date("2025-02-07T10:00:00"),
       precio: 5.00,
-    },
-    {
-      usuario: {
-        uid: "UID67890",
-        nombre: "María González",
-        telefono: "0998765432",
-        direccion: "Calle Los Pinos 456",
-        cedula: "1729876543",
-        placa: "XYZ-5678",
-      },
-      fechaInicio: new Date("2025-02-07T14:00:00"),
-      fechaFin: new Date("2025-02-07T16:30:00"),
-      precio: 7.50,
+      id:1
     }
   ];
+  ticketsProm: Promise<any[]> | undefined;
 
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
     
-    //acutalizar java para trabajar con fechas y no con Timestamps
-    
-    //actualizar el funcionamiento en fecha y hora a la vez
-
+    this.ticketsProm = this.ticketsService.obtenerTciekts();
+    this.ticketsProm.then(response =>{
+      this.tickets = response
+      console.log(response)
+    })
     //eliminar el array de tickets y traer los tickets de la base de datos
 
     //preguntarle a don timbi como quiere que funcione el dia,semana y mes.
@@ -69,9 +60,9 @@ export class TicketsComponent {
   
 
   constructor(
-    private usuarioService: UsuarioService,
     private router: Router,
-    private userService: UserInfoService
+    private userService: UserInfoService,
+    private ticketsService:TicketService
   ) {}
 
   validarUsuario(){

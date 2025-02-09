@@ -1,78 +1,110 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, viewChild } from '@angular/core';
 import { MenuComponent } from "../menu/menu.component";
 import { UsuarioService } from '../../../services/usuario.service';
 import { UserInfoService } from '../../../services/user-info.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.component";
+import { ReservaService } from '../../../services/reserva.service';
+import { PopUpsComponent } from '../../extras/pop-ups/pop-ups.component';
 
 @Component({
   selector: 'app-reservas',
   standalone: true,
-  imports: [MenuComponent,CommonModule],
+  imports: [MenuComponent, CommonModule, ParqueaderoComponent],
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.scss'
 })
 export class ReservasComponent {
+
   user: any;
   tipo: Promise<string> | undefined;
 
 
-  reservas: {usuario:{
-    uid:string,
-    nombre:string,
-    telefono:string,
-    direccion:string,
-    cedula:string,
-    placa:string,
-  },id:number, inicio:Date ,}[] = [
-    {
-      usuario: {
-        uid: "UID12345",
-        nombre: "Juan Pérez",
-        telefono: "0987654321",
-        direccion: "Av. Siempre Viva 123",
-        cedula: "1723456789",
-        placa: "ABC-1234",
-      },
-      id: 1,
-      inicio: new Date("2025-02-07T08:00:00"),
-    },
-    {
-      usuario: {
-        uid: "UID67890",
-        nombre: "María González",
-        telefono: "0998765432",
-        direccion: "Calle Los Pinos 456",
-        cedula: "1729876543",
-        placa: "XYZ-5678",
-      },
-      id: 2,
-      inicio: new Date("2025-02-07T10:30:00"),
-    },
-    {
-      usuario: {
-        uid: "UID54321",
-        nombre: "Carlos Ramírez",
-        telefono: "0976543210",
-        direccion: "Av. La Prensa 789",
-        cedula: "1721122334",
-        placa: "DEF-9012",
-      },
-      id: 3,
-      inicio: new Date("2025-02-07T14:45:00"),
+  reservas: {
+  id:number, 
+  inicio:Date , 
+  lugar:{
+    id:number,
+    estado:string,
+    posicion:string
+  },
+  ticket:{
+    id:number,
+    fin:Date,
+    inicio:Date,
+    fechaInicio:Date,
+    fechaFin:Date,
+    precio:number,
+    usuario:{
+      
+        uid:string,
+        nombre:string,
+        telefono:string,
+        direccion:string,
+        cedula:string,
+        placa:string,
+      
     }
+  }}[] = [
+    {
+      "id": 1,
+      "ticket": {
+          "id": 1,
+          "inicio": new Date(1698210000000),
+          "fin": new Date(1698210000000),
+          "fechaInicio": new Date(1698210000000),
+          "fechaFin": new Date(1698210000000),
+          "precio": 50.0,
+          "usuario": {
+              "uid": "OvvSMLQjVheidapLh83sbca4ujv2",
+              "nombre": "Cristofer",
+              "telefono": "1111111111",
+              "direccion": "a;lskd;alksvnfjsf",
+              "cedula": "1111111111",
+              "placa": "ddd-222"
+          }
+      },
+      "inicio": new Date(1698210000000),
+      "lugar": {
+          "id": 3,
+          "estado": "disponible",
+          "posicion": "A3"
+      }
+  }
   ];
+
+      @ViewChild('ver', { read: ElementRef }) vistaParking!: ElementRef;
+      @ViewChild('ver') vistaParkingO!: ParqueaderoComponent;
+  reservasProm: Promise<any[]> | undefined;
+
+    verEspacio(id: number) {
+      this.vistaParkingO.cambiarVisibilidad(id);
+      this.vistaParking.nativeElement.classList.remove("parking-hidden")
+      setTimeout(()=>{this.vistaParking.nativeElement.classList.add("parking-hidden")},5000)
+    }
+
+    eliminarReserva(id: number) {
+      this.reservasService.eliminarReserva(id).then(()=>{
+
+        this.reservasProm = this.reservasService.obtenerReservas();
+        this.reservasProm.then(response=>{
+          console.log(response)
+          this.reservas = response;
+        })
+      }) ; 
+    }
+      
 
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
 
-    //asignacion de espacio desde el backend.
 
-    //eliminar valores predeterminados de reservas y cargar las reservas desde el backend.
-
-    //agregar funcionalidad de VER reserva (despliega una ventana de parqueadero, mostrando donde esta ubicado el lugar)
-
-    //agregar funcionalidad de ELIMINAR reserva
+    this.reservasProm = this.reservasService.obtenerReservas();
+    this.reservasProm.then(response=>{
+      console.log(response)
+      this.reservas = response;
+    })
 
     
    }
@@ -80,7 +112,8 @@ export class ReservasComponent {
      constructor(
        private usuarioService: UsuarioService,
        private router: Router,
-       private userService: UserInfoService
+       private userService: UserInfoService,
+       private reservasService: ReservaService
      ) {}
  
    validarUsuario(){

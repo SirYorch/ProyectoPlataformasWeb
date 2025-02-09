@@ -180,6 +180,7 @@ export class LoginComponent implements OnInit {
 
     if(!this.valido){
       this.desplegarError(this.errorMessage);
+      this.valido = !this.valido;
       return false;
     }
     

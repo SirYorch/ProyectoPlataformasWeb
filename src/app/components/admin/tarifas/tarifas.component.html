@@ -15,14 +15,14 @@
       <h2>Tarifas</h2>
       <div *ngFor="let tarifa of tarifas" class="tarifa-simple">
           <label>
-            <p class="eliminar-tarifa">X</p>
+            <p class="eliminar-tarifa" (click)="EliminarTarifa(tarifa)">X</p>
               <input type="text"  class=" tarifa-descripcion" [(ngModel)]="tarifa.descripcion" />
               <input type="text" [(ngModel)]="tarifa.precio" />
           </label>
       </div>
 
       <button class="ae-button button bajo " (click)="desplegarCrearTarifa()">Crear Tarifa</button>
-      <button class="ae-button button bajo absoluto" (click)="guardarDatos()">Guardar Tarifas</button>
+      <button class="ae-button button bajo absoluto" (click)="guardarDatos()">Guardar Cambios</button>
 
   </div>
 
@@ -38,9 +38,11 @@
         <input type="text" [(ngModel)]="Precio">
     </label>
 
-    <button (click)="guardarEditar()" class="ah-button button">Guardar</button>
+    <button class="ah-button button" (click)="CrearTarifa()">Crear</button>
       
 </div>
 </div>
 
+<app-pop-ups></app-pop-ups>
+<app-confirm-dialogs></app-confirm-dialogs>
 <app-menu></app-menu>

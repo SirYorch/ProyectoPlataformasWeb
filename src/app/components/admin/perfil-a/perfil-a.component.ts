@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
@@ -25,6 +25,22 @@ export class PerfilAComponent implements OnInit {
   tipo: Promise<string> | undefined;
 
 
+
+   @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+    @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+    
+  
+    desplegarExito(){
+      this.PopUpsComponent.desplegarSuccess("Se muestra un mensaje de exito");
+    }
+    desplegarError(){
+      this.PopUpsComponent.desplegarError("Se meustra un mensaje de error");
+    }
+    desplegarConfirmacion(){
+      this.ConfirmDialogsComponent.desplegarConfirmacion("Quiere enviar un cuadro de exito?", ()=>this.desplegarError());
+    }
+
+    
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
@@ -33,15 +49,21 @@ export class PerfilAComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
 
-    //asignacion de espacio desde el backend.
-
-    //eliminar valores predeterminados de reservas y cargar las reservas desde el backend.
-
-    //agregar funcionalidad de VER reserva (despliega una ventana de parqueadero, mostrando donde esta ubicado el lugar)
-
-    //agregar funcionalidad de ELIMINAR reserva
-
-    
+    try {
+      //  Obtener datos del usuario desde PostgreSQL
+      const usuario = await this.usuarioService.obtenerUsuario(this.user.uid);;
+      console.log("Usuario:", usuario);
+      //  Cargar los datos en el formulario
+      this.nombre = usuario.nombre;
+      this.telefono = usuario.telefono;
+      this.direccion = usuario.direccion;
+      this.cedula = usuario.cedula;
+      this.placas = usuario.placa;
+      this.stat = usuario.tipo_usuario;
+    } catch (error) {
+      console.error("Error al obtener datos del usuario:", error);
+      this.router.navigate(['login']);
+    }
    }
  
    validarUsuario(){
@@ -67,20 +89,24 @@ export class PerfilAComponent implements OnInit {
      });
    }
 
-  async guardarInfo() {
+   async guardarInfo() {
     try {
-      await this.usuarioService.actualizarUsuario(this.user.uid, {
-        nombre: this.nombre,
-        telefono: this.telefono,
-        direccion: this.direccion,
-        cedula: this.cedula,
-        placa: this.placas,
-        tipo_usuario: this.stat //  Asegurar que se envía
+      this.ConfirmDialogsComponent.desplegarConfirmacion("Esta seguro de querer actualizar la información?", async ()=>{
+        await this.usuarioService.actualizarUsuario(this.user.uid, {
+          nombre: this.nombre,
+          telefono: this.telefono,
+          direccion: this.direccion,
+          cedula: this.cedula,
+          placa: this.placas,
+          tipo_usuario: this.stat
+        });
+
+        this.PopUpsComponent.desplegarSuccess("Los datos se han actualizado");
+
       });
-  
-      console.log("Usuario actualizado en PostgreSQL");
+      
     } catch (error) {
-      alert("Error al actualizar información");
+      this.PopUpsComponent.desplegarError("Error al actualizar los datos");
     }
   }
   

@@ -7,13 +7,15 @@
 
     <section class="aa-section arriendoss" *ngFor="let reserva of reservas">
         
-        <p> {{reserva.usuario.nombre}}</p>
-        <button class="button percentage">Ver</button>
+        <p> {{reserva.ticket.usuario.nombre}}</p>
+        <button class="button percentage" (click)="verEspacio(reserva.lugar.id)">Ver</button>
         <div class="exit">
-            <a >X</a>
+            <a (click)="eliminarReserva(reserva.id)">X</a>
         </div>
     </section>
 </div>
+
+<app-parqueadero class="absolute parking-hidden" #ver></app-parqueadero>
 
 
 <app-menu></app-menu>
