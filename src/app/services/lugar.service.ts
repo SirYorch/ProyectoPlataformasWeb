@@ -19,4 +19,30 @@ export class LugarService {
       }
     }
 
+    async entrar(id:string, dato:any): Promise<any[]> {
+      try {
+        return await lastValueFrom(this.http.put<any[]>(`${this.apiUrl}/entrar/${id}`,dato));
+      } catch (error) {
+        console.error("Error al entrar:", error);
+        return [];
+      }
+    }
+    async reservar(id:string, dato:any): Promise<any[]> {
+      try {
+        return await lastValueFrom(this.http.put<any[]>(`${this.apiUrl}/reservar/${id}`,dato));
+      } catch (error) {
+        console.error("Error al reservar:", error);
+        return [];
+      }
+    }
+    async arrendar(id:string, dato:any): Promise<any[]> {
+      try {
+        return await lastValueFrom(this.http.put<any[]>(`${this.apiUrl}/arrendar/${id}`,dato));
+      } catch (error) {
+        console.error("Error al arrendar:", error);
+        return [];
+      }
+    }
+
+
 }

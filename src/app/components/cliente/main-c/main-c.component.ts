@@ -27,7 +27,7 @@ export class MainCComponent implements OnInit {
     @ViewChild('reservar', { read: ElementRef }) reservar!: ElementRef;
     @ViewChild('entrar') entrarComponent!: ParqueaderoComponent;
     @ViewChild('reservar') reservarComponent!: ParqueaderoComponent;
-  
+    valorLugarEntrar:number = 0;
 
     
 
@@ -44,8 +44,15 @@ export class MainCComponent implements OnInit {
     desplegarEntrar() {
       this.entrar.nativeElement.classList.remove("parking-hidden");
       this.reservar.nativeElement.classList.add("parking-hidden");
-      this.entrarComponent.cambiarSeleccionOcupar(()=>{this.ocultarReservar();});
+      this.entrarComponent.cambiarSeleccionOcupar(()=>{
+        this.ocultarReservar();
+        this.valorLugarEntrar = this.entrarComponent.valorLugar;
+        this.entrarFunction()
+      });
       this.entrarComponent.cambiarMensaje("Seleccione un lugar para ocupar");
+    }
+    entrarFunction(){
+      
     }
     desplegarReservar() {
       this.entrar.nativeElement.classList.remove('parking-hidden');

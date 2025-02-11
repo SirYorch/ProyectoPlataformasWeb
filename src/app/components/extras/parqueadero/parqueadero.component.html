@@ -1,19 +1,24 @@
 <div class="Parqueadero">
     <h2>Parqueadero</h2>
     <p>{{mensaje}}</p>
-    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == false && seleccionReservar == false">
+    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == false && seleccionReservar == false && seleccionarArriendo == false">
         <div class="fila" *ngFor="let fila of lugares">
             <label *ngFor="let lugar of fila" class="{{lugar.estado}}">{{lugar.posicion}}</label>
         </div>
     </div>
-    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == true && seleccionReservar == false">
+    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == true && seleccionReservar == false && seleccionarArriendo == false">
         <div class="fila" *ngFor="let fila of lugares">
             <label *ngFor="let lugar of fila" class="{{lugar.estado}}" (click)="ocupar(lugar,fila)">{{lugar.posicion}}</label>
         </div>
     </div>
-    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == false && seleccionReservar == true">
+    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == false && seleccionReservar == true && seleccionarArriendo ==false">
         <div class="fila" *ngFor="let fila of lugares">
             <label *ngFor="let lugar of fila" class="{{lugar.estado}}" (click)="reservar(lugar,fila)">{{lugar.posicion}}</label>
+        </div>
+    </div>
+    <div class="espacios" id="espacios" *ngIf="seleccionOcupar == false && seleccionReservar == false && seleccionarArriendo ==true">
+        <div class="fila" *ngFor="let fila of lugares">
+            <label *ngFor="let lugar of fila" class="{{lugar.estado}}" (click)="arrendar(lugar,fila)">{{lugar.posicion}}</label>
         </div>
     </div>
     <div class="marcadores">

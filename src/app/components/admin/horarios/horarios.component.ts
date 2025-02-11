@@ -6,11 +6,13 @@ import { MenuComponent } from "../menu/menu.component";
 import { UserInfoService } from '../../../services/user-info.service';
 import { HorarioService } from '../../../services/horario.service';
 import { PublicoService } from '../../../services/publico.service';
+import { PopUpsComponent } from "../../extras/pop-ups/pop-ups.component";
+import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-dialogs.component";
 
 @Component({
   selector: 'app-horarios',
   standalone: true,
-  imports: [FormsModule, CommonModule, MenuComponent],
+  imports: [FormsModule, CommonModule, MenuComponent, PopUpsComponent, ConfirmDialogsComponent],
   templateUrl: './horarios.component.html',
   styleUrl: './horarios.component.scss'
 })
@@ -147,8 +149,13 @@ export class HorariosComponent {
   fechaCierre:Date|string = new Date();;
   horarioe:any;
 
+  @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+  @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+  
+
   guardarEditar() {
-    // Unir fecha y hora en un solo objeto Date
+    this.ConfirmDialogsComponent.desplegarConfirmacion("Seguro de querer realizar los cambios?",()=>{
+      // Unir fecha y hora en un solo objeto Date
     const fechaAperturaCompleta = new Date(`${this.fechaApertura}T${this.horaApertura}:00`);
 
     // Unir fecha de cierre y hora de cierre
@@ -159,8 +166,13 @@ export class HorariosComponent {
     this.horarioEditable.fechaFin = fechaCierreCompleta;
     this.horarioEditable.nombre = this.nombreHorario
 
-    console.log(this.horarioEditable)
-    this.horarioService.guardarHorario(this.horarioEditable);
+    this.horarioService.guardarHorario(this.horarioEditable).then(response=>{
+      this.PopUpsComponent.desplegarSuccess("Se han realizado los cambios")
+      this.ocultarEditar();
+    }).catch(()=>{
+      this.PopUpsComponent.desplegarError("Los cambios no se han realizado por un error")
+    });
+    })
   }
 
   crearHorario() {

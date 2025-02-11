@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   direccion = "";
   cedula = "";
   placa = "";
+  correo = "";
   errorMessage = "";
   user: any = null;
   currentUser: any = null;
@@ -128,6 +129,7 @@ export class LoginComponent implements OnInit {
           direccion: this.direccion,
           cedula: this.cedula,
           placa: this.placa,
+          correo: this.correo,
           tipo_usuario: "CLIENTE"
         });
 

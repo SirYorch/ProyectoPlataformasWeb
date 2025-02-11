@@ -11,10 +11,13 @@ import { LugarService } from '../../../services/lugar.service';
   styleUrl: './parqueadero.component.scss'
 })
 export class ParqueaderoComponent implements OnInit{
+
   mensaje = "";
   oculto= false;
   seleccionOcupar = false;
   seleccionReservar = false;
+  seleccionarArriendo = false ;
+  valorLugar = 0;
 
   funcion: () => void = () => {
     console.log("Ejecutando función...");
@@ -48,16 +51,25 @@ export class ParqueaderoComponent implements OnInit{
     this.seleccionReservar = true;
     this.funcion = metodo;
   }
+  cambiarSeleccionArrendar( metodo: () => void){
+    this.seleccionarArriendo = true;
+    this.funcion = metodo;
+  }
   cambiarMensaje(mensaje:string){
     this.mensaje = mensaje;
   }
 
   ocupar(lugar: any, fila: any): void {
-    console.log("Lugar seleccionado:", lugar);
+    this.valorLugar = lugar.id
     this.funcion();
   }
   reservar(lugar: any, fila: any): void {
-    console.log("Lugar seleccionado:", lugar);
+    this.valorLugar = lugar.id
+    this.funcion();
+  }
+
+  arrendar(lugar: any, fila: any): void {
+    this.valorLugar = lugar.id
     this.funcion();
   }
 

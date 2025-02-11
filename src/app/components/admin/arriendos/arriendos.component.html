@@ -31,31 +31,25 @@
     </div>
     <label>
       Placa
-      <input type="text" [(ngModel)]="nuevoArriendo.placa" (blur)="buscarUsuarioPorPlaca()" placeholder="Placa del vehículo" />
+      <input type="text" [(ngModel)]="nuevo.placa" (blur)="buscarUsuarioPorPlaca()" placeholder="Placa del vehículo" />
     </label>
     <label>
       Nombre
-      <input type="text" [(ngModel)]="nuevoArriendo.nombreUsuario" disabled placeholder="Nombre del usuario" />
+      <input type="text" [(ngModel)]="nuevo.nombreUsuario" disabled placeholder="Nombre del usuario" />
     </label>
     
     <label>
       Inicio
-      <input type="date" [(ngModel)]="nuevoArriendo.inicio" />
+      <input type="date" [(ngModel)]="nuevo.inicio">
     </label>
     <label>
       Fin
-      <input type="date" [(ngModel)]="nuevoArriendo.fin" />
+      <input type="date" [(ngModel)]="nuevo.fin">
     </label>
-    <label>
-      Estado
-      <select [(ngModel)]="nuevoArriendo.estado">
-        <option value="Pendiente">Pendiente</option>
-        <option value="Dentro">Dentro</option>
-        <option value="Finalizado">Finalizado</option>
-      </select>
-    </label>
+    <button class="ah-button button" (click)="seleccionarArrendar()">Lugar</button>
     <button class="ah-button button" (click)="crearArriendo()">Guardar</button>
   </div>
   
+  <app-parqueadero class="absolute parking-hidden" #arrendar></app-parqueadero>
 
   <app-menu></app-menu>
