@@ -13,12 +13,21 @@
 
   <div class="tarifas">
       <h2>Tarifas</h2>
+      <section class="no-border aa-section arriendoss">
+        <p>X</p>
+        <p>Desde</p>
+        <p>Hasta</p>
+        <p>Precio</p>
+      </section>
+    
+
       <div *ngFor="let tarifa of tarifas" class="tarifa-simple">
-          <label>
+        <section class="aa-section arriendoss input">
             <p class="eliminar-tarifa" (click)="EliminarTarifa(tarifa)">X</p>
-              <input type="text"  class=" tarifa-descripcion" [(ngModel)]="tarifa.descripcion" />
-              <input type="text" [(ngModel)]="tarifa.precio" />
-          </label>
+            <input type="number" [(ngModel)]="tarifa.desde" />
+            <input type="number" [(ngModel)]="tarifa.hasta" />
+            <input type="number" [(ngModel)]="tarifa.precio" />
+          </section>
       </div>
 
       <button class="ae-button button bajo " (click)="desplegarCrearTarifa()">Crear Tarifa</button>
@@ -30,8 +39,12 @@
     <div class="exit"><a (click)="desplegarCrearTarifa()">X</a></div>
     <div class="selector"> <strong>Crear tarifa</strong> </div>
     <label>
-        <p>Nombre:</p>
-        <input type="text" [(ngModel)]="Descripcion">
+        <p>Hasta:</p>
+        <input type="text" [(ngModel)]="hasta">
+    </label>
+    <label>
+        <p>Desde:</p>
+        <input type="text" [(ngModel)]="desde">
     </label>
     <label>
         <p>Precio:</p>

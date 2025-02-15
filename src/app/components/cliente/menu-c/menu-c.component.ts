@@ -27,7 +27,8 @@ export class MenuCComponent {
       this.router.navigate([''])
     }
     
-      constructor(private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
+      constructor(
+        private googleuser: GoogleAuthService,private read: ReadService,private router:Router,private userService: UserInfoService){
     
       }
 

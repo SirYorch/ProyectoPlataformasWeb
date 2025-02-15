@@ -21,7 +21,9 @@ export class TarifaService {
   }
 
   async crearTarifa(tarifa: any): Promise<void> {
+    console.log(tarifa);
     await lastValueFrom(this.http.post(this.apiUrl, tarifa));
+    
   }
 
   async actualizarTarifa(id: number, datos: any): Promise<void> {

@@ -10,31 +10,43 @@
       <article class="bienvenida">
           <p>{{motd}}</p>
       </article>
-      <button class="cp button ae-button absoluto entrar" (click)="desplegarEntrar()">Entrar</button><br>
-      <button class="cp button ae-button reservar" (click)="desplegarReservar()">Reservar</button>
+      <button class="cp button ae-button absoluto entrar" (click)="desplegarEntrar()" *ngIf="enterBool == true ">Entrar</button>
+      <button class="cp button ae-button absoluto entrar salir" (click)="salir()" *ngIf="enterBool == false">Salir</button><br>
+      <button class="cp button ae-button reservar" (click)="desplegarReservar()" *ngIf="isReservado == true">Reservar</button>
   </article>
 
   <div class="tc">
-      <div class="tarifas">
-          <h2>Tarifas</h2>
-          <div *ngFor="let tarifa of tarifas" class="tarifass">
+    
+        <div class="tarifas">
+            <h2>Tarifas</h2>
+    
+            <div class="tarifass">
               <label>
-                  <p>{{ tarifa.descripcion }} horas</p>
-                  <s>${{ tarifa.precio }}</s>
+                  <p>Desde:</p>
+                  <p>Hasta:</p>
+                  <s>Precio:</s>
               </label><br>
           </div>
-      </div>
+            <div *ngFor="let tarifa of tarifas" class="tarifass">
+                <label>
+                    <p>{{ tarifa.desde }}H</p>
+                    <p>{{ tarifa.hasta }}H</p>
+                    <s>${{ tarifa.precio }}</s>
+                </label><br>
+            </div>
+        </div>
+    
       <div class="croquis">
           <h2>Croquis</h2>
           <img src="croquis.webp" alt="croquis">
       </div>
   </div>
 
-  <app-parqueadero></app-parqueadero>
+  <app-parqueadero #parqueadero *ngIf="recargar == false"></app-parqueadero>
 </div>
 
-<app-parqueadero class="absolute parking-hidden" #entrar></app-parqueadero>
-<app-parqueadero class="absolute parking-hidden" #reservar></app-parqueadero>
+<app-parqueadero class="absolute parking-hidden" *ngIf="recargar ==false" #entrar></app-parqueadero>
+<app-parqueadero class="absolute parking-hidden" *ngIf="recargar == false" #reservar></app-parqueadero>
 
 
 <app-pop-ups></app-pop-ups>

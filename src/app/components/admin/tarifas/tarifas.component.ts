@@ -24,6 +24,8 @@ export class TarifasComponent {
   tipo: Promise<string> | undefined;
   tarifasProm: Promise<any[]> | undefined;
   publico: any;
+hasta: any;
+desde: any;
 
 desplegarCrearTarifa() {
   this.crear.nativeElement.classList.toggle("desplegarCrear");
@@ -50,8 +52,9 @@ constructor(
 ) {}
     
   motd = "Mensaje del dia";
-  tarifas: {descripcion:string , precio:number,id:number}[] = [{
-    descripcion: "Tarifa básica",
+  tarifas: {desde:number, hasta:number, precio:number,id:number}[] = [{
+    desde: 0,
+    hasta: 0,
     precio: 10.50,
     id: 0
 }];
@@ -99,7 +102,8 @@ constructor(
 
   CrearTarifa() {
     const tarifa = {
-      descripcion: this.Descripcion,
+      desde:this.desde,
+      hasta:this.hasta,
       precio: this.Precio
     }  
     this.tarifaService.crearTarifa(tarifa).then(()=>{

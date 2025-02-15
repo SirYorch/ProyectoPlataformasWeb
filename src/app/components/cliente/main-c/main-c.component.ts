@@ -10,6 +10,7 @@ import { ConfirmDialogsComponent } from '../../extras/confirm-dialogs/confirm-di
 import { PopUpsComponent } from '../../extras/pop-ups/pop-ups.component';
 import { PublicoService } from '../../../services/publico.service';
 import { HorarioService } from '../../../services/horario.service';
+import { LugarService } from '../../../services/lugar.service';
 
 @Component({
   selector: 'app-main-c',
@@ -25,10 +26,12 @@ export class MainCComponent implements OnInit {
     
     @ViewChild('entrar', { read: ElementRef }) entrar!: ElementRef;
     @ViewChild('reservar', { read: ElementRef }) reservar!: ElementRef;
+    @ViewChild('parqueadero', { read: ElementRef }) parqueadero!: ElementRef;
     @ViewChild('entrar') entrarComponent!: ParqueaderoComponent;
     @ViewChild('reservar') reservarComponent!: ParqueaderoComponent;
     valorLugarEntrar:number = 0;
-
+enterBool: any;
+    
     
 
     desplegarExito(){
@@ -42,32 +45,85 @@ export class MainCComponent implements OnInit {
     }
 
     desplegarEntrar() {
-      this.entrar.nativeElement.classList.remove("parking-hidden");
+      if(this.usuario.reservado){
+        console.log(this.valorLugarEntrar)
+        console.log(this.usuario)
+        this.lugarService.entrar(this.valorLugarEntrar,this.usuario).then(()=>{
+          this.recargarParqueaderos();
+          this.getUsuario()
+        });
+        
+      } else{
+        this.entrar.nativeElement.classList.remove("parking-hidden");
       this.reservar.nativeElement.classList.add("parking-hidden");
       this.entrarComponent.cambiarSeleccionOcupar(()=>{
-        this.ocultarReservar();
+        this.ocultarEntrar();
         this.valorLugarEntrar = this.entrarComponent.valorLugar;
         this.entrarFunction()
       });
       this.entrarComponent.cambiarMensaje("Seleccione un lugar para ocupar");
-    }
-    entrarFunction(){
+      }
       
     }
+    entrarFunction(){
+      this.lugarService.entrar(this.valorLugarEntrar,this.usuario).finally(()=>{
+        this.recargarParqueaderos();
+        this.getUsuario()
+      });
+
+      
+    }
+    salir(){
+      this.lugarService.salir(this.usuario).then(()=>{
+        this.recargarParqueaderos()
+        
+      });
+
+      this.getUsuario()
+    }
+    async reservarFunction(){
+      this.usuario.reservado = true;
+      console.log(this.usuario)
+      this.lugarService.reservar(this.valorLugarEntrar,this.usuario).then(
+        async ()=>{
+
+          this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid).then(
+            ()=>{
+              this.isReservado = this.usuario.reservado;
+              this.recargarParqueaderos()
+              this.PopUpsComponent.desplegarSuccess("Se han realizado la reservacion al lugar: "+this.valorLugarEntrar);
+            }
+          );
+        }
+      );
+      this.getUsuario();
+    }
     desplegarReservar() {
-      this.entrar.nativeElement.classList.remove('parking-hidden');
-      this.reservar.nativeElement.classList.add('parking-hidden');
-      this.reservarComponent.cambiarSeleccionReservar(()=>{this.ocultarEntrar();});
+      this.reservar.nativeElement.classList.remove('parking-hidden');
+      this.entrar.nativeElement.classList.add('parking-hidden');
+      this.reservarComponent.cambiarSeleccionReservar(()=>{
+        this.ocultarReservar();
+        this.valorLugarEntrar = this.reservarComponent.valorLugar;
+        this.reservarFunction();
+      });
       this.entrarComponent.cambiarMensaje("Seleccione un lugar para reservar");
     }
 
     ocultarEntrar() {
       this.entrar.nativeElement.classList.add('parking-hidden');
-      this.reservar.nativeElement.classList.add('parking-hidden');
     }
     ocultarReservar() {
       this.reservar.nativeElement.classList.add('parking-hidden');
-      this.entrar.nativeElement.classList.add('parking-hidden');
+    }
+    recargar:boolean = false;
+    isReservado:boolean = false;
+
+    async recargarParqueaderos(){
+      this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid);   
+      this.recargar = true;
+      setTimeout(() => {
+        this.recargar = false
+      }, 1);
     }
     user: any;
   usuario:any;
@@ -101,16 +157,15 @@ export class MainCComponent implements OnInit {
     private publicoService: PublicoService,
     private horarioService: HorarioService,
     private tarifasService: TarifaService,
+    private lugarService: LugarService
   ) {}
 
   
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
+
+    this.getUsuario();
  
-
-    this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid);
-    this.nombre = this.usuario.nombre;
-
     this.publico = await this.publicoService.obtenerDatos();
     this.motd = this.publico.motd;
 
@@ -121,6 +176,11 @@ export class MainCComponent implements OnInit {
     this.tarifasProm.then(valor =>{
       this.tarifas = valor;
     })
+    try{
+      this.valorLugarEntrar = this.usuario.lugar.id
+    } catch {
+
+    }
 
     //enviar solicitud para entrar y ocupar un espacio.
 
@@ -129,6 +189,36 @@ export class MainCComponent implements OnInit {
     //enviar solicitud para salir del parqueadero.
 
     //comprobar que no exista una reserva para entrar y elegir un espacio.
+   }
+
+   async getUsuario(){
+    this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid).finally(
+      ()=>{
+        setTimeout(
+          ()=>{this.checkButtons(); 
+          this.nombre = this.usuario.nombre;},300)
+      }
+    )
+    
+   
+   }
+
+   checkButtons(){
+
+    console.log(this.usuario)
+    if(!this.usuario.lugar && !this.usuario.reservado){
+      this.isReservado = true
+    } else {
+      this.isReservado = false
+    }
+
+    if((this.usuario.lugar && this.usuario.reservado) ||(!this.usuario.lugar && !this.usuario.reservado)){
+      this.enterBool = true
+    }
+
+    if(this.usuario.lugar && !this.usuario.reservado){
+      this.enterBool = false
+    }
    }
  
    validarUsuario(){

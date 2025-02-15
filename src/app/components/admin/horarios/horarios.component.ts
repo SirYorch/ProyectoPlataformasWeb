@@ -190,12 +190,15 @@ export class HorariosComponent {
     }
     console.log(horarioNuevo)
 
-    this.horarioService.saveHorarios(horarioNuevo);
+    this.horarioService.saveHorarios(horarioNuevo).then(()=>{
+      this.horariosProm = this.horarioService.getHorarios();
+      this.horariosProm.then(respuesta=>{
+        this.horarios = respuesta
+        this.ocultarCrear();
+      })
+    });
 
-    this.horariosProm = this.horarioService.getHorarios();
-    this.horariosProm.then(respuesta=>{
-      this.horarios = respuesta
-    })
+    
 
     
   }

@@ -131,7 +131,8 @@ export class ParqueaderoComponent implements OnInit{
   ]
 
   constructor(
-    private espacioService:EspacioService,private lugarService:LugarService
+    private espacioService:EspacioService,
+    private lugarService:LugarService
   ){
 
   }

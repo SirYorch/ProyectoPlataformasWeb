@@ -16,9 +16,18 @@
 <div class="tc">
     <div class="tarifas">
         <h2>Tarifas</h2>
+
+        <div class="tarifass">
+          <label>
+              <p>Desde:</p>
+              <p>Hasta:</p>
+              <s>Precio:</s>
+          </label><br>
+      </div>
         <div *ngFor="let tarifa of tarifas" class="tarifass">
             <label>
-                <p>{{ tarifa.descripcion }}</p>
+                <p>{{ tarifa.desde }}</p>
+                <p>{{ tarifa.hasta }}</p>
                 <s>${{ tarifa.precio }}</s>
             </label><br>
         </div>

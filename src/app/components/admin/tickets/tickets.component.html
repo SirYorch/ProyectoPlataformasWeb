@@ -24,10 +24,10 @@
     </section>
     <section class="aa-section arriendoss" *ngFor="let ticket of tickets">
         <p> {{ticket.usuario.nombre}}</p>
-        <p class="extra"> {{ticket.fechaFin | date:'dd/MM/yyyy' }}</p>
-        <p class="extra"> {{ticket.fechaFin | date:'HH:mm' }}</p>
-        <p> {{ticket.fechaInicio | date:'dd/MM/yyyy' }}</p>
+        <p class="extra"> {{ticket.fechaInicio | date:'dd/MM/yyyy' }}</p>
         <p class="extra"> {{ticket.fechaInicio | date:'HH:mm' }}</p>
+        <p> {{ticket.fechaFin | date:'dd/MM/yyyy' }}</p>
+        <p class="extra"> {{ticket.fechaFin | date:'HH:mm' }}</p>
         <p> {{ticket.precio}}</p>
     </section>
 </div>

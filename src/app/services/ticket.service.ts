@@ -18,5 +18,13 @@ export class TicketService {
         return [];
       }
     }
+    async obtenerTicketsUsuario(uid:string): Promise<any[]> {
+      try {
+        return await lastValueFrom(this.http.get<any[]>(`${this.apiUrl}/${uid}`));
+      } catch (error) {
+        console.error("Error al obtener ticekts:", error);
+        return [];
+      }
+    }
 
 }

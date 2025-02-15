@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { UsuarioService } from '../../../services/usuario.service';
+import { TicketService } from '../../../services/ticket.service';
 
 @Component({
   selector: 'app-historial',
@@ -17,16 +18,19 @@ import { UsuarioService } from '../../../services/usuario.service';
 export class HistorialComponent {
   user: any;
   tipo: Promise<string> | undefined;
+  usuario: any;
   constructor(
     private router: Router,
     private userService: UserInfoService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private ticketsService: TicketService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
- 
+    this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid)
     //eliminar tickets predeterminado y traer tickets de la base de datos  (la solicitud get del usuario)
+    this.tickets = await this.ticketsService.obtenerTicketsUsuario(this.usuario.uid)
 
    }
  
@@ -52,14 +56,7 @@ export class HistorialComponent {
      });
    }
 
-   tickets: {usuario:{
-    uid:string,
-    nombre:string,
-    telefono:string,
-    direccion:string,
-    cedula:string,
-    placa:string,
-  }, fechaInicio:Date ,fechaFin:Date, precio: number}[] = [
+   tickets:any = [
     {
       usuario: {
         uid: "UID12345",
@@ -72,19 +69,6 @@ export class HistorialComponent {
       fechaInicio: new Date("2025-02-07T08:00:00"),
       fechaFin: new Date("2025-02-07T10:00:00"),
       precio: 5.00,
-    },
-    {
-      usuario: {
-        uid: "UID67890",
-        nombre: "María González",
-        telefono: "0998765432",
-        direccion: "Calle Los Pinos 456",
-        cedula: "1729876543",
-        placa: "XYZ-5678",
-      },
-      fechaInicio: new Date("2025-02-07T14:00:00"),
-      fechaFin: new Date("2025-02-07T16:30:00"),
-      precio: 7.50,
     }
   ];
 

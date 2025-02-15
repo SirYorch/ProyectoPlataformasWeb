@@ -123,13 +123,14 @@ export class LoginComponent implements OnInit {
       try {
         console.log(" Registrando usuario en PostgreSQL...");
         
+        console.log(this.currentUser)
         await this.googleAuthService.registerUser(this.currentUser.uid, {
           nombre: this.nombre,
           telefono: this.telefono,
           direccion: this.direccion,
           cedula: this.cedula,
           placa: this.placa,
-          correo: this.correo,
+          correo:this.currentUser.email,
           tipo_usuario: "CLIENTE"
         });
 
