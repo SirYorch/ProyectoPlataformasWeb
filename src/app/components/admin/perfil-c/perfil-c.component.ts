@@ -11,7 +11,7 @@ import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-di
 @Component({
   selector: 'app-perfil-c',
   standalone: true,
-  imports: [FormsModule, MenuComponent, ParqueaderoComponent, PopUpsComponent, ConfirmDialogsComponent],
+  imports: [FormsModule, MenuComponent, PopUpsComponent, ConfirmDialogsComponent],
   templateUrl: './perfil-c.component.html',
   styleUrl: './perfil-c.component.scss'
 })

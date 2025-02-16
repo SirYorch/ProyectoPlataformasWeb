@@ -11,7 +11,7 @@ import { TicketService } from '../../../services/ticket.service';
 @Component({
   selector: 'app-historial',
   standalone: true,
-  imports: [MenuComponent, MenuCComponent, CommonModule, FormsModule ],
+  imports: [MenuCComponent, CommonModule, FormsModule ],
   templateUrl: './historial.component.html',
   styleUrl: './historial.component.scss'
 })
