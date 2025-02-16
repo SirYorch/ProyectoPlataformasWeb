@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { TicketService } from '../../../services/ticket.service';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-historial',
@@ -31,6 +32,7 @@ export class HistorialComponent {
     this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid)
     //eliminar tickets predeterminado y traer tickets de la base de datos  (la solicitud get del usuario)
     this.tickets = await this.ticketsService.obtenerTicketsUsuario(this.usuario.uid)
+    console.log(this.tickets)
 
    }
  

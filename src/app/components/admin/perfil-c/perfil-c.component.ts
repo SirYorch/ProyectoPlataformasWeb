@@ -47,7 +47,7 @@ export class PerfilCComponent implements OnInit {
       this.direccion = usuario.direccion;
       this.cedula = usuario.cedula;
       this.placas = usuario.placa;
-      this.stat = usuario.tipo_usuario;
+      this.stat = usuario.stat;
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
@@ -109,7 +109,7 @@ export class PerfilCComponent implements OnInit {
           direccion: this.direccion,
           cedula: this.cedula,
           placa: this.placas,
-          tipo_usuario: this.stat
+          stat:this.stat
         });
 
         this.PopUpsComponent.desplegarSuccess("Los datos se han actualizado");

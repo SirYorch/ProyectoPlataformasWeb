@@ -130,14 +130,13 @@ export class LoginComponent implements OnInit {
           direccion: this.direccion,
           cedula: this.cedula,
           placa: this.placa,
-          correo:this.currentUser.email,
-          tipo_usuario: "CLIENTE"
+          correo:this.currentUser.email
         });
 
         // Verificar usuario en PostgreSQL antes de redirigir
         const usuario = await this.googleAuthService.getUserInfo(this.currentUser.uid);
         
-        if (usuario && usuario.tipo_usuario === "CLIENTE") {
+        if (usuario && usuario.stat === "CLIENTE") {
           this.desplegarExito(" Registro exitoso. Redirigiendo a cliente/principal...");
           this.userService.saveUser({ uid: this.currentUser.uid });
           setTimeout(()=>{this.router.navigate(['/cliente/principal'])},1000);

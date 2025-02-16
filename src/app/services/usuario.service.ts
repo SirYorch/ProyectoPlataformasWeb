@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, Observable } from 'rxjs';
+import { catchError, lastValueFrom, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,15 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  async obtenerUsuarios(): Promise<any[]> {
-    try {
-      return await lastValueFrom(this.http.get<any[]>(this.apiUrl));
-    } catch (error) {
-      console.error("Error al obtener usuarios:", error);
-      return [];
-    }
-  }
-
+  obtenerUsuarios(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      catchError(error => {
+        console.error("Error al obtener usuarios:", error);
+        return of([]); // Devuelve un array vacío en caso de error
+      })
+    );
+  }  
+  
   async obtenerUsuario(uid: string): Promise<any> {
     try {
       const usuario = await lastValueFrom(this.http.get<any>(`${this.apiUrl}/${uid}`));
@@ -28,15 +28,12 @@ export class UsuarioService {
       if (usuario.tipo_usuario === "CLIENTE" && usuario.placa) {
         console.log("Usuario Cliente con Placa:", usuario.placa);
       }
-  
       return usuario;
     } catch (error) {
       console.error(" Error al obtener usuario:", error);
       return null;
     }
   }
-  
-
   async actualizarUsuario(uid: string, datos: any): Promise<void> {
     try {
         console.log(" Enviando actualización de usuario:", uid, datos);
@@ -47,9 +44,6 @@ export class UsuarioService {
         alert("Error al actualizar usuario.");
     }
 }
-
-
-
   async cambiarTipoUsuario(uid: string, nuevoTipo: string): Promise<void> {
     try {
       await lastValueFrom(this.http.put(`${this.apiUrl}/cambiarTipo/${uid}/${nuevoTipo}`, {}));
@@ -68,5 +62,4 @@ export class UsuarioService {
         alert("Error al eliminar usuario.");
     }
 }
-
 }

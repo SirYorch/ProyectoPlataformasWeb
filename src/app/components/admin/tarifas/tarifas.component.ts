@@ -112,6 +112,7 @@ constructor(
         this.tarifas = valor;
       })
       this.PopUpsComponent.desplegarSuccess("Se ha agregado correctamente a la base de datos")  
+      this.desplegarCrearTarifa();
     })
   }
 

@@ -86,7 +86,7 @@ export class GoogleAuthService {
   async getTipoUsuario(uid: string): Promise<string | null> {
     try {
       const response = await this.http.get<any>(`${this.apiUrl}/${uid}`).toPromise();
-      return response ? response.tipo_usuario : null;
+      return response ? response.stat : null;
     } catch (error: unknown) {
       console.error(" Error al obtener tipo de usuario:", error);
       return null;

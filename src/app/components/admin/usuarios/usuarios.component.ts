@@ -13,34 +13,13 @@ import { UsuarioService } from '../../../services/usuario.service'; // 📌 Usar
   styleUrls: ['./usuarios.component.scss']
 })
 export class UsuariosComponent implements OnInit {
-  usuarios: {placa:string,nombre:string, telefono:string, tipo_usuario:string,uid:string}[] = [
+  usuarios :any = [
     {
         placa: "ABC123",
         nombre: "Juan Pérez",
         telefono: "555-1234",
         tipo_usuario: "Cliente",
         uid: "1"
-    },
-    {
-        placa: "XYZ789",
-        nombre: "María Gómez",
-        telefono: "555-5678",
-        tipo_usuario: "Cliente",
-        uid: "2"
-    },
-    {
-        placa: "DEF456",
-        nombre: "Carlos López",
-        telefono: "555-8765",
-        tipo_usuario: "Cliente",
-        uid: "3"
-    },
-    {
-        placa: "GHI789",
-        nombre: "Ana Martínez",
-        telefono: "555-4321",
-        tipo_usuario: "Admin",
-        uid: "4"
     }
 ];
 
@@ -66,10 +45,13 @@ export class UsuariosComponent implements OnInit {
     this.validarUsuario();
  
 
-    this.usuariosProm = this.usuarioService.obtenerUsuarios();
-    this.usuariosProm.then(response =>{
-      this.usuarios = response;
-    })
+    this.usuarioService.obtenerUsuarios().subscribe(
+      res=>{
+        this.usuarios = res;
+        
+        
+      }
+    )
     //eliminar lista predeterminada de usuarios, y tomar la lista de usuarios de la base de datos.
 
     // revisar el funcionamiento nuevo del boton ver de cada usuario para modificar los datos.
@@ -109,7 +91,7 @@ export class UsuariosComponent implements OnInit {
     if (confirm("¿Seguro que deseas eliminar este usuario?")) {
       try {
         await this.usuarioService.eliminarUsuario(uid);
-        this.usuarios = this.usuarios.filter(usuario => usuario.uid !== uid);
+        this.usuarios = this.usuarios.filter((usuario: { uid: string; }) => usuario.uid !== uid);
         console.log(` Usuario ${uid} eliminado de la lista.`);
       } catch (error) {
         console.error(" Error al eliminar usuario:", error);

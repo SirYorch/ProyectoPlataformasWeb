@@ -52,10 +52,16 @@ export class EspacioComponent implements AfterViewInit{
   user:any;
 
   guardarDatos(){
-    this.ConfirmDialogsComponent.desplegarConfirmacion("Si realiza un cambio, se eliminaran todas las reservas y espacios ocupados en este momento",()=>{this.espacio.filas = this.filas;
+    this.ConfirmDialogsComponent.desplegarConfirmacion("Si realiza un cambio, se eliminaran todas las reservas y espacios ocupados en este momento",()=>{
+      this.espacio.filas = this.filas;
       this.espacio.columnas = this.columnas;
-      this.espaciosService.saveDatos(this.espacio);
-      window.location.reload();})
+      this.espaciosService.saveDatos(this.espacio).then(
+        ()=>{
+          window.location.reload();
+        }
+      );
+      
+    })
   }
   
   async ngAfterViewInit(): Promise<void> {

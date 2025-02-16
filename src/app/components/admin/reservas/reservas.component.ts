@@ -21,62 +21,12 @@ export class ReservasComponent {
   tipo: Promise<string> | undefined;
 
 
-  reservas: {
-  id:number, 
-  inicio:Date , 
-  lugar:{
-    id:number,
-    estado:string,
-    posicion:string
-  },
-  ticket:{
-    id:number,
-    fin:Date,
-    inicio:Date,
-    fechaInicio:Date,
-    fechaFin:Date,
-    precio:number,
-    usuario:{
-      
-        uid:string,
-        nombre:string,
-        telefono:string,
-        direccion:string,
-        cedula:string,
-        placa:string,
-      
-    }
-  }}[] = [
-    {
-      "id": 1,
-      "ticket": {
-          "id": 1,
-          "inicio": new Date(1698210000000),
-          "fin": new Date(1698210000000),
-          "fechaInicio": new Date(1698210000000),
-          "fechaFin": new Date(1698210000000),
-          "precio": 50.0,
-          "usuario": {
-              "uid": "OvvSMLQjVheidapLh83sbca4ujv2",
-              "nombre": "Cristofer",
-              "telefono": "1111111111",
-              "direccion": "a;lskd;alksvnfjsf",
-              "cedula": "1111111111",
-              "placa": "ddd-222"
-          }
-      },
-      "inicio": new Date(1698210000000),
-      "lugar": {
-          "id": 3,
-          "estado": "disponible",
-          "posicion": "A3"
-      }
-  }
-  ];
+  usuarios:any;
 
       @ViewChild('ver', { read: ElementRef }) vistaParking!: ElementRef;
       @ViewChild('ver') vistaParkingO!: ParqueaderoComponent;
-  reservasProm: Promise<any[]> | undefined;
+  usuariosSinFiltro: any[] | undefined;
+  usuariosProm: void | undefined;
 
     verEspacio(id: number) {
       this.vistaParkingO.cambiarVisibilidad(id);
@@ -84,28 +34,39 @@ export class ReservasComponent {
       setTimeout(()=>{this.vistaParking.nativeElement.classList.add("parking-hidden")},5000)
     }
 
-    eliminarReserva(id: number) {
-      this.reservasService.eliminarReserva(id).then(()=>{
-
-        this.reservasProm = this.reservasService.obtenerReservas();
-        this.reservasProm.then(response=>{
-          console.log(response)
-          this.reservas = response;
-        })
+    async eliminarReserva(id: number) {
+      this.reservasService.eliminarReserva(id).then(async ()=>{
+      // this.usuariosProm = await this.usuarioService.obtenerUsuarios().then(
+      //   res=>{
+      //     console.log(res)
+      //   }
+      // );
       }) ; 
     }
       
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit() {
     this.validarUsuario();
 
+    
+    this.usuarioService.obtenerUsuarios().subscribe(
+      res=>{
+        this.usuarios = [];
+        for(let valor of res){
+          if(valor.reserva){
+            this.usuarios.push(valor)
+          }
+        }
+        
+      }
+    )
 
-    this.reservasProm = this.reservasService.obtenerReservas();
-    this.reservasProm.then(response=>{
-      console.log(response)
-      this.reservas = response;
-    })
-
+    // this.usuariosProm = await this.usuarioService.obtenerUsuarios().then(
+    //   res=>{
+    //     console.log(res)
+    //   }
+    // );
+    
     
    }
 

@@ -45,7 +45,7 @@ enterBool: any;
     }
 
     desplegarEntrar() {
-      if(this.usuario.reservado){
+      if(this.usuario.reserva){
         console.log(this.valorLugarEntrar)
         console.log(this.usuario)
         this.lugarService.entrar(this.valorLugarEntrar,this.usuario).then(()=>{
@@ -82,7 +82,6 @@ enterBool: any;
       this.getUsuario()
     }
     async reservarFunction(){
-      this.usuario.reservado = true;
       console.log(this.usuario)
       this.lugarService.reservar(this.valorLugarEntrar,this.usuario).then(
         async ()=>{
@@ -206,17 +205,17 @@ enterBool: any;
    checkButtons(){
 
     console.log(this.usuario)
-    if(!this.usuario.lugar && !this.usuario.reservado){
+    if(!this.usuario.reserva && !this.usuario.lugar){
       this.isReservado = true
     } else {
       this.isReservado = false
     }
 
-    if((this.usuario.lugar && this.usuario.reservado) ||(!this.usuario.lugar && !this.usuario.reservado)){
+    if((this.usuario.lugar && this.usuario.reserva) ||(!this.usuario.lugar && !this.usuario.reserva)){
       this.enterBool = true
     }
 
-    if(this.usuario.lugar && !this.usuario.reservado){
+    if(this.usuario.lugar && !this.usuario.reserva){
       this.enterBool = false
     }
    }

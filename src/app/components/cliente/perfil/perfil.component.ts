@@ -93,16 +93,18 @@ export class PerfilComponent  {
     try {
       this.ConfirmDialogsComponent.desplegarConfirmacion("Esta seguro de querer actualizar la información?", async ()=>{
         await this.usuarioService.actualizarUsuario(this.user.uid, {
+          uid: this.user.uid,
           nombre: this.nombre,
           telefono: this.telefono,
           direccion: this.direccion,
           cedula: this.cedula,
           placa: this.placa,
           tipo_usuario: this.tipo_usuario
+        }).then(()=>{
+          this.PopUpsComponent.desplegarSuccess("Los datos se han actualizado");
+        }).catch(err=>{
+          console.log(err)
         });
-
-        this.PopUpsComponent.desplegarSuccess("Los datos se han actualizado");
-
       });
       
     } catch (error) {

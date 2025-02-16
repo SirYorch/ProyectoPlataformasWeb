@@ -5,12 +5,12 @@
 
 <div class="ventana vertical">
 
-    <section class="aa-section arriendoss" *ngFor="let reserva of reservas">
+    <section class="aa-section arriendoss" *ngFor="let usuario of usuarios">
         
-        <p> {{reserva.ticket.usuario.nombre}}</p>
-        <button class="button percentage" (click)="verEspacio(reserva.lugar.id)">Ver</button>
+        <p> {{usuario.nombre}}</p>
+        <button class="button percentage" (click)="verEspacio(usuario.reserva.id)">Ver</button>
         <div class="exit">
-            <a (click)="eliminarReserva(reserva.id)">X</a>
+            <a (click)="eliminarReserva(usuario.reserva.id)">X</a>
         </div>
     </section>
 </div>
