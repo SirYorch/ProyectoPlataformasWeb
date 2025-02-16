@@ -7,7 +7,8 @@ import { lastValueFrom, Observable } from 'rxjs';
 })
 export class PublicoService {
 
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/publico';
+  //private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/publico';
+  private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/publico'; // URL del backend en Jakarta EE
 
   async obtenerDatos(): Promise<any[]> {
       try {

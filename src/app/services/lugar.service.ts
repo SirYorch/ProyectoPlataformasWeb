@@ -6,7 +6,8 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class LugarService {
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/lugares';
+  //private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/lugares';
+  private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/lugares'; // URL del backend en Jakarta EE
 
   constructor(private http: HttpClient) {}
 

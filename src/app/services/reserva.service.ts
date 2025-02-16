@@ -7,8 +7,9 @@ import { lastValueFrom } from 'rxjs';
 })
 export class ReservaService {
 
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/reservas';
- 
+  //private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/reservas';
+  private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/reservas'; // URL del backend en Jakarta EE
+
    constructor(private http: HttpClient) {}
 
      async obtenerReservas(): Promise<any[]> {

@@ -7,7 +7,9 @@ import { lastValueFrom } from 'rxjs';
 })
 export class EspacioService {
 
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/espacios';
+  //private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/espacios';
+  private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/espacios'; // URL del backend en Jakarta EE
+
 
   constructor(private http: HttpClient) {}
   

@@ -39,13 +39,14 @@
     <div class="exit"><a (click)="desplegarCrearTarifa()">X</a></div>
     <div class="selector"> <strong>Crear tarifa</strong> </div>
     <label>
+      <p>Desde:</p>
+      <input type="text" [(ngModel)]="desde">
+  </label>
+    <label>
         <p>Hasta:</p>
         <input type="text" [(ngModel)]="hasta">
     </label>
-    <label>
-        <p>Desde:</p>
-        <input type="text" [(ngModel)]="desde">
-    </label>
+    
     <label>
         <p>Precio:</p>
         <input type="text" [(ngModel)]="Precio">
