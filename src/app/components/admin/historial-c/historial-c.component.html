@@ -1,0 +1,24 @@
+<div class="selector">
+    <strong>Historial</strong>
+  </div>
+  <div class="ventana completo historial-container">
+
+    <section class="no-border aa-section arriendoss">
+      <p class="extra">Fecha Inicio</p>
+      <p>Fecha Fin</p>
+      <p class="extra">Hora inicio
+    </p>
+      <p class="extra">Hora fin</p>
+      <p class="">Precio</p>
+    </section>
+       <!-- Listado dinámico de arriendos -->
+<section *ngFor="let ticket of tickets" class="aa-section arriendoss">
+  <p class="extra"><b>{{ ticket.fechaInicio | date:'dd/MM/yyyy'}}</b></p>
+  <p><b>{{ ticket.fechaFin | date:'dd/MM/yyyy'}}</b></p>
+  <p class="extra">{{ ticket.fechaInicio | date:'HH:mm'}}</p>
+  <p class="extra">{{ ticket.fechaFin | date:'HH:mm'}}</p>
+  <p class="">{{ ticket.precio}}</p>
+</section>
+  
+  </div>
+<app-menu></app-menu>

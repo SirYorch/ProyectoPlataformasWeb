@@ -44,14 +44,6 @@ export class UsuarioService {
         alert("Error al actualizar usuario.");
     }
 }
-  async cambiarTipoUsuario(uid: string, nuevoTipo: string): Promise<void> {
-    try {
-      await lastValueFrom(this.http.put(`${this.apiUrl}/cambiarTipo/${uid}/${nuevoTipo}`, {}));
-      console.log(` Usuario ${uid} ahora es ${nuevoTipo}`);
-    } catch (error) {
-      console.error(" Error al cambiar tipo de usuario:", error);
-    }
-  }
   async eliminarUsuario(uid: string): Promise<void> {
     try {
         await lastValueFrom(this.http.delete(`${this.apiUrl}/${uid}`));

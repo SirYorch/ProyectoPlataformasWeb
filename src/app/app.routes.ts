@@ -14,6 +14,7 @@ import { PerfilAComponent } from './components/admin/perfil-a/perfil-a.component
 import { HistorialComponent } from './components/cliente/historial/historial.component';
 import { ReservasComponent } from './components/admin/reservas/reservas.component';
 import { TicketsComponent } from './components/admin/tickets/tickets.component';
+import { HistorialCComponent } from './components/admin/historial-c/historial-c.component';
 
 export const routes: Routes = [
     {
@@ -75,5 +76,9 @@ export const routes: Routes = [
     {
         path:"admin/tickets",
         component: TicketsComponent
+    },
+    {
+        path:"admin/historialc",
+        component: HistorialCComponent
     },
 ];

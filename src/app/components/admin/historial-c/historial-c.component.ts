@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MenuComponent } from "../../admin/menu/menu.component";
-import { MenuCComponent } from "../menu-c/menu-c.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,16 +8,17 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { TicketService } from '../../../services/ticket.service';
 
 @Component({
-  selector: 'app-historial',
+  selector: 'app-historial-c',
   standalone: true,
-  imports: [MenuComponent, MenuCComponent, CommonModule, FormsModule ],
-  templateUrl: './historial.component.html',
-  styleUrl: './historial.component.scss'
+  imports: [MenuComponent , CommonModule, FormsModule],
+  templateUrl: './historial-c.component.html',
+  styleUrl: './historial-c.component.scss'
 })
-export class HistorialComponent {
+export class HistorialCComponent {
   user: any;
   tipo: Promise<string> | undefined;
   usuario: any;
+  otherUser: any;
   constructor(
     private router: Router,
     private userService: UserInfoService,
@@ -28,10 +28,13 @@ export class HistorialComponent {
 
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
-    this.usuario = await this.usuarioService.obtenerUsuario(this.user.uid)
+    //  Obtener datos del usuario desde PostgreSQL
+    this.otherUser = this.userService.getOtherUser();
+    const usuario = await this.usuarioService.obtenerUsuario(this.otherUser);;
+    console.log(usuario);
     //eliminar tickets predeterminado y traer tickets de la base de datos  (la solicitud get del usuario)
-    this.tickets = await this.ticketsService.obtenerTicketsUsuario(this.usuario.uid)
-
+    this.tickets = await this.ticketsService.obtenerTicketsUsuario(usuario.uid)
+    console.log(this.tickets);
    }
  
    validarUsuario(){
