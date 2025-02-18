@@ -16,6 +16,12 @@ import { HorarioService } from '../../../services/horario.service';
   styleUrl: './main-a.component.scss'
 })
 export class MainAComponent implements OnInit {
+borrarReservas() {
+  this.publicoService.borrarReservas();
+}
+enviarCorreo() {
+  this.publicoService.enviarCorreo();
+}
   user: any;
   usuario:any;
   publico:any;
