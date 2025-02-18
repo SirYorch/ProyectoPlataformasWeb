@@ -202,21 +202,30 @@ enterBool: any;
    
    }
 
+   mensajeArriendo=true;
+   espacioAsignado = "";
    checkButtons(){
 
     console.log(this.usuario)
-    if(!this.usuario.reserva && !this.usuario.lugar){
-      this.isReservado = true
+    if(!this.usuario.arriendo){
+
+      if(!this.usuario.reserva && !this.usuario.lugar){
+        this.isReservado = true
+      } else {
+        this.isReservado = false
+      }
+  
+      if((this.usuario.lugar && this.usuario.reserva) ||(!this.usuario.lugar && !this.usuario.reserva)){
+        this.enterBool = true
+      }
+  
+      if(this.usuario.lugar && !this.usuario.reserva){
+        this.enterBool = false
+      }
+      this.mensajeArriendo=false
     } else {
-      this.isReservado = false
-    }
-
-    if((this.usuario.lugar && this.usuario.reserva) ||(!this.usuario.lugar && !this.usuario.reserva)){
-      this.enterBool = true
-    }
-
-    if(this.usuario.lugar && !this.usuario.reserva){
-      this.enterBool = false
+      this.espacioAsignado = this.usuario.lugar.posicion;
+      this.mensajeArriendo = true;
     }
    }
  

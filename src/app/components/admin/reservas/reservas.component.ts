@@ -57,9 +57,11 @@ export class ReservasComponent {
             this.usuarios.push(valor)
           }
         }
-        
+        console.log(res)
       }
+      
     )
+    
 
     // this.usuariosProm = await this.usuarioService.obtenerUsuarios().then(
     //   res=>{

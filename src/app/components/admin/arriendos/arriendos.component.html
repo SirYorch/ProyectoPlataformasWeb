@@ -12,12 +12,12 @@
     </section>
   
     <!-- Listado dinámico de arriendos -->
-<section *ngFor="let arriendo of arriendos" class="aa-section arriendoss">
-    <div class="exit"><a (click)="eliminarArriendo(arriendo.usuario.placa)">X</a></div>
-    <p><b>{{ arriendo.usuario.placa }}</b></p>
-    <p class="extra">{{ arriendo.fechaInicio | date:'dd/MM/yyyy'}}</p>
-    <p class="extra">{{ arriendo.fechaFin  | date:'dd/MM/yyyy' }}</p>
-    <p class="extra">{{ arriendo.usuario.nombre }}</p>
+<section *ngFor="let cliente of usuarios" class="aa-section arriendoss">
+    <div class="exit"><a (click)="eliminarArriendo(cliente.uid)">X</a></div>
+    <p><b>{{ cliente.placa }}</b></p>
+    <p class="extra">{{ cliente.arriendo.fechaInicio| date:'dd/MM/yyyy'}}</p>
+    <p class="extra">{{ cliente.arriendo.fechaFin  | date:'dd/MM/yyyy' }}</p>
+    <p class="extra">{{ cliente.nombre }}</p>
   </section>
   
   
@@ -31,8 +31,15 @@
     </div>
     <label>
       Placa
-      <input type="text" [(ngModel)]="nuevo.placa" (blur)="buscarUsuarioPorPlaca()" placeholder="Placa del vehículo" />
+      <input type="text" 
+        [(ngModel)]="nuevo.placa" 
+        (input)="filtrarPlacas()" 
+        placeholder="Placa del vehículo" 
+        list="placas-sugeridas"/>
     </label>
+    <label *ngFor="let seleccion of placasFiltradas ">
+      <p class="placa">{{seleccion.placa}}</p><button class="button usar" (click)="seleccionarPlaca(seleccion)">Usar</button>
+    </label>    
     <label>
       Nombre
       <input type="text" [(ngModel)]="nuevo.nombreUsuario" disabled placeholder="Nombre del usuario" />

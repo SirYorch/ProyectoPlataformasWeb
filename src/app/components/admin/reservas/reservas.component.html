@@ -8,7 +8,7 @@
     <section class="aa-section arriendoss" *ngFor="let usuario of usuarios">
         
         <p> {{usuario.nombre}}</p>
-        <button class="button percentage" (click)="verEspacio(usuario.reserva.id)">Ver</button>
+        <button class="button percentage" (click)="verEspacio(usuario.lugar.id)">Ver</button>
         <div class="exit">
             <a (click)="eliminarReserva(usuario.reserva.id)">X</a>
         </div>

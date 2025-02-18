@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MenuComponent } from "../menu/menu.component";
 import { UsuarioService } from '../../../services/usuario.service';
 import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.component";
+import { ReservaService } from '../../../services/reserva.service';
 @Component({
   selector: 'app-arriendos',
   standalone: true,
@@ -17,119 +18,58 @@ import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.compo
   styleUrl: './arriendos.component.scss'
 })
 export class ArriendosComponent {
-buscarUsuarioPorPlaca() {
-throw new Error('Method not implemented.');
+seleccionarPlaca(objeto:any ) {
+  console.log(objeto)
+this.nuevo.nombreUsuario = objeto.nombre
+this.nuevo.uid = objeto.uid
 }
-eliminarArriendo(arg0: string) {
-throw new Error('Method not implemented.');
+  placasFiltradas: any;
+  usuariosCompletos: any;
+
+eliminarArriendo(uid: string) {
+  this.arriendosService.eliminarArriendo(uid);
 }
 
-nuevo:{
-  inicio:Date,
-  fin:Date,
-  usuario_id:string,
-  lugar_id:number,
-  placa:string
-  nombreUsuario:string,
-} = {
+nuevo:any = {
   inicio: new Date(),
   fin: new Date(),
   usuario_id: '',
   lugar_id: 2,
-  placa: "  ",
+  placa: "",
   nombreUsuario: ''
 } ;
 
 nuevoArriendo:{
-  fecha_inicio:Date,
-  fecha_fin:Date,
-  usuario_id:string,
-  lugar_id:number,
-  placa:string
+  fechaInicio:Date,
+  fechaFin:Date,
 }= {
-  fecha_inicio : new Date(),
-  fecha_fin : new Date(),
-  usuario_id : '',
-  lugar_id : 2,
-  placa:"  "
-
+  fechaInicio : new Date(),
+  fechaFin : new Date(),
 };
+lugarid = 0;
 
 crearArriendo() {
-  const timestampIniciogl = this.crearTimestamp(this.nuevo.inicio);
+    const timestampIniciogl = this.crearTimestamp(this.nuevo.inicio);
     const timestampFingl = this.crearTimestamp(this.nuevo.fin);
 
-    this.nuevoArriendo.fecha_inicio = new Date(timestampIniciogl)
-    this.nuevoArriendo.fecha_fin = new Date(timestampFingl)
+    this.nuevoArriendo.fechaInicio = new Date(timestampIniciogl)
+    this.nuevoArriendo.fechaFin = new Date(timestampFingl)
 
-    ///aqui debes agregarle el uid del usuario para poder agregarle a la solicitud
-
-    //el lugar ya se define con la funcion de seleccionar lugar.
-
-    //y luego le envias a guardar
-
-    //hay que cambiarle la logica a lo de arrendar, para que cambie el estado del lugar
-    
+    const usuario = this.nuevo.uid;
+    this.arriendosService.crearArriendo(usuario,this.lugarid,this.nuevoArriendo).then(
+      ()=>{
+        this.desplegarCrear();
+      }
+    );
 }
+
+
   // Método para crear un timestamp a partir de una fecha base y una hora en formato "HH:mm"
   crearTimestamp(fechaBase: Date): number {
     const fecha = new Date(fechaBase); // Clonar la fecha base
     return fecha.getTime(); // Devolver el timestamp
   }
-
   @ViewChild('crear') crear!: ElementRef;
-
-  arriendos: {
-    usuario:{
-      uid:string,
-      nombre:string,
-      telefono:string,
-      direccion:string,
-      cedula:string,
-      placa:string,
-    },id:number, fechaInicio:Date,fechaFin:Date, lugar:{
-      id:number,
-      posicion:string,
-      estado:string,
-    }
-  }[] = [
-    {
-      usuario: {
-        uid: "UID12345",
-        nombre: "Juan Pérez",
-        telefono: "0987654321",
-        direccion: "Av. Siempre Viva 123",
-        cedula: "1723456789",
-        placa: "ABC-1234",
-      },
-      id: 1,
-      fechaInicio: new Date("2025-02-07T08:00:00"),
-      fechaFin: new Date("2025-02-07T10:00:00"),
-      lugar: {
-        id: 101,
-        posicion: "A1",
-        estado: "Ocupado",
-      }
-    },
-    {
-      usuario: {
-        uid: "UID67890",
-        nombre: "María González",
-        telefono: "0998765432",
-        direccion: "Calle Los Pinos 456",
-        cedula: "1729876543",
-        placa: "XYZ-5678",
-      },
-      id: 2,
-      fechaInicio: new Date("2025-02-07T14:00:00"),
-      fechaFin: new Date("2025-02-07T16:30:00"),
-      lugar: {
-        id: 102,
-        posicion: "B3",
-        estado: "Reservado",
-      }
-    }
-  ];
   arriendosProm: Promise<any> | undefined;
 ; // Lista de arriendos
   
@@ -150,11 +90,12 @@ crearArriendo() {
 
   seleccionarArrendar() {
     this.arrendar.nativeElement.classList.remove("parking-hidden");
+
+    this.arrendarComponent.cambiarMensaje("Seleccione un lugar para arrendar");
     this.arrendarComponent.cambiarSeleccionArrendar(()=>{
       this.ocultarArrendar();
-      this.nuevoArriendo.lugar_id = this.arrendarComponent.valorLugar;
+      this.lugarid = this.arrendarComponent.valorLugar
     });
-    this.arrendarComponent.cambiarMensaje("Seleccione un lugar para arrendar");
   }
   ocultarArrendar(){
     this.arrendar.nativeElement.classList.add("parking-hidden");
@@ -162,26 +103,61 @@ crearArriendo() {
 
   
 
+  usuarios:any;
 
   async ngOnInit(): Promise<void> {
     this.validarUsuario();
     
-
-    this.arriendosProm = this.arriendosService.obtenerArriendos();
-    this.arriendosProm.then(
+    
+    this.usuarioService.obtenerUsuarios().subscribe(
       res=>{
-
-        console.log(this.arriendos)
-        this.arriendos= res;
-        console.log(this.arriendos)
+        this.usuarios = [];
+        this.usuariosCompletos = res
+        for(let valor of res){
+          if(valor.arriendo){
+            this.usuarios.push(valor)
+          }
+        }
       }
+      
     )
+    
     //eliminar valores predeterminados de arriendos y cargar los arriendos desde el backend
 
     //agregar funcionalidad de CREAR arriendo
 
     //agregar funcionalidad de ELIMINAR arriendo    
   }
+
+  filtrarPlacas(): void {
+    const valor: string = this.nuevo.placa.trim().toLowerCase();
+    this.placasFiltradas = []; // Limpiar la lista antes de comenzar
+    if (valor.length > 0) {
+      for (let cliente of this.usuariosCompletos) {
+        if (cliente.placa.toLowerCase().includes(valor)) {
+          const coso  = {
+            placa: cliente.placa,
+            nombre: cliente.nombre,
+            uid: cliente.uid
+          }
+          this.placasFiltradas.push(coso);
+        }
+      }
+    }
+  
+    // Buscar usuario exacto si la placa ingresada coincide completamente
+    let usuarioEncontrado = null;
+    for (let user of this.usuarios) {
+      if (user.placa.toLowerCase() === valor) {
+        usuarioEncontrado = user;
+        break; // Detener el bucle al encontrar el usuario
+      }
+    }
+  
+    this.nuevo.nombreUsuario = usuarioEncontrado ? usuarioEncontrado.nombre : '';
+  }
+  
+
   
 
   validarUsuario(){
@@ -197,12 +173,10 @@ crearArriendo() {
         break;
       case 'ERROR':
       default:
-        console.log("⚠️ Tipo de usuario desconocido o error. Redirigiendo a login.");
         this.router.navigate(['/login']);
         break;
       }
     }).catch(error => {
-      console.error("Error al validar el usuario:", error);
       this.router.navigate(['/login']);
     });
   }

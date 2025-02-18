@@ -12,6 +12,8 @@
 
     --reserved:#58A4DA;
 
+    --arrended: #41dfb2;
+
     --used:#79B6E2;
 
     --Black:#557 ;   /*uso solo si es necesario;*/
@@ -61,7 +63,7 @@ h2{
     margin: auto;
     margin-bottom: 20px;
     padding: 10px;
-    width: 80vw;
+    width: 350px;
     overflow-x: hidden;
     border-radius: 10px;
     position: relative;
@@ -86,12 +88,14 @@ h2{
     text-align: center;
     color: var(--blueD)
 }
-.marcadores{
+.marcadores{ 
+    flex-wrap: wrap;
     justify-content: space-around;
 }
+
 #espacios{
     margin-top:80px;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     width: fit-content;
     max-width: 100%;
     overflow-x: auto;
@@ -147,6 +151,14 @@ h2{
 }
 .reservado{
     background-color: var(--reserved);
+}
+.Parqueadero .marcadores  .arrendado{
+    color: var(--blueD);
+    background-color: var(--arrended);
+}
+.arrendado{
+    color: var(--blueD);
+    background-color: var(--arrended);
 }
 
     /* login  */
@@ -451,6 +463,23 @@ h2{
 }
 .tarifas s{
     width: 45%;
+}
+datalist{
+    display: block;
+    z-index: 9999;
+    width: auto;
+    height: auto;
+}
+
+.placa{
+    font-size: 20px;
+    color: var(--blueD);
+}
+option{
+    display: block;
+    z-index: 9999;
+    width: auto;
+    height: auto;
 }
 .croquis{
     display: flex;
@@ -1026,8 +1055,8 @@ textarea:focus{
 
 .entrar, .reservar{
     width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .salir{
     background-color: var(--Black)
@@ -1098,6 +1127,9 @@ input:focus-visible{
     border: none;
     outline: none;
     border-bottom: 2px solid var(--Black);
+}
+.usar{
+    width:100px
 }
 
 @media only screen and (min-width: 1200px) {
@@ -1429,5 +1461,15 @@ margin: auto 100px;
     }
     .at .crearTarifas{
         width: 500px;
+    }
+    .marcadores{
+        display: flex;
+        justify-content: space-around;
+    }
+    .marcadores label{
+        width: 100px;
+        text-align: center;
+        justify-content: center;
+        margin: auto;
     }
 }

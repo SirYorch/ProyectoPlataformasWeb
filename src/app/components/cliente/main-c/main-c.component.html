@@ -5,11 +5,17 @@
 <div class="ventana mprincipal">
   <article class="datos-bienvenida">
       <article class="bienvenida">
-          <p>Bienvenido {{nombre}}, el estado actual del parqueadero es {{estado}}</p>
+          <p>Bienvenido <strong>{{nombre}}</strong>, el estado actual del parqueadero es <strong>{{estado}}</strong></p>
       </article>
       <article class="bienvenida">
           <p>{{motd}}</p>
       </article>
+      <article class="bienvenida" *ngIf="mensajeArriendo == true">
+        <p>Usted no necesita los botones de Entrar, Salir y Reservar</p>
+        <p>Su espacio asignado es:</p>
+        <p>{{espacioAsignado}}</p>
+      </article>
+    
       <button class="cp button ae-button absoluto entrar" (click)="desplegarEntrar()" *ngIf="enterBool == true ">Entrar</button>
       <button class="cp button ae-button absoluto entrar salir" (click)="salir()" *ngIf="enterBool == false">Salir</button><br>
       <button class="cp button ae-button reservar" (click)="desplegarReservar()" *ngIf="isReservado == true">Reservar</button>
