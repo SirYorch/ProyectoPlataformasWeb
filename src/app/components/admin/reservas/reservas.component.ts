@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.component";
 import { ReservaService } from '../../../services/reserva.service';
 import { PopUpsComponent } from '../../extras/pop-ups/pop-ups.component';
+import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-dialogs.component";
 
 @Component({
   selector: 'app-reservas',
   standalone: true,
-  imports: [MenuComponent, CommonModule, ParqueaderoComponent],
+  imports: [MenuComponent, CommonModule, ParqueaderoComponent, ConfirmDialogsComponent, PopUpsComponent],
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.scss'
 })
@@ -35,6 +36,7 @@ export class ReservasComponent {
     }
 
     async eliminarReserva(id: number) {
+      this.ConfirmDialogsComponent.desplegarConfirmacion("Está seguro de querer eliminar la reserva?",()=>{
       this.reservasService.eliminarReserva(id).then(async ()=>{
       // this.usuariosProm = await this.usuarioService.obtenerUsuarios().then(
       //   res=>{
@@ -42,6 +44,7 @@ export class ReservasComponent {
       //   }
       // );
       }) ; 
+      })
     }
       
 
@@ -79,6 +82,12 @@ export class ReservasComponent {
        private reservasService: ReservaService
      ) {}
  
+     
+
+  @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+  @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+  
+  
    validarUsuario(){
  
      this.user = this.userService.getUser();

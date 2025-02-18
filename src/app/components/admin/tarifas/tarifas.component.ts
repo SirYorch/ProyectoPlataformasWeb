@@ -119,18 +119,6 @@ constructor(
       @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
       @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
 
-      
-  
-      desplegarExito(){
-        this.PopUpsComponent.desplegarSuccess("Se muestra un mensaje de exito");
-      }
-      desplegarError(){
-        this.PopUpsComponent.desplegarError("Se meustra un mensaje de error");
-      }
-      desplegarConfirmacion(){
-        this.ConfirmDialogsComponent.desplegarConfirmacion("Quiere enviar un cuadro de exito?", ()=>this.desplegarError());
-      }
-
   EliminarTarifa(tarifa:any){
     this.ConfirmDialogsComponent.desplegarConfirmacion("Esta seguro de querer eliminar la tarifa?",()=>{
       this.tarifaService.eliminarTarifa(tarifa.id).then(response=>{

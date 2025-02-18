@@ -129,14 +129,16 @@ export class HorariosComponent {
   }
 
   eliminar(horario: any) {
-    this.horarioService.deleteHorarios(horario.id).then(
-      ()=>{
-        this.horariosProm = this.horarioService.getHorarios();
-    this.horariosProm.then(respuesta=>{
-      this.horarios = respuesta
+    this.ConfirmDialogsComponent.desplegarConfirmacion("Está seguro de querer eliminar el horario?",()=>{
+      this.horarioService.deleteHorarios(horario.id).then(
+        ()=>{
+          this.horariosProm = this.horarioService.getHorarios();
+      this.horariosProm.then(respuesta=>{
+        this.horarios = respuesta
+      })
+        }
+      )
     })
-      }
-    )
 
     
   }
@@ -204,7 +206,8 @@ export class HorariosComponent {
   }
 
   guardarGeneral() {
-    // Fecha base (puede ser cualquier fecha, por ejemplo, la fecha actual)
+    this.ConfirmDialogsComponent.desplegarConfirmacion("Está seguro de querer cambiar los datos del horario general?",()=>{
+      // Fecha base (puede ser cualquier fecha, por ejemplo, la fecha actual)
     const fechaBase = new Date();
   
     // Convertir las horas a timestamps
@@ -234,7 +237,7 @@ export class HorariosComponent {
 
     this.ocultarEditarGeneral();
 
-    
+    })
   }
   
   // Método para crear un timestamp a partir de una fecha base y una hora en formato "HH:mm"

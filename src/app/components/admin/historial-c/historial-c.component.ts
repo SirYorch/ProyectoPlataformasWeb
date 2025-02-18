@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MenuComponent } from "../../admin/menu/menu.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,11 +6,13 @@ import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { TicketService } from '../../../services/ticket.service';
+import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-dialogs.component";
+import { PopUpsComponent } from "../../extras/pop-ups/pop-ups.component";
 
 @Component({
   selector: 'app-historial-c',
   standalone: true,
-  imports: [MenuComponent , CommonModule, FormsModule],
+  imports: [MenuComponent, CommonModule, FormsModule, ConfirmDialogsComponent, PopUpsComponent],
   templateUrl: './historial-c.component.html',
   styleUrl: './historial-c.component.scss'
 })
@@ -25,6 +27,11 @@ export class HistorialCComponent {
     private usuarioService: UsuarioService,
     private ticketsService: TicketService
   ) {}
+
+  @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+    @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+    
+    
 
   async ngOnInit(): Promise<void> {
     this.validarUsuario();

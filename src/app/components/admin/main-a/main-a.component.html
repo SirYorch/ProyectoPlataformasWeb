@@ -11,9 +11,12 @@
   <article class="bienvenida ">
     <p>{{motd}}</p>
   </article>
-</article>
+<div>
+
 <button class="cp button ae-button entrar " (click)="enviarCorreo()">Enviar correos</button>
 <button class="cp button ae-button entrar" (click)="borrarReservas()">Eliminar Reservas</button>
+</div>
+</article>
 
 <div class="tc">
     <div class="tarifas">
@@ -39,4 +42,7 @@
 <app-parqueadero></app-parqueadero>
 </div>
 
+
+<app-pop-ups></app-pop-ups>
+<app-confirm-dialogs></app-confirm-dialogs>
 <app-menu></app-menu>

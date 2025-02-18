@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../../../services/user-info.service';
@@ -8,19 +8,32 @@ import { TarifaService } from '../../../services/tarifa.service'; // 📌 Servic
 import { CommonModule } from '@angular/common';
 import { PublicoService } from '../../../services/publico.service';
 import { HorarioService } from '../../../services/horario.service';
+import { PopUpsComponent } from "../../extras/pop-ups/pop-ups.component";
+import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-dialogs.component";
 @Component({
   selector: 'app-main-a',
   standalone: true,
-  imports: [MenuComponent, ParqueaderoComponent, CommonModule],
+  imports: [MenuComponent, ParqueaderoComponent, CommonModule, PopUpsComponent, ConfirmDialogsComponent],
   templateUrl: './main-a.component.html',
   styleUrl: './main-a.component.scss'
 })
 export class MainAComponent implements OnInit {
 borrarReservas() {
-  this.publicoService.borrarReservas();
+  this.ConfirmDialogsComponent.desplegarConfirmacion("Esta seguro de querer eliminar las reservas activas?",()=>{
+    this.publicoService.borrarReservas().then(()=>{this.PopUpsComponent.desplegarSuccess("Se han eliminado las reservas")}).catch((()=>{this.PopUpsComponent.desplegarError("Se ha producido un error Borrando las reservas")}));
+  })
+  
 }
+
+
+
+  @ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+  @ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+  
 enviarCorreo() {
-  this.publicoService.enviarCorreo();
+  this.ConfirmDialogsComponent.desplegarConfirmacion("Esta seguro de querer enviar un correo a los clientes dentro del pparqueadero?",()=>{
+    this.publicoService.enviarCorreo().then(()=>{this.PopUpsComponent.desplegarSuccess("Se ha enviado el correo a los usuarios")}).catch((()=>{this.PopUpsComponent.desplegarError("Se ha producido un error en el envio de correos")}));
+  })
 }
   user: any;
   usuario:any;

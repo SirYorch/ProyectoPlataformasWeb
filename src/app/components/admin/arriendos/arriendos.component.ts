@@ -10,10 +10,12 @@ import { MenuComponent } from "../menu/menu.component";
 import { UsuarioService } from '../../../services/usuario.service';
 import { ParqueaderoComponent } from "../../extras/parqueadero/parqueadero.component";
 import { ReservaService } from '../../../services/reserva.service';
+import { ConfirmDialogsComponent } from "../../extras/confirm-dialogs/confirm-dialogs.component";
+import { PopUpsComponent } from "../../extras/pop-ups/pop-ups.component";
 @Component({
   selector: 'app-arriendos',
   standalone: true,
-  imports: [FormsModule, CommonModule, MenuComponent, ParqueaderoComponent],
+  imports: [FormsModule, CommonModule, MenuComponent, ParqueaderoComponent, ConfirmDialogsComponent, PopUpsComponent],
   templateUrl: './arriendos.component.html',
   styleUrl: './arriendos.component.scss'
 })
@@ -27,7 +29,11 @@ this.nuevo.uid = objeto.uid
   usuariosCompletos: any;
 
 eliminarArriendo(uid: string) {
-  this.arriendosService.eliminarArriendo(uid);
+  this.ConfirmDialogsComponent.desplegarConfirmacion("Está seguro de querer eliminar el arriendo?",()=>{
+    this.arriendosService.eliminarArriendo(uid).then(()=>{
+      this.PopUpsComponent.desplegarSuccess("Se ha eliminado el arriendo")
+    });
+  })
 }
 
 nuevo:any = {
@@ -48,6 +54,11 @@ nuevoArriendo:{
 };
 lugarid = 0;
 
+
+@ViewChild(PopUpsComponent) PopUpsComponent!: PopUpsComponent;
+@ViewChild(ConfirmDialogsComponent) ConfirmDialogsComponent!: ConfirmDialogsComponent;
+
+
 crearArriendo() {
     const timestampIniciogl = this.crearTimestamp(this.nuevo.inicio);
     const timestampFingl = this.crearTimestamp(this.nuevo.fin);
@@ -58,6 +69,7 @@ crearArriendo() {
     const usuario = this.nuevo.uid;
     this.arriendosService.crearArriendo(usuario,this.lugarid,this.nuevoArriendo).then(
       ()=>{
+        this.PopUpsComponent.desplegarSuccess("Se ha creado el arriendo correctamente")
         this.desplegarCrear();
       }
     );

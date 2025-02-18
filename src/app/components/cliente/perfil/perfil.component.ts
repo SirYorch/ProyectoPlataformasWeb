@@ -98,8 +98,7 @@ export class PerfilComponent  {
           telefono: this.telefono,
           direccion: this.direccion,
           cedula: this.cedula,
-          placa: this.placa,
-          tipo_usuario: this.tipo_usuario
+          placa: this.placa
         }).then(()=>{
           this.PopUpsComponent.desplegarSuccess("Los datos se han actualizado");
         }).catch(err=>{

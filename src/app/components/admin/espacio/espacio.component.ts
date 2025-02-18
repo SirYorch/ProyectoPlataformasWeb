@@ -58,8 +58,11 @@ export class EspacioComponent implements AfterViewInit{
       this.espaciosService.saveDatos(this.espacio).then(
         ()=>{
           window.location.reload();
+          this.PopUpsComponent.desplegarSuccess("Se han realizado los cambios de la matriz de lugares")
         }
-      );
+      ).catch(()=>{
+        this.PopUpsComponent.desplegarError("Se ha producido un error en actualizacion de matriz de lugares.")
+      });
       
     })
   }
