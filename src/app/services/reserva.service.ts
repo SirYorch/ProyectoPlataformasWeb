@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class ReservaService {
 
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/reservas';
+  private apiUrl = 'http://192.168.60.190:8080/parking-1.0-SNAPSHOT/api/reservas';
  
    constructor(private http: HttpClient) {}
 

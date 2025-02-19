@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class EspacioService {
 
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/espacios';
+  private apiUrl = 'http://192.168.60.190:8080/parking-1.0-SNAPSHOT/api/espacios';
 
   constructor(private http: HttpClient) {}
   

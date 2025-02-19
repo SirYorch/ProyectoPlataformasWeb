@@ -7,7 +7,7 @@ import { catchError, lastValueFrom, Observable, of } from 'rxjs';
 })
 export class UsuarioService {
   //private apiUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/usuarios';
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/usuarios';
+  private apiUrl = 'http://192.168.60.190:8080/parking-1.0-SNAPSHOT/api/usuarios';
 
   constructor(private http: HttpClient) {}
 

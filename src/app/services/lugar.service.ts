@@ -6,7 +6,7 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class LugarService {
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/lugares';
+  private apiUrl = 'http://192.168.60.190:8080/parking-1.0-SNAPSHOT/api/lugares';
 
   constructor(private http: HttpClient) {}
 

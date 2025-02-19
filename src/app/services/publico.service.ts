@@ -23,7 +23,7 @@ export class PublicoService {
     }
   }
 
-  private apiUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/publico';
+  private apiUrl = 'http://192.168.60.190:8080/parking-1.0-SNAPSHOT/api/publico';
 
   async obtenerDatos(): Promise<any[]> {
       try {

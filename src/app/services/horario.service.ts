@@ -15,7 +15,7 @@ export class HorarioService {
     }
   }
   //private horariosUrl = 'http://localhost:8080/ups_edu_-1.0-SNAPSHOT/api/horarios'; // URL en Jakarta EE
-  private horariosUrl = 'http://localhost:8080/parking-1.0-SNAPSHOT/api/horarios'; // URL en Jakarta EE
+  private horariosUrl = 'http://192.168.60.190:8080/parking-1.0-SNAPSHOT/api/horarios'; // URL en Jakarta EE
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
